@@ -57,7 +57,7 @@ class Map extends Component {
       // Length issue
       `https://gist.githubusercontent.com`,
       `/KevinHu2014/80f0dfe62528601a9ac0634c8379bee4`,
-      `/raw/8fb5a920b6355ab010ffa27deea008e7ff907ea2/ReactDot.json`
+      `/raw/56bd6ee4e2a86a06f8c8bb83a93807a3df3cd67e/ReactDot.json`
     ].join("")
 
     fetch(url)
