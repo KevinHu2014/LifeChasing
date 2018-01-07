@@ -39,6 +39,7 @@ const MapWithAMarkerClusterer = compose(
       {props.markers.map(marker => (
         <Marker
           key={marker.id}
+          onClick={() => {console.log(marker.latitude+","+marker.longitude)}}
           position={{ lat: marker.latitude, lng: marker.longitude }}
         />
       ))}
@@ -48,6 +49,16 @@ const MapWithAMarkerClusterer = compose(
 
 
 class Map extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      latitude: null,
+      longitude: null,
+      error: null,
+    };
+  }
+
   componentWillMount() {
     this.setState({ markers: [] })
   }
@@ -66,6 +77,35 @@ class Map extends Component {
         this.setState({ markers: data.Dots });
         console.log(data.Dots)
       });
+
+    this.GetLocationAndEatBean();
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
+  }
+
+  GetLocationAndEatBean() {
+    this.watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+          markers: this.state.markers.filter(dot => {
+            //Eat Beans
+            //0.000045-->5m , 0.000044-->5m
+            if (!(Math.abs(dot.latitude - this.state.latitude) < 0.000045 * 5
+            && Math.abs(dot.longitude - this.state.longitude) < 0.000044 * 5)) {
+              return dot;
+            }
+          })
+        });
+        console.log('location changed!')
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
+    );
   }
 
   render() {
