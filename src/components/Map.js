@@ -56,6 +56,7 @@ class Map extends Component {
       latitude: null,
       longitude: null,
       error: null,
+      score: 0
     };
   }
 
@@ -88,6 +89,7 @@ class Map extends Component {
   GetLocationAndEatBean() {
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
+        let Counter = 0;
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -99,7 +101,9 @@ class Map extends Component {
             && Math.abs(dot.longitude - this.state.longitude) < 0.000044 * 5)) {
               return dot;
             }
-          })
+            Counter++;
+          }),
+          score: this.state.score + Counter
         });
         console.log('location changed!')
       },
@@ -110,7 +114,10 @@ class Map extends Component {
 
   render() {
     return (
-      <MapWithAMarkerClusterer markers={this.state.markers} />
+      <div>
+        <h1 style={{textAlign: 'center'}}>{this.state.score}</h1>
+        <MapWithAMarkerClusterer markers={this.state.markers} />
+      </div>
     )
   }
 }
