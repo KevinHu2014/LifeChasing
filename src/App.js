@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class App extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class App extends Component {
         </p>
         <h2>{this.state.latitude}</h2>
         <h2>{this.state.longitude}</h2>
+        <RaisedButton label="Default" />
       </div>
     );
   }
