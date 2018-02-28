@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
 import logo from './logo.svg';
 import './App.css';
+import ThreeButtonSelectionPage from './components/common/ThreeButtonSelectionPage';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      latitude: null,
-      longitude: null,
+      logo: 'logo',
     };
   }
 
@@ -17,14 +16,9 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo" alt={this.state.logo} />
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <h2>{this.state.latitude}</h2>
-        <h2>{this.state.longitude}</h2>
-        <RaisedButton label="Default" />
+        <ThreeButtonSelectionPage />
       </div>
     );
   }
