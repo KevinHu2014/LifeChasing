@@ -1,23 +1,29 @@
 import React, { PropTypes } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'material-ui/Button';
 import './ThreeButtonSelectionPage.css';
 
 
 const ThreeButtonSelectionPage = props => (
   <div className="Container">
-    <div className="Title" style={{ backgroundColor: 'white' }}>
+    <div className="Title">
       <p>請選擇起點</p>
     </div>
-    <div className="Content" style={{ backgroundColor: 'yellow' }}>
-      <RaisedButton label={props.first} />
+    <div className="Content">
+      <Button variant="raised" size="large" color="primary">
+        {props.first}
+      </Button>
     </div>
-    <div className="Content" style={{ backgroundColor: 'white' }}>
-      <RaisedButton label={props.second} />
+    <div className="Content">
+      <Button variant="raised" size="large" color="default">
+        {props.second}
+      </Button>
     </div>
-    <div className="Content" style={{ backgroundColor: 'green' }}>
-      <RaisedButton label={props.third} />
+    <div className="Content">
+      <Button variant="raised" size="large" color="default">
+        {props.third}
+      </Button>
     </div>
-    <div className="Content" style={{ backgroundColor: 'blue' }} />
+    <div className="Content" />
   </div>
 );
 

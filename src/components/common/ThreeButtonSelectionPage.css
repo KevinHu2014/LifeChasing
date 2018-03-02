@@ -4,7 +4,6 @@
     flex-direction: column;
     width: 100vw;
     height: 100vh;
-    background-color: orange;
   }
 .Title {
     display: flex;
@@ -15,7 +14,6 @@
 .Content {
     display: flex;
     flex: 1;
-    background-color: red;
     justify-content: center;
     align-items: center;
 }
