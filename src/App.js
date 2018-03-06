@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ThreeButtonSelectionPage from './components/common/ThreeButtonSelectionPage';
+// import ThreeButtonSelectionPage from './components/common/ThreeButtonSelectionPage';
+import GameSegment from './components/common/GameSegment';
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class App extends Component {
   render() {
     return (
       <div className={this.state.test}>
-        <ThreeButtonSelectionPage first="捷運輔大站" second="聖言樓" third="輔大側門" />
+        {/* <ThreeButtonSelectionPage first="捷運輔大站" second="聖言樓" third="輔大側門" /> */}
+        <GameSegment />
       </div>
     );
   }
