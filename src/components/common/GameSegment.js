@@ -9,22 +9,23 @@ const styles = theme => ({
     flexGrow: 1,
   },
   paper: {
-    padding: theme.spacing.unit * 10.5,
+    padding: theme.spacing.unit * 2,
     [theme.breakpoints.only('xs')]: {
-      padding: theme.spacing.unit * 10.5,
+      height: theme.spacing.unit * 19,
     },
     [theme.breakpoints.only('sm')]: {
-      padding: theme.spacing.unit * 11.5,
+      height: theme.spacing.unit * 22,
       backgroundColor: 'red',
     },
     [theme.breakpoints.only('md')]: {
-      padding: theme.spacing.unit * 18,
+      height: theme.spacing.unit * 30,
       backgroundColor: 'blue',
     },
     [theme.breakpoints.only('lg')]: {
-      padding: theme.spacing.unit * 18,
+      height: theme.spacing.unit * 35,
       backgroundColor: 'orange',
     },
+    // fontSize: 60,
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
