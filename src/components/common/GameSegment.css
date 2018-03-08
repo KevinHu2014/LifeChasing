@@ -16,7 +16,17 @@
     flex-Grow: 1;
 }
 .paper {
+    display: flex;
+    justify-content: space-around;
+    /* align-items: center; */
+    flex-direction: column;
     height: calc((100vh - 56px - 24px) / 3);
+    padding: 0px 10px;
+
+}
+
+.icon {
+    font-size: 30px;
 }
 
 /* Below Data are from Bootstrap */
