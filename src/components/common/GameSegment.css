@@ -1,0 +1,47 @@
+
+.grid {
+    display: flex;
+    flex-Grow: 1;
+}
+.paper {
+    height: calc((100vh - 56px - 24px) / 3);
+}
+
+/* Below Data are from Bootstrap */
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575px) {
+    .paper {
+        background-color: white !important;
+    }
+ }
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767px) {
+    .paper {
+        background-color: green !important;
+    }
+ }
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .paper {
+        background-color: blue !important;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .paper {
+        background: yellow !important;
+        height: calc((100vh - 64px - 24px) / 2);
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .paper {
+        height: calc((100vh - 64px - 30px) / 2);
+        background: orange !important;
+    }
+ }
