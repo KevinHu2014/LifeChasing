@@ -15,22 +15,22 @@ class GameSegment extends Component {
         <BackAppBar title="Title Text" />
         <div className="grid">
           <Grid container spacing={8}>
-            <Grid item xs={6} sm={6} md={4} lg={4}>
+            <Grid id="one" item xs={6} sm={6} md={4} lg={4}>
               <Paper className="paper">1</Paper>
             </Grid>
-            <Grid item xs={6} sm={6} md={4} lg={4}>
+            <Grid id="two" item xs={6} sm={6} md={4} lg={4}>
               <Paper className="paper">2</Paper>
             </Grid>
-            <Grid item xs={6} sm={6} md={4} lg={4}>
+            <Grid id="three" item xs={6} sm={6} md={4} lg={4}>
               <Paper className="paper">3</Paper>
             </Grid>
-            <Grid item xs={6} sm={6} md={4} lg={4}>
+            <Grid id="four" item xs={6} sm={6} md={4} lg={4}>
               <Paper className="paper">4</Paper>
             </Grid>
-            <Grid item xs={6} sm={6} md={4} lg={4}>
+            <Grid id="five" item xs={6} sm={6} md={4} lg={4}>
               <Paper className="paper">5</Paper>
             </Grid>
-            <Grid item xs={6} sm={6} md={4} lg={4}>
+            <Grid id="six" item xs={6} sm={6} md={4} lg={4}>
               <Paper className="paper">6</Paper>
             </Grid>
           </Grid>
