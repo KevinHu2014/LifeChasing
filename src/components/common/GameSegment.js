@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-import Icon from 'material-ui/Icon';
+import HeartPulse from 'mdi-material-ui/HeartPulse';
 import BackAppBar from './BackAppBar';
 import './GameSegment.css';
 
@@ -65,7 +65,7 @@ class GameSegment extends Component {
             </Grid>
             <Grid id="five" item xs={6} sm={6} md={4} lg={4}>
               <Paper className="paper" style={{ alignItems: 'center' }}>
-                <Icon color="error" style={{ fontSize: 60 }}>trending_up</Icon>
+                <HeartPulse color="error" style={{ width: '60px', height: '60px' }} />
                 <Typography variant="display1" align="center" color="secondary">
                   118
                 </Typography>
