@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import { compose, withProps, withHandlers } from 'recompose';
-
-const {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-} = require('react-google-maps');
-const { MarkerClusterer } = require('react-google-maps/lib/components/addons/MarkerClusterer');
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 
 const MapWithAMarkerClusterer = compose(
   withProps({
