@@ -11,8 +11,6 @@ export function eatBeans(beans) {
 }
 
 export function getPoints(score) {
-  // eatBeans is an ActionCreator, it needs to return an action,
-  // an object with a type property.
   return {
     type: GET_POINTS,
     score,

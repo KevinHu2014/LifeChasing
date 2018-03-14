@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxPromise from 'redux-promise';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import './index.css';
 // import Main from './App';
 import Main from './containers/Map';
 import registerServiceWorker from './registerServiceWorker';
-import rootReducer from './reducers';
+import reducers from './reducers';
 
-const store = createStore(rootReducer);
+const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
 const theme = createMuiTheme({
   palette: {
@@ -29,7 +30,7 @@ const theme = createMuiTheme({
 });
 
 const App = () => (
-  <Provider store={store}>
+  <Provider store={createStoreWithMiddleware(reducers)}>
     <MuiThemeProvider theme={theme}>
       <Main />
     </MuiThemeProvider>
