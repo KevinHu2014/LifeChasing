@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import fetch from 'isomorphic-fetch';
 import { compose, withProps, withHandlers } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
-import { getPoints } from '../actions/index';
+import { getPoints, fetchMarkers } from '../actions/index';
 
 const MapWithAMarkerClusterer = compose(
   withProps({
@@ -57,24 +56,11 @@ class Map extends Component {
   }
 
   componentWillMount() {
-    this.setState({ markers: [] });
+    this.props.fetchMarkers();
+    this.setState({ markers: this.props.markers });
   }
 
   componentDidMount() {
-    const url = [
-      // Length issue
-      'https://gist.githubusercontent.com',
-      '/KevinHu2014/80f0dfe62528601a9ac0634c8379bee4',
-      '/raw/56bd6ee4e2a86a06f8c8bb83a93807a3df3cd67e/ReactDot.json',
-    ].join('');
-
-    fetch(url)
-      .then(res => res.json())
-      .then((data) => {
-        this.setState({ markers: data.Dots });
-        console.log(data.Dots);
-      });
-
     this.GetLocationAndEatBean();
   }
 
@@ -115,7 +101,7 @@ class Map extends Component {
     return (
       <div>
         <h1 style={{ textAlign: 'center' }}>{this.props.score}</h1>
-        <MapWithAMarkerClusterer markers={this.state.markers} />
+        <MapWithAMarkerClusterer markers={this.props.markers} />
       </div>
     );
   }
@@ -123,7 +109,13 @@ class Map extends Component {
 
 Map.propTypes = {
   getPoints: PropTypes.func.isRequired,
+  fetchMarkers: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
+  markers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+  })).isRequired,
 };
 
 function mapStateToProps(state) {
@@ -131,6 +123,7 @@ function mapStateToProps(state) {
 //   console.log(state);
   return {
     score: state.points,
+    markers: state.markers,
   };
 }
 
@@ -139,7 +132,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   // Whenever eatBeans is called, the results should be
   // pass to all our reducers
-  return bindActionCreators({ getPoints }, dispatch);
+  return bindActionCreators({ getPoints, fetchMarkers }, dispatch);
 }
 
 
