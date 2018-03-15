@@ -8,24 +8,15 @@ const url = [
 ].join(''); // Marker url
 
 export const EAT_BEANS = 'EAT_BEANS';
-export const GET_POINTS = 'GET_POINTS';
 export const FETCH_MARKERS = 'FETCH_MARKERS';
 
-export function eatBeans(latitude, longitude, markers) {
+export function eatBeans(latitude, longitude) {
   // eatBeans is an ActionCreator, it needs to return an action,
   // an object with a type property.
   return {
     type: EAT_BEANS,
     latitude,
     longitude,
-    markers,
-  };
-}
-
-export function getPoints(score) {
-  return {
-    type: GET_POINTS,
-    score,
   };
 }
 

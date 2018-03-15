@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { compose, withProps, withHandlers } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
-import { getPoints, fetchMarkers } from '../actions/index';
+import { fetchMarkers, eatBeans } from '../actions/index';
 
 const MapWithAMarkerClusterer = compose(
   withProps({
@@ -46,18 +46,8 @@ const MapWithAMarkerClusterer = compose(
 
 
 class Map extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      latitude: null,
-      longitude: null,
-    };
-  }
-
   componentWillMount() {
     this.props.fetchMarkers();
-    this.setState({ markers: this.props.beanMap.markers });
   }
 
   componentDidMount() {
@@ -71,25 +61,9 @@ class Map extends Component {
   GetLocationAndEatBean() {
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
-        // let Counter = 0;
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
-        this.setState({
-          latitude: lat,
-          longitude: lon,
-          markers: this.state.markers.filter((dot) => {
-            // Eat Beans
-            // 0.000045-->5m , 0.000044-->5m
-            if (!(Math.abs(dot.latitude - this.state.latitude) < 0.000045 * 5
-              && Math.abs(dot.longitude - this.state.longitude) < 0.000044 * 5)) {
-              return dot;
-            }
-            // Counter += 1;
-            return false;
-          }),
-        });
-        // const temp = this.props.beanMap.score + Counter;
-        this.props.getPoints(10);
+        this.props.eatBeans(lat, lon);
         console.log('location changed!');
       },
       ((error) => { console.log(error.message); }),
@@ -110,8 +84,8 @@ class Map extends Component {
 }
 
 Map.propTypes = {
-  getPoints: PropTypes.func.isRequired,
   fetchMarkers: PropTypes.func.isRequired,
+  eatBeans: PropTypes.func.isRequired,
   beanMap: PropTypes.shape({
     score: PropTypes.number.isRequired,
     markers: PropTypes.arrayOf(PropTypes.shape({
@@ -136,7 +110,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   // Whenever eatBeans is called, the results should be
   // pass to all our reducers
-  return bindActionCreators({ getPoints, fetchMarkers }, dispatch);
+  return bindActionCreators({ fetchMarkers, eatBeans }, dispatch);
 }
 
 
