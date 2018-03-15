@@ -57,7 +57,7 @@ class Map extends Component {
 
   componentWillMount() {
     this.props.fetchMarkers();
-    this.setState({ markers: this.props.markers });
+    this.setState({ markers: this.props.beanMap.markers });
   }
 
   componentDidMount() {
@@ -71,10 +71,12 @@ class Map extends Component {
   GetLocationAndEatBean() {
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
-        let Counter = 0;
+        // let Counter = 0;
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
         this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          latitude: lat,
+          longitude: lon,
           markers: this.state.markers.filter((dot) => {
             // Eat Beans
             // 0.000045-->5m , 0.000044-->5m
@@ -82,12 +84,12 @@ class Map extends Component {
               && Math.abs(dot.longitude - this.state.longitude) < 0.000044 * 5)) {
               return dot;
             }
-            Counter += 1;
+            // Counter += 1;
             return false;
           }),
         });
-        const temp = this.props.score + Counter;
-        this.props.getPoints(temp);
+        // const temp = this.props.beanMap.score + Counter;
+        this.props.getPoints(10);
         console.log('location changed!');
       },
       ((error) => { console.log(error.message); }),
@@ -100,8 +102,8 @@ class Map extends Component {
   render() {
     return (
       <div>
-        <h1 style={{ textAlign: 'center' }}>{this.props.score}</h1>
-        <MapWithAMarkerClusterer markers={this.props.markers} />
+        <h1 style={{ textAlign: 'center' }}>{this.props.beanMap.score}</h1>
+        <MapWithAMarkerClusterer markers={this.props.beanMap.markers} />
       </div>
     );
   }
@@ -110,20 +112,22 @@ class Map extends Component {
 Map.propTypes = {
   getPoints: PropTypes.func.isRequired,
   fetchMarkers: PropTypes.func.isRequired,
-  score: PropTypes.number.isRequired,
-  markers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-  })).isRequired,
+  beanMap: PropTypes.shape({
+    score: PropTypes.number.isRequired,
+    markers: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
+    })).isRequired,
+  }).isRequired,
+
 };
 
 function mapStateToProps(state) {
   // Whatever is returned will show up as props inside the Map
 //   console.log(state);
   return {
-    score: state.points,
-    markers: state.markers,
+    beanMap: state.beanMap,
   };
 }
 

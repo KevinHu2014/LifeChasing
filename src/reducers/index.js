@@ -1,12 +1,8 @@
 import { combineReducers } from 'redux';
-import eatBeans from './eatBeans';
-import getPoints from './getPoints';
-import fetchMarkers from './fetchMarkers';
+import beanMap from './reducer_beanMap';
 
 const rootReducer = combineReducers({
-  beans: eatBeans,
-  points: getPoints,
-  markers: fetchMarkers,
+  beanMap,
 });
 
 export default rootReducer;
