@@ -4,10 +4,13 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxPromise from 'redux-promise';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 import { createLogger } from 'redux-logger';
 import './index.css';
 // import Main from './App';
 import Main from './containers/Map';
+import GameRecord from './components/common/GameRecord';
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
 
@@ -37,7 +40,14 @@ const theme = createMuiTheme({
 const App = () => (
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
-      <Main />
+      <BrowserRouter>
+        <div>
+          <Switch>
+            <Route path="/GameRecord" component={GameRecord} />
+            <Route path="/" component={Main} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     </MuiThemeProvider>
   </Provider>
 );
