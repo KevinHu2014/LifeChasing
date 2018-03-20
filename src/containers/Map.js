@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { compose, withProps, withHandlers } from 'recompose';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import { compose, withProps, withHandlers, lifecycle } from 'recompose';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { fetchMarkers, eatBeans } from '../actions/index';
-
+/* global google */
 const MapWithAMarkerClusterer = compose(
   withProps({
     googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBvVSIH17eqL5gy_M0bn3Hb_N8qYnZ7oKQ',
@@ -22,12 +22,32 @@ const MapWithAMarkerClusterer = compose(
   }),
   withScriptjs,
   withGoogleMap,
+  lifecycle({
+    componentDidMount() {
+      const DirectionsService = new google.maps.DirectionsService();
+
+      DirectionsService.route({
+        origin: new google.maps.LatLng(25.032803, 121.435432),
+        destination: new google.maps.LatLng(25.038444, 121.431343),
+        travelMode: google.maps.TravelMode.WALKING,
+      }, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          this.setState({
+            directions: result,
+          });
+        } else {
+          console.error(`error fetching directions ${result}`);
+        }
+      });
+    },
+  }),
 )(props =>
   (
     <GoogleMap
       defaultZoom={17}
       defaultCenter={{ lat: 25.03515125, lng: 121.4330576875 }}
     >
+      {props.directions && <DirectionsRenderer directions={props.directions} />}
       <MarkerClusterer
         onClick={props.onMarkerClustererClick}
         averageCenter
