@@ -76,7 +76,7 @@ class Map extends Component {
   render() {
     return (
       <div>
-        <h1 style={{ textAlign: 'center' }}>{this.props.beanMap.score}</h1>
+        <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
         <MapWithAMarkerClusterer markers={this.props.beanMap.markers} />
       </div>
     );
