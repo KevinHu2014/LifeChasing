@@ -8,7 +8,7 @@ import { fetchMarkers, eatBeans } from '../actions/index';
 /* global google */
 const MapWithAMarkerClusterer = compose(
   withProps({
-    googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBvVSIH17eqL5gy_M0bn3Hb_N8qYnZ7oKQ',
+    googleMapURL: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC6u4b84tBPokRRlbVhzXorKh93BzP9OPA',
     loadingElement: <div style={{ height: '100%' }} />,
     containerElement: <div style={{ height: '100vh' }} />,
     mapElement: <div style={{ height: '100%' }} />,
@@ -27,14 +27,16 @@ const MapWithAMarkerClusterer = compose(
       const DirectionsService = new google.maps.DirectionsService();
 
       DirectionsService.route({
-        origin: new google.maps.LatLng(25.032803, 121.435432),
-        destination: new google.maps.LatLng(25.038444, 121.431343),
+        origin: new google.maps.LatLng(25.032854, 121.435198),
+        destination: new google.maps.LatLng(25.038491, 121.431402),
         travelMode: google.maps.TravelMode.WALKING,
+        provideRouteAlternatives: true,
       }, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
           this.setState({
             directions: result,
           });
+          // console.log(result);
         } else {
           console.error(`error fetching directions ${result}`);
         }
@@ -47,7 +49,7 @@ const MapWithAMarkerClusterer = compose(
       defaultZoom={17}
       defaultCenter={{ lat: 25.03515125, lng: 121.4330576875 }}
     >
-      {props.directions && <DirectionsRenderer directions={props.directions} />}
+      {props.directions && <DirectionsRenderer directions={props.directions} routeIndex={1} />}
       <MarkerClusterer
         onClick={props.onMarkerClustererClick}
         averageCenter
