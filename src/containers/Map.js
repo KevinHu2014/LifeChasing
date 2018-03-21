@@ -49,7 +49,10 @@ const MapWithAMarkerClusterer = compose(
       defaultZoom={17}
       defaultCenter={{ lat: 25.03515125, lng: 121.4330576875 }}
     >
-      {props.directions && <DirectionsRenderer directions={props.directions} routeIndex={1} />}
+      {
+        props.showDirections && props.directions &&
+        <DirectionsRenderer directions={props.directions} routeIndex={1} />
+      }
       <MarkerClusterer
         onClick={props.onMarkerClustererClick}
         averageCenter
@@ -99,7 +102,7 @@ class Map extends Component {
     return (
       <div>
         <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
-        <MapWithAMarkerClusterer markers={this.props.beanMap.markers} />
+        <MapWithAMarkerClusterer markers={this.props.beanMap.markers} showDirections />
       </div>
     );
   }
