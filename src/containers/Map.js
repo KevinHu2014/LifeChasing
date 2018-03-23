@@ -77,6 +77,8 @@ class Map extends Component {
 
   componentDidMount() {
     this.GetLocationAndEatBean();
+    window.addEventListener('focus', () => { console.log('window has focus'); }, false);
+    window.addEventListener('blur', () => { console.log('window lost focus'); }, false);
   }
 
   componentWillUnmount() {
@@ -102,7 +104,7 @@ class Map extends Component {
     return (
       <div>
         <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
-        <MapWithAMarkerClusterer markers={this.props.beanMap.markers} showDirections />
+        <MapWithAMarkerClusterer id="map" markers={this.props.beanMap.markers} showDirections />
       </div>
     );
   }
