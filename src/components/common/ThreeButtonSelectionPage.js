@@ -6,20 +6,35 @@ import './ThreeButtonSelectionPage.css';
 const ThreeButtonSelectionPage = props => (
   <div className="Container">
     <div className="Title">
-      <p>請選擇起點</p>
+      <p>{props.header}</p>
     </div>
     <div className="Content">
-      <Button variant="raised" size="large" color="primary">
+      <Button
+        variant="raised"
+        size="large"
+        color="primary"
+        onClick={() => { props.clickHandler(props.first); }}
+      >
         {props.first}
       </Button>
     </div>
     <div className="Content">
-      <Button variant="raised" size="large" color="default">
+      <Button
+        variant="raised"
+        size="large"
+        color="default"
+        onClick={() => { props.clickHandler(props.second); }}
+      >
         {props.second}
       </Button>
     </div>
     <div className="Content">
-      <Button variant="raised" size="large" color="default">
+      <Button
+        variant="raised"
+        size="large"
+        color="default"
+        onClick={() => { props.clickHandler(props.third); }}
+      >
         {props.third}
       </Button>
     </div>
@@ -28,9 +43,11 @@ const ThreeButtonSelectionPage = props => (
 );
 
 ThreeButtonSelectionPage.propTypes = {
+  header: PropTypes.string.isRequired,
   first: PropTypes.string.isRequired,
   second: PropTypes.string.isRequired,
   third: PropTypes.string.isRequired,
+  clickHandler: PropTypes.func.isRequired,
 };
 
 export default ThreeButtonSelectionPage;

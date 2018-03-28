@@ -9,6 +9,8 @@ import { createLogger } from 'redux-logger';
 import './index.css';
 import Main from './containers/Map';
 import GameRecord from './components/common/GameRecord';
+import SelectStart from './components/SelectStart';
+import SelectEnd from './components/SelectEnd';
 import reducers from './reducers';
 
 const logger = createLogger();
@@ -41,6 +43,8 @@ const App = () => (
       <BrowserRouter>
         <div>
           <Switch>
+            <Route path="/SelectStart" component={SelectStart} />
+            <Route path="/SelectEnd" component={SelectEnd} />
             <Route path="/GameRecord" component={GameRecord} />
             <Route path="/" component={Main} />
           </Switch>
