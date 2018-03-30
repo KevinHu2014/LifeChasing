@@ -12,7 +12,7 @@ const ThreeButtonSelectionPage = props => (
       <Button
         variant="raised"
         size="large"
-        color="primary"
+        color="secondary"
         onClick={() => { props.clickHandler(props.first); }}
       >
         {props.first}
