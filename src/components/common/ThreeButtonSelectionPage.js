@@ -44,7 +44,7 @@ const ThreeButtonSelectionPage = props => (
 
 ThreeButtonSelectionPage.propTypes = {
   header: PropTypes.string.isRequired,
-  blue: PropTypes.string.isRequired,
+  blue: PropTypes.bool.isRequired,
   first: PropTypes.string.isRequired,
   second: PropTypes.string.isRequired,
   third: PropTypes.string.isRequired,
