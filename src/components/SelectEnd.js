@@ -2,7 +2,7 @@ import React from 'react';
 import ThreeButtonSelection from './common/ThreeButtonSelectionPage';
 
 
-const SelectEnd = () => (
+const SelectEnd = props => (
   <div>
     <ThreeButtonSelection
       header="請選擇終點"
@@ -11,10 +11,14 @@ const SelectEnd = () => (
       third="中美堂"
       clickHandler={(a) => {
         console.log(a);
-        // console.log(this.props.location.state.start);
+        console.log(props.location.state.start);
       }}
     />
   </div>
 );
+
+SelectEnd.propTypes = {
+  location: React.PropTypes.shape().isRequired,
+};
 
 export default SelectEnd;

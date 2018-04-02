@@ -1,8 +1,9 @@
 import React from 'react';
-import ThreeButtonSelection from './common/ThreeButtonSelectionPage';
-import history from '../history';
+import { withRouter } from 'react-router-dom';
 
-const SelectStart = () => (
+import ThreeButtonSelection from './common/ThreeButtonSelectionPage';
+
+const SelectStart = props => (
   <div>
     <ThreeButtonSelection
       header="請選擇起點"
@@ -11,7 +12,7 @@ const SelectStart = () => (
       third="側門"
       clickHandler={(a) => {
         console.log(a);
-        history.push({
+        props.history.push({
           pathname: '/SelectEnd',
           state: { start: a },
         });
@@ -20,4 +21,8 @@ const SelectStart = () => (
   </div>
 );
 
-export default SelectStart;
+SelectStart.propTypes = {
+  history: React.PropTypes.shape().isRequired,
+};
+
+export default withRouter(SelectStart);
