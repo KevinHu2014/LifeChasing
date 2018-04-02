@@ -12,7 +12,7 @@ const ThreeButtonSelectionPage = props => (
       <Button
         variant="raised"
         size="large"
-        color="secondary"
+        color={props.blue ? 'secondary' : 'default'}
         onClick={() => { props.clickHandler(props.first); }}
       >
         {props.first}
@@ -44,6 +44,7 @@ const ThreeButtonSelectionPage = props => (
 
 ThreeButtonSelectionPage.propTypes = {
   header: PropTypes.string.isRequired,
+  blue: PropTypes.string.isRequired,
   first: PropTypes.string.isRequired,
   second: PropTypes.string.isRequired,
   third: PropTypes.string.isRequired,

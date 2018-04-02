@@ -11,6 +11,7 @@ import Main from './containers/Map';
 import GameRecord from './components/common/GameRecord';
 import SelectStart from './components/SelectStart';
 import SelectEnd from './components/SelectEnd';
+import SelectMode from './components/SelectMode';
 import reducers from './reducers';
 
 const logger = createLogger();
@@ -45,6 +46,7 @@ const App = () => (
           <Switch>
             <Route path="/SelectStart" component={SelectStart} />
             <Route path="/SelectEnd" component={SelectEnd} />
+            <Route path="/SelectMode" component={SelectMode} />
             <Route path="/GameRecord" component={GameRecord} />
             <Route path="/" component={Main} />
           </Switch>

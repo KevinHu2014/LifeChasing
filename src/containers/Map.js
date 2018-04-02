@@ -77,6 +77,7 @@ class Map extends Component {
 
   componentDidMount() {
     this.GetLocationAndEatBean();
+    console.log(this.props.location.state);
     window.addEventListener('focus', () => { console.log('window has focus'); }, false);
     window.addEventListener('blur', () => { console.log('window lost focus'); }, false);
   }
@@ -121,7 +122,7 @@ Map.propTypes = {
       longitude: PropTypes.number.isRequired,
     })).isRequired,
   }).isRequired,
-
+  location: PropTypes.shape().isRequired,
 };
 
 function mapStateToProps(state) {

@@ -7,17 +7,18 @@ import ThreeButtonSelection from './common/ThreeButtonSelectionPage';
 const SelectEnd = props => (
   <div>
     <ThreeButtonSelection
-      header="請選擇終點"
-      blue
-      first="國璽樓"
-      second="輔園"
-      third="中美堂"
+      header="請選擇模式"
+      blue={false}
+      first="全自動"
+      second="半自動"
+      third="手動"
       clickHandler={(a) => {
         props.history.push({
-          pathname: '/SelectMode',
+          pathname: '/Map',
           state: {
             start: props.location.state.start,
-            end: a,
+            end: props.location.state.end,
+            mode: a,
           },
         });
       }}
