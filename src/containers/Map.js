@@ -86,6 +86,12 @@ class Map extends Component {
     navigator.geolocation.clearWatch(this.watchId);
   }
 
+  HandleTouch(e) {
+    console.log(this.state);
+    console.log(e.targetTouches[0].clientX);
+    console.log(e.targetTouches[0].clientY);
+  }
+
   GetLocationAndEatBean() {
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
@@ -103,7 +109,13 @@ class Map extends Component {
 
   render() {
     return (
-      <div>
+      <div
+        onTouchStart={(e) => {
+          // console.log(e.targetTouches[0].pageX);
+          this.HandleTouch(e);
+        }}
+        role="presentation"
+      >
         <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
         <MapWithAMarkerClusterer id="map" markers={this.props.beanMap.markers} showDirections />
       </div>
