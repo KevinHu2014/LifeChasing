@@ -120,8 +120,8 @@ class Map extends Component {
         role="presentation"
       >
         <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
-        <MapWithAMarkerClusterer id="map" markers={this.props.beanMap.markers} showDirections />
-        { (mode === '全自動') ? <MapDialog /> : null }
+        <MapWithAMarkerClusterer id="map" markers={this.props.beanMap.markers} showDirections={mode === '半自動'} />
+        { mode === '全自動' && <MapDialog /> }
       </div>
     );
   }
