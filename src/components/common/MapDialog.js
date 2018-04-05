@@ -24,19 +24,15 @@ class MapDialog extends React.Component {
   render() {
     return (
       <Dialog open={this.state.open}>
-        <DialogTitle>Set backup account</DialogTitle>
+        <DialogTitle>開始遊戲</DialogTitle>
         <DialogContent>
           <DialogContentText>
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
+              遊戲即將開始，點擊OK鍵後請鎖定手機
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => { this.handleClose(); }} color="primary">
-              Disagree
-          </Button>
           <Button onClick={() => { this.handleClose(); }} color="primary" autoFocus>
-              Agree
+              Ok
           </Button>
         </DialogActions>
       </Dialog>

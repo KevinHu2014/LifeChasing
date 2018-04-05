@@ -5,6 +5,8 @@ import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { fetchMarkers, eatBeans } from '../actions/index';
+import MapDialog from '../components/common/MapDialog';
+
 /* global google */
 const MapWithAMarkerClusterer = compose(
   withProps({
@@ -108,6 +110,7 @@ class Map extends Component {
   }
 
   render() {
+    const { mode } = this.props.location.state;
     return (
       <div
         onTouchStart={(e) => {
@@ -118,6 +121,7 @@ class Map extends Component {
       >
         <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
         <MapWithAMarkerClusterer id="map" markers={this.props.beanMap.markers} showDirections />
+        { (mode === '全自動') ? <MapDialog /> : null }
       </div>
     );
   }
