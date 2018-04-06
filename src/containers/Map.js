@@ -73,6 +73,13 @@ const MapWithAMarkerClusterer = compose(
 
 
 class Map extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    };
+  }
+
   componentWillMount() {
     this.props.fetchMarkers();
   }
@@ -80,8 +87,14 @@ class Map extends Component {
   componentDidMount() {
     this.GetLocationAndEatBean();
     console.log(this.props.location.state);
-    window.addEventListener('focus', () => { console.log('window has focus'); }, false);
-    window.addEventListener('blur', () => { console.log('window lost focus'); }, false);
+    window.addEventListener('focus', () => {
+      console.log('window has focus');
+      this.setState({ open: true });
+    }, false);
+    window.addEventListener('blur', () => {
+      console.log('window lost focus');
+      this.setState({ open: false });
+    }, false);
   }
 
   componentWillUnmount() {
@@ -121,7 +134,7 @@ class Map extends Component {
       >
         <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
         <MapWithAMarkerClusterer id="map" markers={this.props.beanMap.markers} showDirections={mode === '半自動'} />
-        { mode === '全自動' && <MapDialog /> }
+        { mode === '全自動' && <MapDialog open={this.state.open} /> }
       </div>
     );
   }

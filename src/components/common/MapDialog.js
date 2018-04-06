@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Button from 'material-ui/Button';
 import Dialog, {
   DialogActions,
@@ -23,7 +23,7 @@ class MapDialog extends React.Component {
 
   render() {
     return (
-      <Dialog open={this.state.open}>
+      <Dialog open={this.state.open || this.props.open}>
         <DialogTitle>開始遊戲</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -39,5 +39,9 @@ class MapDialog extends React.Component {
     );
   }
 }
+
+MapDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+};
 
 export default withMobileDialog()(MapDialog);
