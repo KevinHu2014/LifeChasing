@@ -1,8 +1,10 @@
 import {
   FETCH_MARKERS,
+  INIT_POSITION,
   EAT_BEANS,
   SET_TIMER,
   TIME_OUT,
+  CAL_SPEED,
 } from '../actions/index';
 
 const initialState = {
@@ -10,6 +12,13 @@ const initialState = {
   alarm: new Date().getTime(),
   markers: [],
   ghost: false,
+  maxSpeed: 0,
+  avgSpeed: 0,
+  distance: 0,
+  latitude: 0,
+  longitude: 0,
+  startTime: new Date().getTime(),
+  lastUpdateTime: new Date().getTime(),
 };
 
 // State argument is not application state, only the state
@@ -20,6 +29,11 @@ const beanMap = (state = initialState, action) => {
     case FETCH_MARKERS:
       return Object.assign({}, state, {
         markers: action.payload.data.Dots,
+      });
+    case INIT_POSITION:
+      return Object.assign({}, state, {
+        latitude: action.latitude,
+        longitude: action.longitude,
       });
     case EAT_BEANS: {
       let Counter = 0;
@@ -59,6 +73,9 @@ const beanMap = (state = initialState, action) => {
           ghost: true,
         });
       }
+      return state;
+    }
+    case CAL_SPEED: {
       return state;
     }
     default:

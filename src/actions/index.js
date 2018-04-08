@@ -9,8 +9,10 @@ const url = [
 
 export const EAT_BEANS = 'EAT_BEANS';
 export const FETCH_MARKERS = 'FETCH_MARKERS';
+export const INIT_POSITION = 'INIT_POSITION';
 export const SET_TIMER = 'SET_TIMER';
 export const TIME_OUT = 'TIME_OUT';
+export const CAL_SPEED = 'CAL_SPEED';
 
 export function eatBeans(latitude, longitude) {
   // eatBeans is an ActionCreator, it needs to return an action,
@@ -30,6 +32,14 @@ export function fetchMarkers() {
   };
 }
 
+export function initPosition(latitude, longitude) {
+  return {
+    type: INIT_POSITION,
+    latitude,
+    longitude,
+  };
+}
+
 export function setTimer(minutes) {
   return {
     type: SET_TIMER,
@@ -41,5 +51,14 @@ export function timeOut(current) {
   return {
     type: TIME_OUT,
     payload: current,
+  };
+}
+
+export function calSpeed(latitude, longitude, current) {
+  return {
+    type: CAL_SPEED,
+    latitude,
+    longitude,
+    current,
   };
 }

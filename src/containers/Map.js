@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
-import { fetchMarkers, eatBeans, setTimer, timeOut } from '../actions/index';
+import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed } from '../actions/index';
 import MapDialog from '../components/common/MapDialog';
 
 /* global google */
@@ -82,6 +82,17 @@ class Map extends Component {
 
   componentWillMount() {
     this.props.fetchMarkers();
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        this.props.initPosition(lat, lon);
+      },
+      ((error) => { console.log(error.message); }),
+      {
+        enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10,
+      },
+    );
   }
 
   componentDidMount() {
@@ -121,6 +132,7 @@ class Map extends Component {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         this.props.eatBeans(lat, lon);
+        this.props.calSpeed(lat, lon, new Date().getTime());
         console.log('location changed!');
       },
       ((error) => { console.log(error.message); }),
@@ -150,9 +162,11 @@ class Map extends Component {
 
 Map.propTypes = {
   fetchMarkers: PropTypes.func.isRequired,
+  initPosition: PropTypes.func.isRequired,
   eatBeans: PropTypes.func.isRequired,
   setTimer: PropTypes.func.isRequired,
   timeOut: PropTypes.func.isRequired,
+  calSpeed: PropTypes.func.isRequired,
   beanMap: PropTypes.shape({
     score: PropTypes.number.isRequired,
     markers: PropTypes.arrayOf(PropTypes.shape({
@@ -179,9 +193,11 @@ function mapDispatchToProps(dispatch) {
   // pass to all our reducers
   return bindActionCreators({
     fetchMarkers,
+    initPosition,
     eatBeans,
     setTimer,
     timeOut,
+    calSpeed,
   }, dispatch);
 }
 
