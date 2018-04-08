@@ -111,7 +111,7 @@ class Map extends Component {
   SetAlarm(minutes) {
     this.props.setTimer(minutes);
     setTimeout(() => {
-      this.props.timeOut();
+      this.props.timeOut(new Date().getTime());
     }, 1000 * 60 * minutes);
   }
 

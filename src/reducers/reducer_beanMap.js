@@ -9,6 +9,7 @@ const initialState = {
   score: 0,
   alarm: new Date().getTime(),
   markers: [],
+  ghost: false,
 };
 
 // State argument is not application state, only the state
@@ -47,6 +48,17 @@ const beanMap = (state = initialState, action) => {
       });
     }
     case TIME_OUT: {
+      /*
+          action.payload is set after SET_TIMER
+          so action.payload might be larger
+          if the state.alarm, it means the alarm
+          time must have been update
+        */
+      if (action.payload >= state.alarm) {
+        return Object.assign({}, state, {
+          ghost: true,
+        });
+      }
       return state;
     }
     default:

@@ -37,9 +37,9 @@ export function setTimer(minutes) {
   };
 }
 
-export function timeOut() {
+export function timeOut(current) {
   return {
     type: TIME_OUT,
-    payload: null,
+    payload: current,
   };
 }
