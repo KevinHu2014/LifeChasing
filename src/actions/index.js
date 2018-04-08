@@ -9,6 +9,8 @@ const url = [
 
 export const EAT_BEANS = 'EAT_BEANS';
 export const FETCH_MARKERS = 'FETCH_MARKERS';
+export const SET_TIMER = 'SET_TIMER';
+export const TIME_OUT = 'TIME_OUT';
 
 export function eatBeans(latitude, longitude) {
   // eatBeans is an ActionCreator, it needs to return an action,
@@ -25,5 +27,19 @@ export function fetchMarkers() {
   return {
     type: FETCH_MARKERS,
     payload: request,
+  };
+}
+
+export function setTimer(minutes) {
+  return {
+    type: SET_TIMER,
+    payload: minutes,
+  };
+}
+
+export function timeOut() {
+  return {
+    type: TIME_OUT,
+    payload: null,
   };
 }

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
-import { fetchMarkers, eatBeans } from '../actions/index';
+import { fetchMarkers, eatBeans, setTimer, timeOut } from '../actions/index';
 import MapDialog from '../components/common/MapDialog';
 
 /* global google */
@@ -86,6 +86,7 @@ class Map extends Component {
 
   componentDidMount() {
     this.GetLocationAndEatBean();
+    this.SetAlarm(5); // input is minutes
     console.log(this.props.location.state);
     window.addEventListener('focus', () => {
       console.log('window has focus');
@@ -105,6 +106,13 @@ class Map extends Component {
     console.log(this.state);
     console.log(e.targetTouches[0].clientX);
     console.log(e.targetTouches[0].clientY);
+  }
+
+  SetAlarm(minutes) {
+    this.props.setTimer(minutes);
+    setTimeout(() => {
+      this.props.timeOut();
+    }, 1000 * 60 * minutes);
   }
 
   GetLocationAndEatBean() {
@@ -143,6 +151,8 @@ class Map extends Component {
 Map.propTypes = {
   fetchMarkers: PropTypes.func.isRequired,
   eatBeans: PropTypes.func.isRequired,
+  setTimer: PropTypes.func.isRequired,
+  timeOut: PropTypes.func.isRequired,
   beanMap: PropTypes.shape({
     score: PropTypes.number.isRequired,
     markers: PropTypes.arrayOf(PropTypes.shape({
@@ -167,7 +177,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   // Whenever eatBeans is called, the results should be
   // pass to all our reducers
-  return bindActionCreators({ fetchMarkers, eatBeans }, dispatch);
+  return bindActionCreators({
+    fetchMarkers,
+    eatBeans,
+    setTimer,
+    timeOut,
+  }, dispatch);
 }
 
 

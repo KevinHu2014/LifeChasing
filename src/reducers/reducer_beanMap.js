@@ -1,7 +1,13 @@
-import { FETCH_MARKERS, EAT_BEANS } from '../actions/index';
+import {
+  FETCH_MARKERS,
+  EAT_BEANS,
+  SET_TIMER,
+  TIME_OUT,
+} from '../actions/index';
 
 const initialState = {
   score: 0,
+  alarm: new Date().getTime(),
   markers: [],
 };
 
@@ -29,6 +35,19 @@ const beanMap = (state = initialState, action) => {
         }),
         score: (state.score + Counter),
       });
+    }
+    case SET_TIMER: {
+      const now = new Date().getTime();
+      /*
+        getTime return the number of milliseconds since midnight January 1, 1970
+        1 minute equal to 60 * 1000 milliseconds
+      */
+      return Object.assign({}, state, {
+        alarm: (now + (1000 * 60 * action.payload)),
+      });
+    }
+    case TIME_OUT: {
+      return state;
     }
     default:
       return state;
