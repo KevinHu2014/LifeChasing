@@ -79,7 +79,14 @@ const beanMap = (state = initialState, action) => {
       return state;
     }
     case CAL_SPEED: {
-      const dist = Distance(state.latitude, state.longitude, action.latitude, action.longitude, 'K');
+      /*
+       There's a bug that accurs sometimes when it the same loaction, the distance isn't zero.
+       It will return 0.00009493073054631141.
+       according to this site https://www.movable-type.co.uk/scripts/latlong.html?
+       rounding to 4 significant figures reflects the approx. 0.3% accuracy of the spherical model
+       */
+      let dist = Distance(state.latitude, state.longitude, action.latitude, action.longitude, 'K');
+      dist = Math.round(dist * 1000) / 1000;
       const time = (action.currentTime - state.lastUpdateTime) * 1000 * 60 * 60;
       const totalTime = (action.currentTime - state.startTime) * 1000 * 60 * 60;
       const speed = dist / time;
