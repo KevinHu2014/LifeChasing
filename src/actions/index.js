@@ -54,11 +54,11 @@ export function timeOut(current) {
   };
 }
 
-export function calSpeed(latitude, longitude, current) {
+export function calSpeed(latitude, longitude, currentTime) {
   return {
     type: CAL_SPEED,
     latitude,
     longitude,
-    current,
+    currentTime,
   };
 }

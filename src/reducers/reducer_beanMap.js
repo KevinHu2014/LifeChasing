@@ -6,6 +6,7 @@ import {
   TIME_OUT,
   CAL_SPEED,
 } from '../actions/index';
+import Distance from '../Distance';
 
 const initialState = {
   score: 0,
@@ -14,7 +15,7 @@ const initialState = {
   ghost: false,
   maxSpeed: 0,
   avgSpeed: 0,
-  distance: 0,
+  distance: 0, // Km
   latitude: 0,
   longitude: 0,
   startTime: new Date().getTime(),
@@ -76,7 +77,18 @@ const beanMap = (state = initialState, action) => {
       return state;
     }
     case CAL_SPEED: {
-      return state;
+      const dist = Distance(state.latitude, state.longitude, action.latitude, action.longitude, 'K');
+      const time = (action.currentTime - state.lastUpdateTime) * 1000 * 60 * 60;
+      const totalTime = (action.currentTime - state.startTime) * 1000 * 60 * 60;
+      const speed = dist / time;
+      return Object.assign({}, state, {
+        maxSpeed: Math.max(state.maxSpeed, speed),
+        avgSpeed: (state.distance + dist) / totalTime,
+        distance: (state.distance + dist),
+        latitude: action.latitude,
+        longitude: action.longitude,
+        lastUpdateTime: action.currentTime,
+      });
     }
     default:
       return state;
