@@ -13,6 +13,7 @@ const initialState = {
   alarm: new Date().getTime(),
   markers: [],
   ghost: false,
+  ghostCounter: 0,
   maxSpeed: 0,
   avgSpeed: 0,
   distance: 0, // Km
@@ -72,6 +73,7 @@ const beanMap = (state = initialState, action) => {
       if (action.payload >= state.alarm) {
         return Object.assign({}, state, {
           ghost: true,
+          ghostCounter: state.ghostCounter + 1,
         });
       }
       return state;
