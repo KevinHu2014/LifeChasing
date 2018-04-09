@@ -131,6 +131,7 @@ class Map extends Component {
       (position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
+        this.SetAlarm(5); // Reset time clock
         this.props.eatBeans(lat, lon);
         this.props.calSpeed(lat, lon, new Date().getTime());
         console.log('location changed!');
