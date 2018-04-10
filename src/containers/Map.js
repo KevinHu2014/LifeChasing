@@ -4,7 +4,12 @@ import { bindActionCreators } from 'redux';
 import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
-import { DialogContentText } from 'material-ui/Dialog';
+import { DialogContent, DialogContentText } from 'material-ui/Dialog';
+import List, { ListItem, ListItemAvatar, ListItemText } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import PillIcon from 'mdi-material-ui/Pill';
+import GhostIcon from 'mdi-material-ui/Ghost';
+import SpeedIcon from 'mdi-material-ui/Speedometer';
 
 import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed } from '../actions/index';
 import MapDialog from '../components/common/MapDialog';
@@ -79,6 +84,7 @@ class Map extends Component {
     super(props);
     this.state = {
       gameStartDialog: true,
+      gamePauseDialog: false,
     };
   }
 
@@ -103,11 +109,12 @@ class Map extends Component {
     console.log(this.props.location.state);
     window.addEventListener('focus', () => {
       console.log('window has focus');
-      this.setState({ open: true });
+      if (!(this.state.gameStartDialog)) {
+        this.setState({ gamePauseDialog: true });
+      }
     }, false);
     window.addEventListener('blur', () => {
       console.log('window lost focus');
-      this.setState({ open: false });
     }, false);
   }
 
@@ -159,14 +166,53 @@ class Map extends Component {
         <MapWithAMarkerClusterer id="map" markers={this.props.beanMap.markers} showDirections={mode === '半自動'} />
         <MapDialog
           id="start"
-          title="開始遊戲"
+          title="遊戲開始"
+          buttonText="ok"
           open={this.state.gameStartDialog}
           onClose={() => { this.setState({ gameStartDialog: false }); }}
         >
-          <DialogContentText>
-            {(mode === '全自動') ? '遊戲即將開始，點擊OK鍵後請鎖定手機'
-                                : '遊戲即將開始，點擊OK鍵後即開始遊戲'}
-          </DialogContentText>
+          <DialogContent>
+            <DialogContentText>
+              {(mode === '全自動') ? '遊戲即將開始，點擊OK鍵後請鎖定手機'
+                                  : '遊戲即將開始，點擊OK鍵後即開始遊戲'}
+            </DialogContentText>
+          </DialogContent>
+        </MapDialog>
+        <MapDialog
+          id="pause"
+          title="遊戲暫停"
+          buttonText="continue"
+          open={this.state.gamePauseDialog}
+          onClose={() => { this.setState({ gamePauseDialog: false }); }}
+        >
+          <div>
+            <List>
+              <ListItem key="bean">
+                <ListItemAvatar>
+                  <Avatar>
+                    <PillIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText style={{ paddingLeft: 100 }} primary="pill" />
+              </ListItem>
+              <ListItem key="ghost">
+                <ListItemAvatar>
+                  <Avatar>
+                    <GhostIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText style={{ paddingLeft: 100 }} primary="ghost" />
+              </ListItem>
+              <ListItem key="speed">
+                <ListItemAvatar>
+                  <Avatar>
+                    <SpeedIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText style={{ paddingLeft: 100 }} primary="speed" />
+              </ListItem>
+            </List>
+          </div>
         </MapDialog>
       </div>
     );

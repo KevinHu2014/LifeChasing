@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import Button from 'material-ui/Button';
 import Dialog, {
   DialogActions,
-  DialogContent,
   DialogTitle,
   withMobileDialog,
 } from 'material-ui/Dialog';
@@ -11,12 +10,10 @@ import Dialog, {
 const MapDialog = props => (
   <Dialog open={props.open}>
     <DialogTitle>{props.title}</DialogTitle>
-    <DialogContent>
-      {props.children}
-    </DialogContent>
+    {props.children}
     <DialogActions>
       <Button onClick={() => { props.onClose(); }} color="primary" autoFocus>
-        Ok
+        {props.buttonText}
       </Button>
     </DialogActions>
   </Dialog>
@@ -24,6 +21,7 @@ const MapDialog = props => (
 
 MapDialog.propTypes = {
   title: PropTypes.string.isRequired,
+  buttonText: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
