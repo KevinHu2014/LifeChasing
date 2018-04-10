@@ -3,45 +3,30 @@ import Button from 'material-ui/Button';
 import Dialog, {
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   withMobileDialog,
 } from 'material-ui/Dialog';
 
 
-// eslint-disable-next-line prefer-stateless-function
-class MapDialog extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: true,
-    };
-  }
-  handleClose() {
-    this.setState({ open: false });
-  }
-
-  render() {
-    return (
-      <Dialog open={this.state.open || this.props.open}>
-        <DialogTitle>開始遊戲</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-              遊戲即將開始，點擊OK鍵後請鎖定手機
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => { this.handleClose(); }} color="primary" autoFocus>
-              Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  }
-}
+const MapDialog = props => (
+  <Dialog open={props.open}>
+    <DialogTitle>{props.title}</DialogTitle>
+    <DialogContent>
+      {props.children}
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={() => { props.onClose(); }} color="primary" autoFocus>
+        Ok
+      </Button>
+    </DialogActions>
+  </Dialog>
+);
 
 MapDialog.propTypes = {
+  title: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default withMobileDialog()(MapDialog);

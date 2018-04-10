@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
+import { DialogContentText } from 'material-ui/Dialog';
+
 import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed } from '../actions/index';
 import MapDialog from '../components/common/MapDialog';
 
@@ -76,7 +78,7 @@ class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      gameStartDialog: true,
     };
   }
 
@@ -155,7 +157,17 @@ class Map extends Component {
       >
         <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
         <MapWithAMarkerClusterer id="map" markers={this.props.beanMap.markers} showDirections={mode === '半自動'} />
-        { mode === '全自動' && <MapDialog open={this.state.open} /> }
+        <MapDialog
+          id="start"
+          title="開始遊戲"
+          open={this.state.gameStartDialog}
+          onClose={() => { this.setState({ gameStartDialog: false }); }}
+        >
+          <DialogContentText>
+            {(mode === '全自動') ? '遊戲即將開始，點擊OK鍵後請鎖定手機'
+                                : '遊戲即將開始，點擊OK鍵後即開始遊戲'}
+          </DialogContentText>
+        </MapDialog>
       </div>
     );
   }
