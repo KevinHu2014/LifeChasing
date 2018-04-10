@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import ThreeButtonSelection from './common/ThreeButtonSelectionPage';
+import { ThreeButtonSelection } from './common/';
 
 
 const SelectEnd = props => (

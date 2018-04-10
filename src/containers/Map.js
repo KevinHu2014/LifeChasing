@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
-import { DialogContent, DialogContentText } from 'material-ui/Dialog';
 import List, { ListItem, ListItemAvatar, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import PillIcon from 'mdi-material-ui/Pill';
@@ -12,7 +11,7 @@ import GhostIcon from 'mdi-material-ui/Ghost';
 import SpeedIcon from 'mdi-material-ui/Speedometer';
 
 import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed } from '../actions/index';
-import MapDialog from '../components/common/MapDialog';
+import { MapDialog, GameStartDialog } from '../components/common';
 
 /* global google */
 const MapWithAMarkerClusterer = compose(
@@ -171,12 +170,7 @@ class Map extends Component {
           open={this.state.gameStartDialog}
           onClose={() => { this.setState({ gameStartDialog: false }); }}
         >
-          <DialogContent>
-            <DialogContentText>
-              {(mode === '全自動') ? '遊戲即將開始，點擊OK鍵後請鎖定手機'
-                                  : '遊戲即將開始，點擊OK鍵後即開始遊戲'}
-            </DialogContentText>
-          </DialogContent>
+          <GameStartDialog mode={mode} />
         </MapDialog>
         <MapDialog
           id="pause"
