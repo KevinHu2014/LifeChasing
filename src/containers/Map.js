@@ -4,14 +4,9 @@ import { bindActionCreators } from 'redux';
 import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
-import List, { ListItem, ListItemAvatar, ListItemText } from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
-import PillIcon from 'mdi-material-ui/Pill';
-import GhostIcon from 'mdi-material-ui/Ghost';
-import SpeedIcon from 'mdi-material-ui/Speedometer';
 
 import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed } from '../actions/index';
-import { MapDialog, GameStartDialog } from '../components/common';
+import { MapDialog, GameStartDialog, GamePauseDialog } from '../components/common';
 
 /* global google */
 const MapWithAMarkerClusterer = compose(
@@ -179,34 +174,7 @@ class Map extends Component {
           open={this.state.gamePauseDialog}
           onClose={() => { this.setState({ gamePauseDialog: false }); }}
         >
-          <div>
-            <List>
-              <ListItem key="bean">
-                <ListItemAvatar>
-                  <Avatar>
-                    <PillIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText style={{ paddingLeft: 100 }} primary="pill" />
-              </ListItem>
-              <ListItem key="ghost">
-                <ListItemAvatar>
-                  <Avatar>
-                    <GhostIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText style={{ paddingLeft: 100 }} primary="ghost" />
-              </ListItem>
-              <ListItem key="speed">
-                <ListItemAvatar>
-                  <Avatar>
-                    <SpeedIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText style={{ paddingLeft: 100 }} primary="speed" />
-              </ListItem>
-            </List>
-          </div>
+          <GamePauseDialog pill={5} ghost={1} speed={5} />
         </MapDialog>
       </div>
     );
