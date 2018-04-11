@@ -6,7 +6,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } fr
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 
 import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed } from '../actions/index';
-import { MapDialog, GameStartDialog, GamePauseDialog } from '../components/common';
+import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../components/common';
 
 /* global google */
 const MapWithAMarkerClusterer = compose(
@@ -79,6 +79,7 @@ class Map extends Component {
     this.state = {
       gameStartDialog: true,
       gamePauseDialog: false,
+      gameEndDialog: false,
     };
   }
 
@@ -175,6 +176,15 @@ class Map extends Component {
           onClose={() => { this.setState({ gamePauseDialog: false }); }}
         >
           <GamePauseDialog pill={5} ghost={1} speed={5} />
+        </MapDialog>
+        <MapDialog
+          id="end"
+          title="遊戲結束"
+          buttonText="ok"
+          open={this.state.gameEndDialog}
+          onClose={() => { this.setState({ gameEndDialog: false }); }}
+        >
+          <GameEndDialog pill={5} exercise={30} game={50} />
         </MapDialog>
       </div>
     );
