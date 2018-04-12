@@ -41,6 +41,7 @@
     "react-dom": "^15.6.1",
     "react-google-maps": "^9.4.3",
     "react-redux": "^5.0.7",
+    "react-redux-firebase": "^2.0.6",
     "react-router": "^4.0.0",
     "react-router-dom": "^4.0.0",
     "react-tap-event-plugin": "^3.0.2",
