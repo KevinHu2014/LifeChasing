@@ -1,11 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import ReduxPromise from 'redux-promise';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import { reactReduxFirebase } from 'react-redux-firebase';
+import firebase from 'firebase';
 import { createLogger } from 'redux-logger';
+
 import './index.css';
 import MainMap from './containers/Map';
 import { GameRecord } from './components/common/';
@@ -13,11 +15,24 @@ import SelectStart from './components/SelectStart';
 import SelectEnd from './components/SelectEnd';
 import SelectMode from './components/SelectMode';
 import reducers from './reducers';
+import firebaseConfig from './firebaseConfig';
+
+// react-redux-firebase options
+const config = {
+  userProfile: 'users', // firebase root where user profiles are stored
+  enableLogging: true, // enable/disable Firebase's database logging
+};
+
+// initialize firebase instance
+firebase.initializeApp(firebaseConfig);
 
 const logger = createLogger();
 const store = createStore(
   reducers,
-  applyMiddleware(ReduxPromise, logger),
+  compose(
+    reactReduxFirebase(firebase, config),
+    applyMiddleware(ReduxPromise, logger),
+  ),
 );
 
 const theme = createMuiTheme({
