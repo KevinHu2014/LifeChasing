@@ -6,31 +6,17 @@ import Hidden from 'material-ui/Hidden';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
+import { LeftPanel } from '../components/common';
 import './SignUp.css';
 // eslint-disable-next-line react/prefer-stateless-function
 class SignUp extends Component {
   render() {
     return (
-      <div className="Box">
+      <div className="SignUp-Box">
         <Hidden smDown>
-          <Paper className="Background">
-            <div style={{ margin: 20 }}>
-              <Typography variant="display1" style={{ color: '#fff' }}>
-                Life Chasing
-              </Typography>
-              <Typography style={{ color: '#fff' }}>
-                  Culpa aliqua non minim minim enim in ea ex ex veniam qui fugiat.
-                  Consequat officia tempor consectetur nulla do elit laboris. Irure
-                  ullamco irure esse excepteur irure reprehenderit aute ex. Lorem
-                  deserunt Lorem minim ullamco pariatur pariatur eiusmod occaecat do.
-                  Amet velit cillum culpa commodo sint. Veniam quis labore ea ut consectetur
-                  voluptate fugiat sint id officia incididunt. Ullamco laboris et nisi voluptate
-                  ex reprehenderit culpa aliquip ut cupidatat.
-              </Typography>
-            </div>
-          </Paper>
+          <LeftPanel />
         </Hidden>
-        <Paper className="Form">
+        <Paper className="SignUp-Form">
           <Typography variant="display1">
               Sign Up
           </Typography>
