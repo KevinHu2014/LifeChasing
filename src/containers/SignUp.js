@@ -20,7 +20,7 @@ class SignUp extends Component {
   }
   render() {
     return (
-      <div className="Container">
+      <div className="Box">
         <Hidden smDown>
           <Paper className="Background">
             <Typography variant="display1" style={{ color: '#fff' }}>
