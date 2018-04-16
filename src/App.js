@@ -36,27 +36,44 @@ const store = createStore(
   ),
 );
 
-const theme = createMuiTheme({
+const theme1 = createMuiTheme({
   palette: {
     primary: {
-      light: '#80e27e',
-      main: '#4caf50',
-      dark: '#087f23',
-      contrastText: '#000',
+      light: '#ff71ca',
+      main: '#ff3399',
+      dark: '#c7006b',
+      contrastText: '#ffffff',
     },
     secondary: {
-      light: '#63a4ff',
-      main: '#1976d2',
-      dark: '#004ba0',
-      contrastText: '#fff',
+      light: '#7cff98',
+      main: '#33ff66',
+      dark: '#00ca34',
+      contrastText: '#000000',
     },
   },
 });
 
+// const theme2 = createMuiTheme({
+//   palette: {
+//     primary: {
+//       light: '#ffff6e',
+//       main: '#ffff33',
+//       dark: '#c8cc00',
+//       contrastText: '#000000',
+//     },
+//     secondary: {
+//       light: '#7e61ff',
+//       main: '#3333ff',
+//       dark: '#0000ca',
+//       contrastText: '#ffffff',
+//     },
+//   },
+// });
+
 
 const App = () => (
   <Provider store={store}>
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={theme1}>
       <BrowserRouter>
         <div>
           <Switch>
