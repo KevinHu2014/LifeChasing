@@ -3,56 +3,76 @@ import { firebaseConnect } from 'react-redux-firebase';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Hidden from 'material-ui/Hidden';
-import IconButton from 'material-ui/IconButton';
-import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
-import { FormControl } from 'material-ui/Form';
-
-import Visibility from 'mdi-material-ui/Eye';
-import VisibilityOff from 'mdi-material-ui/EyeOff';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
 
 import './SignUp.css';
-
 // eslint-disable-next-line react/prefer-stateless-function
 class SignUp extends Component {
-  constructor() {
-    super();
-    this.state = { showPassword: false };
-  }
   render() {
     return (
       <div className="Box">
         <Hidden smDown>
           <Paper className="Background">
-            <Typography variant="display1" style={{ color: '#fff' }}>
-                Semi automation
-            </Typography>
+            <div style={{ margin: 20 }}>
+              <Typography variant="display1" style={{ color: '#fff' }}>
+                Life Chasing
+              </Typography>
+              <Typography style={{ color: '#fff' }}>
+                  Culpa aliqua non minim minim enim in ea ex ex veniam qui fugiat.
+                  Consequat officia tempor consectetur nulla do elit laboris. Irure
+                  ullamco irure esse excepteur irure reprehenderit aute ex. Lorem
+                  deserunt Lorem minim ullamco pariatur pariatur eiusmod occaecat do.
+                  Amet velit cillum culpa commodo sint. Veniam quis labore ea ut consectetur
+                  voluptate fugiat sint id officia incididunt. Ullamco laboris et nisi voluptate
+                  ex reprehenderit culpa aliquip ut cupidatat.
+              </Typography>
+            </div>
           </Paper>
         </Hidden>
         <Paper className="Form">
-          <FormControl>
-            <InputLabel htmlFor="adornment-password">Password</InputLabel>
-            <Input
-              id="adornment-password"
-              type={this.state.showPassword ? 'text' : 'password'}
-              value={this.state.password}
-              onChange={(event) => {
-                this.setState({ password: event.target.value });
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="Toggle password visibility"
-                    onClick={() => {
-                      this.setState({ showPassword: !this.state.showPassword });
-                    }}
-                    onMouseDown={(event) => { event.preventDefault(); }}
-                  >
-                    {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
+          <Typography variant="display1">
+              Sign Up
+          </Typography>
+          <TextField
+            id="username-input"
+            label="User name"
+            className="TextField"
+            placeholder="User name"
+            margin="normal"
+          />
+          <TextField
+            id="email-input"
+            label="Email"
+            className="TextField"
+            placeholder="Email"
+            margin="normal"
+          />
+          <TextField
+            id="password-input"
+            label="Password"
+            className="TextField"
+            type="password"
+            autoComplete="current-password"
+            margin="normal"
+          />
+          <Button
+            variant="raised"
+            size="large"
+            color="primary"
+            style={{ margin: 15 }}
+            onClick={() => { console.log('clicked!'); }}
+          >
+            SIGNUP
+          </Button>
+          <Button
+            variant="flat"
+            size="medium"
+            color="default"
+            onClick={() => { console.log('clicked!'); }}
+          >
+            or Signin
+          </Button>
         </Paper>
       </div>
     );
