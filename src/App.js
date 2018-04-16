@@ -15,6 +15,7 @@ import SelectStart from './components/SelectStart';
 import SelectEnd from './components/SelectEnd';
 import SelectMode from './components/SelectMode';
 import SignUp from './containers/SignUp';
+import StartPage from './containers/StartPage';
 import reducers from './reducers';
 import firebaseConfig from './firebaseConfig';
 
@@ -77,6 +78,7 @@ const App = () => (
       <BrowserRouter>
         <div>
           <Switch>
+            <Route path="/StartPage" component={StartPage} />
             <Route path="/SignUp" component={SignUp} />
             <Route path="/SelectStart" component={SelectStart} />
             <Route path="/SelectEnd" component={SelectEnd} />

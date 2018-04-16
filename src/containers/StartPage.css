@@ -1,0 +1,19 @@
+.StartPage-Box {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.StartPage-Content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #efefef;
+}
+
+.StartPage-Image {
+  width: 300px;
+  height: auto;
+}
