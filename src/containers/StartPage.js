@@ -48,7 +48,6 @@ class StartPage extends Component {
           <Button
             variant="raised"
             size="large"
-            color="primary"
             classes={{
               root: this.props.classes.signIn,
               label: this.props.classes.label,
