@@ -9,12 +9,13 @@ import logo from '../images/logo.png';
 import { LeftPanel } from '../components/common';
 import './StartPage.css';
 
-const styles = {
+
+const styles = theme => ({
   signIn: {
-    background: '#ff71ca',
+    background: theme.palette.primary.light,
     borderRadius: 50,
     border: 0,
-    color: 'white',
+    color: theme.palette.primary.contrastText,
     height: 48,
     width: 200,
     padding: '0 30px',
@@ -25,7 +26,7 @@ const styles = {
   label: {
     textTransform: 'capitalize',
   },
-};
+});
 
 // eslint-disable-next-line react/prefer-stateless-function
 class StartPage extends Component {
@@ -80,4 +81,4 @@ StartPage.propTypes = {
   classes: PropTypes.shape.isRequired,
 };
 
-export default withStyles(styles)(firebaseConnect()(StartPage));
+export default withStyles(styles, { withTheme: true })(firebaseConnect()(StartPage));
