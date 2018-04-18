@@ -48,6 +48,7 @@ class SignUp extends Component {
             className="TextField"
             placeholder="User name"
             margin="normal"
+            onChange={(event) => { console.log(event.target.value); }}
           />
           <TextField
             id="email-input"
