@@ -56,17 +56,17 @@ const theme1 = createMuiTheme({
 
 // const theme2 = createMuiTheme({
 //   palette: {
+//     light: '#7e61ff',
+//     main: '#3333ff',
+//     dark: '#0000ca',
+//     contrastText: '#ffffff',
+//   },
+//   secondary: {
 //     primary: {
 //       light: '#ffff6e',
 //       main: '#ffff33',
 //       dark: '#c8cc00',
 //       contrastText: '#000000',
-//     },
-//     secondary: {
-//       light: '#7e61ff',
-//       main: '#3333ff',
-//       dark: '#0000ca',
-//       contrastText: '#ffffff',
 //     },
 //   },
 // });
