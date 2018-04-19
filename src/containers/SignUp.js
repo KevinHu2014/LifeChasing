@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import firebase from 'firebase';
 import { firebaseConnect } from 'react-redux-firebase';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
@@ -7,6 +10,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 
+import { usernameChanged, emailChanged, passwordChanged } from '../actions';
 import { LeftPanel } from '../components/common';
 import './SignUp.css';
 
@@ -32,6 +36,14 @@ const styles = theme => ({
 
 // eslint-disable-next-line react/prefer-stateless-function
 class SignUp extends Component {
+  static createNewUser({ username, email, password }) {
+    firebase.createUser(
+      { email, password },
+      { username, email },
+    )
+      .then(() => { console.log('success!'); })
+      .catch((err) => { console.log(err); });
+  }
   render() {
     return (
       <div className="SignUp-Box">
@@ -48,7 +60,9 @@ class SignUp extends Component {
             className="TextField"
             placeholder="User name"
             margin="normal"
-            onChange={(event) => { console.log(event.target.value); }}
+            onChange={(event) => {
+              this.props.usernameChanged(event.target.value);
+            }}
           />
           <TextField
             id="email-input"
@@ -56,6 +70,9 @@ class SignUp extends Component {
             className="TextField"
             placeholder="Email"
             margin="normal"
+            onChange={(event) => {
+              this.props.emailChanged(event.target.value);
+            }}
           />
           <TextField
             id="password-input"
@@ -64,6 +81,9 @@ class SignUp extends Component {
             type="password"
             autoComplete="current-password"
             margin="normal"
+            onChange={(event) => {
+              this.props.passwordChanged(event.target.value);
+            }}
           />
           <Button
             variant="raised"
@@ -73,7 +93,11 @@ class SignUp extends Component {
               root: this.props.classes.signUp,
               label: this.props.classes.label,
             }}
-            onClick={() => { console.log('clicked!'); }}
+            onClick={() => {
+              const { username, email, password } = this.props.auth;
+              console.log(this.props.auth);
+              SignUp.createNewUser({ username, email, password });
+            }}
           >
             SIGNUP
           </Button>
@@ -97,6 +121,25 @@ class SignUp extends Component {
 
 SignUp.propTypes = {
   classes: PropTypes.shape.isRequired,
+  auth: PropTypes.shape.isRequired,
+  usernameChanged: PropTypes.func.isRequired,
+  emailChanged: PropTypes.func.isRequired,
+  passwordChanged: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(firebaseConnect()(SignUp));
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    usernameChanged,
+    emailChanged,
+    passwordChanged,
+  }, dispatch);
+}
+
+const signUp = connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default withStyles(styles, { withTheme: true })(firebaseConnect()(signUp));
