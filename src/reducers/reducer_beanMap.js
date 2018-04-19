@@ -5,7 +5,7 @@ import {
   SET_TIMER,
   TIME_OUT,
   CAL_SPEED,
-} from '../actions/index';
+} from '../actions/type';
 import Distance from '../Distance';
 
 const initialState = {
