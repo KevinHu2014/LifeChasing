@@ -10,3 +10,4 @@ export const CAL_SPEED = 'CAL_SPEED';
 export const EMAIL_CHANGED = 'EMAIL_CHANGED';
 export const PASSWORD_CHANGED = 'PASSWORD_CHANGED';
 export const USERNAME_CHANGED = 'USERNAME_CHANGED';
+export const DIALOG_TYPE = 'DIALOG_TYPE';

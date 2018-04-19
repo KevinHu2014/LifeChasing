@@ -2,6 +2,7 @@ import {
   USERNAME_CHANGED,
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
+  DIALOG_TYPE,
 } from '../actions/type';
 
 const INITAL_STATE = {
@@ -9,6 +10,8 @@ const INITAL_STATE = {
   username: '',
   password: '',
   showDialog: false,
+  errorTitle: null,
+  errorMessage: null,
 };
 
 const auth = (state = INITAL_STATE, action) => {
@@ -19,6 +22,13 @@ const auth = (state = INITAL_STATE, action) => {
       return { ...state, email: action.payload };
     case PASSWORD_CHANGED:
       return { ...state, password: action.payload };
+    case DIALOG_TYPE:
+      return {
+        ...state,
+        showDialog: action.payload.type,
+        errorTitle: action.payload.errorTitle,
+        errorMessage: action.payload.errorMessage,
+      };
     default:
       return state;
   }

@@ -1,16 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import firebase from 'firebase';
 import { firebaseConnect } from 'react-redux-firebase';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Hidden from 'material-ui/Hidden';
 import TextField from 'material-ui/TextField';
+import Dialog, {
+  DialogActions,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+} from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 
-import { usernameChanged, emailChanged, passwordChanged } from '../actions';
+import {
+  usernameChanged,
+  emailChanged,
+  passwordChanged,
+  dialogType,
+} from '../actions';
 import { LeftPanel } from '../components/common';
 import './SignUp.css';
 
@@ -36,13 +47,24 @@ const styles = theme => ({
 
 // eslint-disable-next-line react/prefer-stateless-function
 class SignUp extends Component {
-  static createNewUser({ username, email, password }) {
-    firebase.createUser(
-      { email, password },
-      { username, email },
-    )
-      .then(() => { console.log('success!'); })
-      .catch((err) => { console.log(err); });
+  createNewUser({ username, email, password }) {
+    if (username.length === 0) {
+      this.props.dialogType(true, 'Username-required', 'Please set an username.');
+    } else if (email.length === 0) {
+      this.props.dialogType(true, 'Email-required', 'Please enter your email.');
+    } else if (password.length === 0) {
+      this.props.dialogType(true, 'Password-required', 'Please set your awesome passwords.');
+    } else {
+      firebase.createUser(
+        { email, password },
+        { username, email },
+      )
+        .then((m) => { console.log(m); })
+        .catch((err) => {
+          console.log(err.code);
+          this.props.dialogType(true, err.code.substring(5, err.code.length), err.message);
+        });
+    }
   }
   render() {
     return (
@@ -95,8 +117,7 @@ class SignUp extends Component {
             }}
             onClick={() => {
               const { username, email, password } = this.props.auth;
-              console.log(this.props.auth);
-              SignUp.createNewUser({ username, email, password });
+              this.createNewUser({ username, email, password });
             }}
           >
             SIGNUP
@@ -114,6 +135,19 @@ class SignUp extends Component {
             or Signin
           </Button>
         </Paper>
+        <Dialog open={this.props.auth.showDialog}>
+          <DialogTitle>{this.props.auth.errorTitle}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              {this.props.auth.errorMessage}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => { this.props.dialogType(false, '', ''); }} color="primary" autoFocus>
+              close
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
@@ -125,6 +159,7 @@ SignUp.propTypes = {
   usernameChanged: PropTypes.func.isRequired,
   emailChanged: PropTypes.func.isRequired,
   passwordChanged: PropTypes.func.isRequired,
+  dialogType: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -138,8 +173,15 @@ function mapDispatchToProps(dispatch) {
     usernameChanged,
     emailChanged,
     passwordChanged,
+    dialogType,
   }, dispatch);
 }
 
-const signUp = connect(mapStateToProps, mapDispatchToProps)(SignUp);
-export default withStyles(styles, { withTheme: true })(firebaseConnect()(signUp));
+
+const signUp = compose(
+  firebaseConnect(),
+  connect(mapStateToProps, mapDispatchToProps),
+)(SignUp);
+
+// withMobileDialog 不確定是不是真的是這樣寫，還要在查
+export default withStyles(styles, { withTheme: true }, { withMobileDialog: true })(signUp);
