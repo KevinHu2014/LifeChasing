@@ -21,6 +21,7 @@ import {
   emailChanged,
   passwordChanged,
   dialogType,
+  signUpSuccess,
 } from '../actions';
 import { LeftPanel } from '../components/common';
 import './SignUp.css';
@@ -59,7 +60,10 @@ class SignUp extends Component {
         { email, password },
         { username, email },
       )
-        .then((m) => { console.log(m); })
+        .then((m) => {
+          console.log(m.username);
+          this.props.signUpSuccess();
+        })
         .catch((err) => {
           console.log(err.code);
           this.props.dialogType(true, err.code.substring(5, err.code.length), err.message);
@@ -82,6 +86,7 @@ class SignUp extends Component {
             className="TextField"
             placeholder="User name"
             margin="normal"
+            value={this.props.auth.username}
             onChange={(event) => {
               this.props.usernameChanged(event.target.value);
             }}
@@ -92,6 +97,7 @@ class SignUp extends Component {
             className="TextField"
             placeholder="Email"
             margin="normal"
+            value={this.props.auth.email}
             onChange={(event) => {
               this.props.emailChanged(event.target.value);
             }}
@@ -103,6 +109,7 @@ class SignUp extends Component {
             type="password"
             autoComplete="current-password"
             margin="normal"
+            value={this.props.auth.password}
             onChange={(event) => {
               this.props.passwordChanged(event.target.value);
             }}
@@ -159,6 +166,7 @@ SignUp.propTypes = {
   usernameChanged: PropTypes.func.isRequired,
   emailChanged: PropTypes.func.isRequired,
   passwordChanged: PropTypes.func.isRequired,
+  signUpSuccess: PropTypes.func.isRequired,
   dialogType: PropTypes.func.isRequired,
 };
 
@@ -174,6 +182,7 @@ function mapDispatchToProps(dispatch) {
     emailChanged,
     passwordChanged,
     dialogType,
+    signUpSuccess,
   }, dispatch);
 }
 

@@ -3,6 +3,7 @@ import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
   DIALOG_TYPE,
+  SIGN_UP_SUCCESS,
 } from '../actions/type';
 
 const INITAL_STATE = {
@@ -28,6 +29,11 @@ const auth = (state = INITAL_STATE, action) => {
         showDialog: action.payload.type,
         errorTitle: action.payload.errorTitle,
         errorMessage: action.payload.errorMessage,
+      };
+    case SIGN_UP_SUCCESS:
+      return {
+        ...state,
+        ...INITAL_STATE,
       };
     default:
       return state;
