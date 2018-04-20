@@ -161,8 +161,19 @@ class SignUp extends Component {
 }
 
 SignUp.propTypes = {
-  classes: PropTypes.shape.isRequired,
-  auth: PropTypes.shape.isRequired,
+  classes: PropTypes.shape({
+    signUp: PropTypes.string.isRequired,
+    signIn: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  }).isRequired,
+  auth: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    showDialog: PropTypes.bool.isRequired,
+    errorTitle: PropTypes.string.isRequired,
+    errorMessage: PropTypes.string.isRequired,
+  }).isRequired,
   usernameChanged: PropTypes.func.isRequired,
   emailChanged: PropTypes.func.isRequired,
   passwordChanged: PropTypes.func.isRequired,

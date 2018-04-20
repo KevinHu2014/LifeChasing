@@ -11,8 +11,8 @@ const INITAL_STATE = {
   username: '',
   password: '',
   showDialog: false,
-  errorTitle: null,
-  errorMessage: null,
+  errorTitle: '',
+  errorMessage: '',
 };
 
 const auth = (state = INITAL_STATE, action) => {

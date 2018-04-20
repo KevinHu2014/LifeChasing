@@ -77,7 +77,7 @@ class StartPage extends Component {
 }
 
 StartPage.propTypes = {
-  classes: PropTypes.shape.isRequired,
+  classes: PropTypes.shape().isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(firebaseConnect()(StartPage));
