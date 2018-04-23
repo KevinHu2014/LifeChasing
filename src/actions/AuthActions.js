@@ -4,6 +4,7 @@ import {
   PASSWORD_CHANGED,
   DIALOG_TYPE,
   SIGN_UP_SUCCESS,
+  SIGN_IN_SUCCESS,
 } from './type';
 
 export const usernameChanged = text => ({
@@ -28,5 +29,10 @@ export const dialogType = (type, errorTitle, errorMessage) => ({
 
 export const signUpSuccess = () => ({
   type: SIGN_UP_SUCCESS,
+  payload: null,
+});
+
+export const signInSuccess = () => ({
+  type: SIGN_IN_SUCCESS,
   payload: null,
 });
