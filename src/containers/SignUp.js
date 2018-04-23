@@ -44,6 +44,9 @@ const styles = theme => ({
   label: {
     textTransform: 'capitalize',
   },
+  textField: {
+    width: 250,
+  },
 });
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -83,7 +86,7 @@ class SignUp extends Component {
           <TextField
             id="username-input"
             label="User name"
-            className="TextField"
+            classes={{ root: this.props.classes.textField }}
             placeholder="User name"
             margin="normal"
             value={this.props.auth.username}
@@ -94,7 +97,7 @@ class SignUp extends Component {
           <TextField
             id="email-input"
             label="Email"
-            className="TextField"
+            classes={{ root: this.props.classes.textField }}
             placeholder="Email"
             margin="normal"
             value={this.props.auth.email}
@@ -105,7 +108,7 @@ class SignUp extends Component {
           <TextField
             id="password-input"
             label="Password"
-            className="TextField"
+            classes={{ root: this.props.classes.textField }}
             type="password"
             autoComplete="current-password"
             margin="normal"
@@ -165,6 +168,7 @@ SignUp.propTypes = {
     signUp: PropTypes.string.isRequired,
     signIn: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
+    textField: PropTypes.string.isRequired,
   }).isRequired,
   auth: PropTypes.shape({
     username: PropTypes.string.isRequired,
