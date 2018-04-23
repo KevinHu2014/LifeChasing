@@ -53,7 +53,7 @@ const styles = theme => ({
 });
 
 class SignIn extends Component {
-  createNewUser(email, password) {
+  signInUser(email, password) {
     if (email.length === 0) {
       this.props.dialogType(true, 'Email-required', 'Please enter your email.');
     } else if (password.length === 0) {
@@ -125,7 +125,7 @@ class SignIn extends Component {
             }}
             onClick={() => {
               const { email, password } = this.props.auth;
-              this.createNewUser(email, password);
+              this.signInUser(email, password);
             }}
           >
             SIGN IN
