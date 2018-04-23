@@ -73,6 +73,21 @@ class SignIn extends Component {
         });
     }
   }
+  sendResetEmail(email) {
+    if (email.length === 0) {
+      this.props.dialogType(true, 'Email-required', 'Please enter your email.');
+    } else {
+      this.props.firebase.auth()
+        .sendPasswordResetEmail(email)
+        .then(() => {
+          console.log('email sent successfully');
+          this.props.dialogType(true, 'Email sent successfully', 'Please check your email.');
+        })
+        .catch((err) => {
+          this.props.dialogType(true, err.code.substring(5, err.code.length), err.message);
+        });
+    }
+  }
   render() {
     return (
       <div className="SignUp-Box">
@@ -112,7 +127,7 @@ class SignIn extends Component {
               root: this.props.classes.forgot,
               label: this.props.classes.label,
             }}
-            onClick={() => { console.log('clicked!'); }}
+            onClick={() => { this.sendResetEmail(this.props.auth.email); }}
           >
             Forgot your password?
           </Button>
