@@ -42,7 +42,13 @@ class StartPage extends Component {
   signInAnonymously() {
     this.props.firebase.auth()
       .signInAnonymously()
-      .then((m) => { console.log(m.uid); })
+      .then((m) => {
+        console.log(m.uid);
+        this.props.history.push({
+          pathname: '/SelectStart',
+          state: {},
+        }); // 暫時的
+      })
       .catch((err) => {
         this.props.dialogType(true, err.code.substring(5, err.code.length), err.message);
       });
@@ -118,6 +124,7 @@ StartPage.propTypes = {
     errorTitle: PropTypes.string.isRequired,
     errorMessage: PropTypes.string.isRequired,
   }).isRequired,
+  history: React.PropTypes.shape().isRequired,
 };
 
 function mapStateToProps(state) {

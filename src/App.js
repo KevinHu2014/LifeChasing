@@ -17,6 +17,7 @@ import SelectMode from './components/SelectMode';
 import SignUp from './containers/SignUp';
 import SignIn from './containers/SignIn';
 import StartPage from './containers/StartPage';
+import PrivateRoute from './containers/PrivateRoute';
 import reducers from './reducers';
 import firebaseConfig from './firebaseConfig';
 
@@ -84,7 +85,7 @@ const App = () => (
             <Route path="/SignUp" component={SignUp} />
             <Route path="/SelectStart" component={SelectStart} />
             <Route path="/SelectEnd" component={SelectEnd} />
-            <Route path="/SelectMode" component={SelectMode} />
+            <PrivateRoute path="/SelectMode" component={SelectMode} />
             <Route path="/GameRecord" component={GameRecord} />
             <Route path="/Map" component={MainMap} />
             <Route path="/" component={SelectStart} />
