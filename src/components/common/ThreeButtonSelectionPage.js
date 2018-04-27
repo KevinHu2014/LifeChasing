@@ -5,9 +5,12 @@ import './ThreeButtonSelectionPage.css';
 
 const ThreeButtonSelectionPage = props => (
   <div className="Container">
-    <div className="Title">
-      <p>{props.header}</p>
-    </div>
+    {
+      !!props.header &&
+      <div className="Title">
+        <p>{props.header}</p>
+      </div>
+    }
     <div className="Content">
       <Button
         variant="raised"
@@ -38,7 +41,9 @@ const ThreeButtonSelectionPage = props => (
         {props.third}
       </Button>
     </div>
-    <div className="Content" />
+    {
+      !!props.header && <div className="Content" />
+    }
   </div>
 );
 
