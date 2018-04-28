@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import HeartPulse from 'mdi-material-ui/HeartPulse';
-import BackAppBar from './BackAppBar';
+import { BackAppBar } from '../common';
 import './GameSegment.css';
 
 class GameSegment extends Component {

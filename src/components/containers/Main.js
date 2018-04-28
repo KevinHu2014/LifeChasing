@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
 
-import { ThreeButtonSelection } from '../components/common';
+import { ThreeButtonSelection } from '../common';
 
 const Main = props => (
   <div>

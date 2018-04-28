@@ -13,9 +13,9 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import { withStyles } from 'material-ui/styles';
 
-import { dialogType } from '../actions';
-import logo from '../images/logo.png';
-import { LeftPanel } from '../components/common';
+import { dialogType } from '../../actions';
+import logo from '../../images/logo.png';
+import { LeftPanel } from '../common';
 import './StartPage.css';
 
 

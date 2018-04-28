@@ -9,16 +9,21 @@ import firebase from 'firebase';
 import { createLogger } from 'redux-logger';
 
 import './index.css';
-import MainMap from './containers/Map';
-import { GameRecord, GameSegment } from './components/common/';
-import Main from './containers/Main';
-import SelectStart from './components/SelectStart';
-import SelectEnd from './components/SelectEnd';
-import SelectMode from './components/SelectMode';
-import SignUp from './containers/SignUp';
-import SignIn from './containers/SignIn';
-import StartPage from './containers/StartPage';
-import PrivateRoute from './containers/PrivateRoute';
+import {
+  GameRecord,
+  GameSegment,
+  SelectStart,
+  SelectEnd,
+  SelectMode,
+} from './components/presentational';
+import {
+  Main,
+  SignUp,
+  SignIn,
+  StartPage,
+  PrivateRoute,
+  MainMap,
+} from './components/containers';
 import reducers from './reducers';
 import firebaseConfig from './firebaseConfig';
 

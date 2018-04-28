@@ -5,8 +5,8 @@ import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 
-import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed } from '../actions';
-import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../components/common';
+import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed } from '../../actions';
+import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../common';
 
 /* global google */
 const MapWithAMarkerClusterer = compose(

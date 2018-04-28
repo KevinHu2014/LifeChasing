@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
-import BackAppBar from './BackAppBar';
+import { BackAppBar } from '../common';
 
 class GameRecord extends Component {
   constructor(props) {

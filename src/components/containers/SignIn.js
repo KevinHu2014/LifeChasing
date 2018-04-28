@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
-import firebase from 'firebase';
 import { firebaseConnect } from 'react-redux-firebase';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
@@ -17,17 +16,17 @@ import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 
 import {
-  usernameChanged,
   emailChanged,
   passwordChanged,
   dialogType,
-  signUpSuccess,
-} from '../actions';
-import { LeftPanel } from '../components/common';
+  signInSuccess,
+} from '../../actions';
+import { LeftPanel } from '../common';
 import './SignUp.css';
+import ghost from '../../images/ghost.png';
 
 const styles = theme => ({
-  signUp: {
+  signIn: {
     background: theme.palette.primary.main,
     borderRadius: 50,
     border: 0,
@@ -37,9 +36,13 @@ const styles = theme => ({
     margin: 30,
     padding: '0 30px',
   },
-  signIn: {
-    color: '#9E9E9E',
+  register: {
+    color: theme.palette.primary.main,
     width: 150,
+  },
+  forgot: {
+    color: theme.palette.primary.main,
+    marginLeft: 100,
   },
   label: {
     textTransform: 'capitalize',
@@ -49,26 +52,38 @@ const styles = theme => ({
   },
 });
 
-// eslint-disable-next-line react/prefer-stateless-function
-class SignUp extends Component {
-  createNewUser({ username, email, password }) {
-    if (username.length === 0) {
-      this.props.dialogType(true, 'Username-required', 'Please set an username.');
-    } else if (email.length === 0) {
+class SignIn extends Component {
+  signInUser(email, password) {
+    if (email.length === 0) {
       this.props.dialogType(true, 'Email-required', 'Please enter your email.');
     } else if (password.length === 0) {
-      this.props.dialogType(true, 'Password-required', 'Please set your awesome passwords.');
+      this.props.dialogType(true, 'Password-required', 'Please enter your passwords.');
     } else {
-      firebase.createUser(
-        { email, password },
-        { username, email },
-      )
+      this.props.firebase.login({
+        email,
+        password,
+      })
         .then((m) => {
-          console.log(m.username);
-          this.props.signUpSuccess();
+          console.log(m);
+          this.props.signInSuccess();
         })
         .catch((err) => {
           console.log(err.code);
+          this.props.dialogType(true, err.code.substring(5, err.code.length), err.message);
+        });
+    }
+  }
+  sendResetEmail(email) {
+    if (email.length === 0) {
+      this.props.dialogType(true, 'Email-required', 'Please enter your email.');
+    } else {
+      this.props.firebase.auth()
+        .sendPasswordResetEmail(email)
+        .then(() => {
+          console.log('email sent successfully');
+          this.props.dialogType(true, 'Email sent successfully', 'Please check your email.');
+        })
+        .catch((err) => {
           this.props.dialogType(true, err.code.substring(5, err.code.length), err.message);
         });
     }
@@ -79,21 +94,8 @@ class SignUp extends Component {
         <Hidden smDown>
           <LeftPanel />
         </Hidden>
-        <Paper className="SignUp-Form">
-          <Typography variant="display1">
-              Sign Up
-          </Typography>
-          <TextField
-            id="username-input"
-            label="User name"
-            classes={{ root: this.props.classes.textField }}
-            placeholder="User name"
-            margin="normal"
-            value={this.props.auth.username}
-            onChange={(event) => {
-              this.props.usernameChanged(event.target.value);
-            }}
-          />
+        <Paper className="SignUp-Form" style={{ backgroundColor: '#efefef' }}>
+          <img src={ghost} style={{ width: 'auto', height: 150 }} alt="ghost" />
           <TextField
             id="email-input"
             label="Email"
@@ -118,31 +120,44 @@ class SignUp extends Component {
             }}
           />
           <Button
+            variant="flat"
+            size="small"
+            color="default"
+            classes={{
+              root: this.props.classes.forgot,
+              label: this.props.classes.label,
+            }}
+            onClick={() => { this.sendResetEmail(this.props.auth.email); }}
+          >
+            Forgot your password?
+          </Button>
+          <Button
             variant="raised"
             size="large"
             color="primary"
             classes={{
-              root: this.props.classes.signUp,
-              label: this.props.classes.label,
+              root: this.props.classes.signIn,
             }}
             onClick={() => {
-              const { username, email, password } = this.props.auth;
-              this.createNewUser({ username, email, password });
+              const { email, password } = this.props.auth;
+              this.signInUser(email, password);
             }}
           >
-            SIGNUP
+            SIGN IN
           </Button>
+          <Typography variant="caption">
+              Don‘t have an account?
+          </Typography>
           <Button
             variant="flat"
             size="large"
             color="default"
             classes={{
-              root: this.props.classes.signIn,
-              label: this.props.classes.label,
+              root: this.props.classes.register,
             }}
             onClick={() => { console.log('clicked!'); }}
           >
-            or Signin
+            Register
           </Button>
         </Paper>
         <Dialog open={this.props.auth.showDialog}>
@@ -163,11 +178,12 @@ class SignUp extends Component {
   }
 }
 
-SignUp.propTypes = {
+SignIn.propTypes = {
   classes: PropTypes.shape({
-    signUp: PropTypes.string.isRequired,
-    signIn: PropTypes.string.isRequired,
+    forgot: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
+    signIn: PropTypes.string.isRequired,
+    register: PropTypes.string.isRequired,
     textField: PropTypes.string.isRequired,
   }).isRequired,
   auth: PropTypes.shape({
@@ -178,11 +194,11 @@ SignUp.propTypes = {
     errorTitle: PropTypes.string.isRequired,
     errorMessage: PropTypes.string.isRequired,
   }).isRequired,
-  usernameChanged: PropTypes.func.isRequired,
   emailChanged: PropTypes.func.isRequired,
   passwordChanged: PropTypes.func.isRequired,
-  signUpSuccess: PropTypes.func.isRequired,
+  signInSuccess: PropTypes.func.isRequired,
   dialogType: PropTypes.func.isRequired,
+  firebase: PropTypes.shape().isRequired,
 };
 
 function mapStateToProps(state) {
@@ -193,19 +209,18 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    usernameChanged,
     emailChanged,
     passwordChanged,
     dialogType,
-    signUpSuccess,
+    signInSuccess,
   }, dispatch);
 }
 
 
-const signUp = compose(
+const signIn = compose(
   firebaseConnect(),
   connect(mapStateToProps, mapDispatchToProps),
-)(SignUp);
+)(SignIn);
 
 // withMobileDialog 不確定是不是真的是這樣寫，還要在查
-export default withStyles(styles, { withTheme: true }, { withMobileDialog: true })(signUp);
+export default withStyles(styles, { withTheme: true }, { withMobileDialog: true })(signIn);
