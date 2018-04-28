@@ -7,7 +7,7 @@ const SelectStart = props => (
   <div>
     <ThreeButtonSelection
       header="請選擇起點"
-      blue
+      secondary
       first="捷運站"
       second="聖言樓"
       third="側門"

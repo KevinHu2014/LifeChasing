@@ -8,7 +8,7 @@ const SelectEnd = props => (
   <div>
     <ThreeButtonSelection
       header="請選擇終點"
-      blue
+      secondary
       first="國璽樓"
       second="輔園"
       third="中美堂"

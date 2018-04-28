@@ -8,7 +8,7 @@ const SelectEnd = props => (
   <div>
     <ThreeButtonSelection
       header="請選擇模式"
-      blue={false}
+      secondary={false}
       first="全自動"
       second="半自動"
       third="手動"

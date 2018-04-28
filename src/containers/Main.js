@@ -7,8 +7,8 @@ import { ThreeButtonSelection } from '../components/common';
 const Main = props => (
   <div>
     <ThreeButtonSelection
-      header=""
-      blue
+      header="Life Chasing"
+      secondary
       first="開始遊戲"
       second="查詢記錄"
       third="登出"
