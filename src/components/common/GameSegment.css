@@ -11,7 +11,7 @@
 
 #six { order: 6; }
 
-.grid {
+.SegmentGrid {
     display: flex;
     flex-Grow: 1;
 }

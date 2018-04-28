@@ -15,7 +15,7 @@ class GameSegment extends Component {
     return (
       <div>
         <BackAppBar title="11/27  15:00" />
-        <div className="grid">
+        <div className="SegmentGrid">
           <Grid container spacing={8}>
             <Grid id="one" item xs={6} sm={6} md={4} lg={4}>
               <Paper className="paper">

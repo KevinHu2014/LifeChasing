@@ -10,7 +10,7 @@ import { createLogger } from 'redux-logger';
 
 import './index.css';
 import MainMap from './containers/Map';
-import { GameRecord } from './components/common/';
+import { GameRecord, GameSegment } from './components/common/';
 import Main from './containers/Main';
 import SelectStart from './components/SelectStart';
 import SelectEnd from './components/SelectEnd';
@@ -89,6 +89,7 @@ const App = () => (
             <Route path="/SelectEnd" component={SelectEnd} />
             <PrivateRoute path="/SelectMode" component={SelectMode} />
             <Route path="/GameRecord" component={GameRecord} />
+            <Route path="/GameSegment" component={GameSegment} />
             <Route path="/Map" component={MainMap} />
             <Route path="/" component={SelectStart} />
           </Switch>
