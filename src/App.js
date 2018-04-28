@@ -11,7 +11,7 @@ import { createLogger } from 'redux-logger';
 import './index.css';
 import MainMap from './containers/Map';
 import { GameRecord } from './components/common/';
-import Main from './components/Main';
+import Main from './containers/Main';
 import SelectStart from './components/SelectStart';
 import SelectEnd from './components/SelectEnd';
 import SelectMode from './components/SelectMode';

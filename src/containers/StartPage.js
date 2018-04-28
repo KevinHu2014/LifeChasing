@@ -45,7 +45,7 @@ class StartPage extends Component {
       .then((m) => {
         console.log(m.uid);
         this.props.history.push({
-          pathname: '/SelectStart',
+          pathname: '/Main',
           state: {},
         }); // 暫時的
       })
