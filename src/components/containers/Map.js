@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { firebaseConnect } from 'react-redux-firebase';
 import { bindActionCreators } from 'redux';
 import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
@@ -155,7 +156,20 @@ class Map extends Component {
           title="遊戲開始"
           buttonText="ok"
           open={this.props.beanMap.gameStartDialog}
-          onClose={() => { this.props.gameDialog('start', false); }}
+          onClose={() => {
+            this.props.gameDialog('start', false);
+            console.log(this.props.firebaseAuth.uid);
+            console.log(this.state);
+            const UID = this.props.firebaseAuth.uid;
+            this.props.firebase.push(
+              'game',
+              {
+                userUid: UID,
+                mode,
+                interface: 'Material',
+              },
+            );
+          }}
         >
           <GameStartDialog mode={mode} />
         </MapDialog>
@@ -201,7 +215,11 @@ Map.propTypes = {
     gamePauseDialog: PropTypes.bool.isRequired,
     gameEndDialog: PropTypes.bool.isRequired,
   }).isRequired,
+  firebaseAuth: PropTypes.shape({
+    uid: PropTypes.string.isRequired,
+  }).isRequired,
   location: PropTypes.shape().isRequired,
+  firebase: PropTypes.shape().isRequired,
 };
 
 function mapStateToProps(state) {
@@ -209,6 +227,7 @@ function mapStateToProps(state) {
 //   console.log(state);
   return {
     beanMap: state.beanMap,
+    firebaseAuth: state.firebase.auth,
   };
 }
 
@@ -231,4 +250,8 @@ function mapDispatchToProps(dispatch) {
 
 // Promote Map from a component to a container - it needs to know
 // about this dispatch method, eatBeans. Make it as a props
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
+const map = compose(
+  firebaseConnect(),
+  connect(mapStateToProps, mapDispatchToProps),
+)(Map);
+export default map;
