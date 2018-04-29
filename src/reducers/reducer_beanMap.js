@@ -6,6 +6,7 @@ import {
   TIME_OUT,
   CAL_SPEED,
   GAME_DIALOG,
+  GAME_END,
 } from '../actions/type';
 import Distance from '../Distance';
 
@@ -14,6 +15,8 @@ const initialState = {
   gamePauseDialog: false,
   gameEndDialog: false,
   score: 0,
+  gameScore: 0,
+  sportScore: 0,
   alarm: new Date().getTime(),
   markers: [],
   ghost: false,
@@ -25,6 +28,7 @@ const initialState = {
   longitude: 0,
   startTime: new Date().getTime(),
   lastUpdateTime: new Date().getTime(),
+  totalTime: 0,
 };
 
 // State argument is not application state, only the state
@@ -121,6 +125,54 @@ const beanMap = (state = initialState, action) => {
         default:
           return state;
       }
+    }
+    case GAME_END: {
+      // (totalBeans, expectTimeCost, expectDistance, w1, w2, sd)
+      const {
+        score, ghostCounter, avgSpeed, distance,
+      } = state;
+      const {
+        totalBeans, expectTimeCost, expectDistance, w1, w2, sd, currentTime,
+      } = action;
+      const totalTime = (currentTime - state.startTime);
+      /**
+        Game Score
+        (((Bm * W1) - (C * W2)) / (Bt * W1))*(Ta / Tt)*100;
+        Bm: Number of fairy balls eaten
+        C: Number of times being caught by monster
+        Tt: Time used of this game segment
+        Bt: Total number of fairy balls on the map
+        Ta: Expected time spent
+        Wi: Weight
+      */
+      let gameScore = (((score * w1) - (ghostCounter * w2)) / (totalBeans * w1)) *
+        (expectTimeCost / totalTime) * 100;
+      gameScore = Math.round(gameScore * 1000) / 1000; // 四捨五入
+      /**
+        Sport Score
+        No Fitbit
+        (Sa / Sd) * (de / dt) *100;
+        Sa: Average speed of this game segment
+        de: Actual movement distance
+        Sd: Default exercise speed (to have full exercise experience) dt: Expected movement distance
+
+        With Fitbit
+        (Sa / Sd) * (de / dt) * (Hm / Ha) *100;
+        Sa: Average speed of this game segment
+        de: Actual movement distance
+        Sd: Default exercise speed (to have full exercise experience) dt: Expected movement distance
+        Hm: Highest heart rate of this game segment
+        Ha: Daily average heart rate
+       */
+      let sportScore = (avgSpeed / sd) * (distance / expectDistance) * 100;
+      sportScore = Math.round(sportScore * 1000) / 1000; // 四捨五入
+
+      return Object.assign({}, state, {
+        gameScore,
+        sportScore,
+        gameEndDialog: true,
+        totalTime,
+      });
     }
     default:
       return state;

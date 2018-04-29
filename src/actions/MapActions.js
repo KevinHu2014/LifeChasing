@@ -7,6 +7,7 @@ import {
   TIME_OUT,
   CAL_SPEED,
   GAME_DIALOG,
+  GAME_END,
 } from './type';
 
 const url = [
@@ -70,5 +71,18 @@ export function gameDialog(dialogType, flag) {
     type: GAME_DIALOG,
     dialogType,
     flag,
+  };
+}
+
+export function gameEnd(totalBeans, expectTimeCost, expectDistance, w1, w2, sd, currentTime) {
+  return {
+    type: GAME_END,
+    totalBeans,
+    expectTimeCost,
+    expectDistance,
+    w1,
+    w2,
+    sd,
+    currentTime,
   };
 }

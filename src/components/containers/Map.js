@@ -6,8 +6,9 @@ import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 
-import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed, gameDialog } from '../../actions';
+import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed, gameDialog, gameEnd } from '../../actions';
 import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../common';
+import Distance from '../../Distance';
 
 /* global google */
 const MapWithAMarkerClusterer = compose(
@@ -77,6 +78,22 @@ const MapWithAMarkerClusterer = compose(
 
 
 class Map extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      gameKey: null,
+      expectTimeCost: 805,
+      expectDistance: 10,
+      destination: {
+        lat: 25.038491,
+        lng: 121.431402,
+      },
+      totalBeans: 377,
+      w1: 0.5,
+      w2: 0.3,
+      sd: 10, // Default exercise speed <- 看不懂的東西
+    };// 暫時 hard code
+  }
   componentWillMount() {
     this.props.fetchMarkers();
     navigator.geolocation.getCurrentPosition(
@@ -127,11 +144,26 @@ class Map extends Component {
   GetLocationAndEatBean() {
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
+        const {
+          destination, totalBeans, expectTimeCost,
+          expectDistance, w1, w2, sd,
+        } = this.state;
         const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+        const lng = position.coords.longitude;
         this.SetAlarm(5); // Reset time clock
-        this.props.eatBeans(lat, lon);
-        this.props.calSpeed(lat, lon, new Date().getTime());
+        this.props.eatBeans(lat, lng);
+        this.props.calSpeed(lat, lng, new Date().getTime());
+        let dist = Distance(lat, lng, destination.lat, destination.lng, 'K');
+        dist = Math.round(dist * 1000) / 1000; // 四捨五入
+        dist *= 1000; // 1 Km = 1000m
+        console.log(dist);
+        if (dist < 5) {
+          console.log('game end');
+          this.props.gameEnd(
+            totalBeans, expectTimeCost, expectDistance,
+            w1, w2, sd, new Date().getTime(),
+          );
+        }
         console.log('location changed!');
       },
       ((error) => { console.log(error.message); }),
@@ -174,8 +206,10 @@ class Map extends Component {
                 mode,
                 interface: 'Material',
               },
-            ).then((result) => {
-              this.setState({ gameKey: result.key });
+            ).then(async (result) => {
+              console.log(result);
+              console.log(result.key);
+              await this.setState({ gameKey: result.key });
             });
           }}
         >
@@ -198,25 +232,36 @@ class Map extends Component {
           buttonText="ok"
           open={this.props.beanMap.gameEndDialog}
           onClose={() => {
+            const {
+              score, ghostCounter, distance, totalTime, maxSpeed,
+              gameScore, sportScore,
+            } = this.props.beanMap;
+
+            const { totalBeans, expectTimeCost } = this.state;
+            console.log(this.state.gameKey);
             this.props.firebase.update(
               `game/${this.state.gameKey}`,
               {
-                beanEaten: 3,
-                caughtTimes: 2,
-                totalDistance: 4,
-                timeSpent: 1,
-                heartRate: 1,
-                maxSpeed: 1,
-                gameScore: 1,
-                sportScore: 1,
-                totalBeans: 100,
-                expectTimeCost: 10,
+                beanEaten: score,
+                caughtTimes: ghostCounter,
+                totalDistance: distance,
+                timeSpent: totalTime,
+                heartRate: 1, // hard code
+                maxSpeed,
+                gameScore,
+                sportScore,
+                totalBeans,
+                expectTimeCost,
               },
             );
             this.props.gameDialog('end', false);
           }}
         >
-          <GameEndDialog pill={5} exercise={30} game={50} />
+          <GameEndDialog
+            pill={this.props.beanMap.score}
+            exercise={this.props.beanMap.sportScore}
+            game={this.props.beanMap.gameScore}
+          />
         </MapDialog>
       </div>
     );
@@ -231,6 +276,7 @@ Map.propTypes = {
   timeOut: PropTypes.func.isRequired,
   calSpeed: PropTypes.func.isRequired,
   gameDialog: PropTypes.func.isRequired,
+  gameEnd: PropTypes.func.isRequired,
   beanMap: PropTypes.shape({
     score: PropTypes.number.isRequired,
     markers: PropTypes.arrayOf(PropTypes.shape({
@@ -241,6 +287,12 @@ Map.propTypes = {
     gameStartDialog: PropTypes.bool.isRequired,
     gamePauseDialog: PropTypes.bool.isRequired,
     gameEndDialog: PropTypes.bool.isRequired,
+    ghostCounter: PropTypes.number.isRequired,
+    distance: PropTypes.number.isRequired,
+    totalTime: PropTypes.number.isRequired,
+    maxSpeed: PropTypes.number.isRequired,
+    gameScore: PropTypes.number.isRequired,
+    sportScore: PropTypes.number.isRequired,
   }).isRequired,
   firebaseAuth: PropTypes.shape({
     uid: PropTypes.string.isRequired,
@@ -271,6 +323,7 @@ function mapDispatchToProps(dispatch) {
     timeOut,
     calSpeed,
     gameDialog,
+    gameEnd,
   }, dispatch);
 }
 
