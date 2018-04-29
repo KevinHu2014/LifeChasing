@@ -5,10 +5,14 @@ import {
   SET_TIMER,
   TIME_OUT,
   CAL_SPEED,
+  GAME_DIALOG,
 } from '../actions/type';
 import Distance from '../Distance';
 
 const initialState = {
+  gameStartDialog: true,
+  gamePauseDialog: false,
+  gameEndDialog: false,
   score: 0,
   alarm: new Date().getTime(),
   markers: [],
@@ -99,6 +103,24 @@ const beanMap = (state = initialState, action) => {
         longitude: action.longitude,
         lastUpdateTime: action.currentTime,
       });
+    }
+    case GAME_DIALOG: {
+      switch (action.dialogType) {
+        case 'start':
+          return Object.assign({}, state, {
+            gameStartDialog: action.flag,
+          });
+        case 'pause':
+          return Object.assign({}, state, {
+            gamePauseDialog: action.flag,
+          });
+        case 'end':
+          return Object.assign({}, state, {
+            gameEndDialog: action.flag,
+          });
+        default:
+          return state;
+      }
     }
     default:
       return state;

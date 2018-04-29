@@ -5,7 +5,7 @@ import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 
-import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed } from '../../actions';
+import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed, gameDialog } from '../../actions';
 import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../common';
 
 /* global google */
@@ -74,15 +74,6 @@ const MapWithAMarkerClusterer = compose(
 
 
 class Map extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      gameStartDialog: true,
-      gamePauseDialog: false,
-      gameEndDialog: false,
-    };
-  }
-
   componentWillMount() {
     this.props.fetchMarkers();
     navigator.geolocation.getCurrentPosition(
@@ -104,8 +95,8 @@ class Map extends Component {
     console.log(this.props.location.state);
     window.addEventListener('focus', () => {
       console.log('window has focus');
-      if (!(this.state.gameStartDialog)) {
-        this.setState({ gamePauseDialog: true });
+      if (!(this.props.beanMap.gameStartDialog)) {
+        this.props.gameDialog('pause', true);
       }
     }, false);
     window.addEventListener('blur', () => {
@@ -163,8 +154,8 @@ class Map extends Component {
           id="start"
           title="遊戲開始"
           buttonText="ok"
-          open={this.state.gameStartDialog}
-          onClose={() => { this.setState({ gameStartDialog: false }); }}
+          open={this.props.beanMap.gameStartDialog}
+          onClose={() => { this.props.gameDialog('start', false); }}
         >
           <GameStartDialog mode={mode} />
         </MapDialog>
@@ -172,8 +163,8 @@ class Map extends Component {
           id="pause"
           title="遊戲暫停"
           buttonText="continue"
-          open={this.state.gamePauseDialog}
-          onClose={() => { this.setState({ gamePauseDialog: false }); }}
+          open={this.props.beanMap.gamePauseDialog}
+          onClose={() => { this.props.gameDialog('pause', false); }}
         >
           <GamePauseDialog pill={5} ghost={1} speed={5} />
         </MapDialog>
@@ -181,8 +172,8 @@ class Map extends Component {
           id="end"
           title="遊戲結束"
           buttonText="ok"
-          open={this.state.gameEndDialog}
-          onClose={() => { this.setState({ gameEndDialog: false }); }}
+          open={this.props.beanMap.gameEndDialog}
+          onClose={() => { this.props.gameDialog('end', false); }}
         >
           <GameEndDialog pill={5} exercise={30} game={50} />
         </MapDialog>
@@ -198,6 +189,7 @@ Map.propTypes = {
   setTimer: PropTypes.func.isRequired,
   timeOut: PropTypes.func.isRequired,
   calSpeed: PropTypes.func.isRequired,
+  gameDialog: PropTypes.func.isRequired,
   beanMap: PropTypes.shape({
     score: PropTypes.number.isRequired,
     markers: PropTypes.arrayOf(PropTypes.shape({
@@ -205,6 +197,9 @@ Map.propTypes = {
       latitude: PropTypes.number.isRequired,
       longitude: PropTypes.number.isRequired,
     })).isRequired,
+    gameStartDialog: PropTypes.bool.isRequired,
+    gamePauseDialog: PropTypes.bool.isRequired,
+    gameEndDialog: PropTypes.bool.isRequired,
   }).isRequired,
   location: PropTypes.shape().isRequired,
 };
@@ -229,6 +224,7 @@ function mapDispatchToProps(dispatch) {
     setTimer,
     timeOut,
     calSpeed,
+    gameDialog,
   }, dispatch);
 }
 

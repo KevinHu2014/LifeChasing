@@ -6,6 +6,7 @@ import {
   SET_TIMER,
   TIME_OUT,
   CAL_SPEED,
+  GAME_DIALOG,
 } from './type';
 
 const url = [
@@ -61,5 +62,13 @@ export function calSpeed(latitude, longitude, currentTime) {
     latitude,
     longitude,
     currentTime,
+  };
+}
+
+export function gameDialog(dialogType, flag) {
+  return {
+    type: GAME_DIALOG,
+    dialogType,
+    flag,
   };
 }
