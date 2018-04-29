@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
+import { withRouter } from 'react-router-dom';
+
 import { BackAppBar } from '../common';
 
 class GameRecord extends Component {
@@ -12,7 +14,15 @@ class GameRecord extends Component {
   render() {
     return (
       <div>
-        <BackAppBar title="Game Records" />
+        <BackAppBar
+          title="Game Records"
+          onPress={() => {
+            this.props.history.push({
+              pathname: '/Main',
+              state: {},
+            });
+          }}
+        />
         <div className="grid">
           <List>
             <ListItem>
@@ -43,4 +53,8 @@ class GameRecord extends Component {
   }
 }
 
-export default GameRecord;
+GameRecord.propTypes = {
+  history: PropTypes.shape().isRequired,
+};
+
+export default withRouter(GameRecord);

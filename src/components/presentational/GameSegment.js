@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import HeartPulse from 'mdi-material-ui/HeartPulse';
+import { withRouter } from 'react-router-dom';
+
 import { BackAppBar } from '../common';
 import './GameSegment.css';
 
@@ -14,7 +16,15 @@ class GameSegment extends Component {
   render() {
     return (
       <div>
-        <BackAppBar title="11/27  15:00" />
+        <BackAppBar
+          title="11/27  15:00"
+          onPress={() => {
+            this.props.history.push({
+              pathname: '/GameRecord',
+              state: {},
+            });
+          }}
+        />
         <div className="SegmentGrid">
           <Grid container spacing={8}>
             <Grid id="one" item xs={6} sm={6} md={4} lg={4}>
@@ -91,4 +101,8 @@ class GameSegment extends Component {
   }
 }
 
-export default GameSegment;
+GameSegment.propTypes = {
+  history: PropTypes.shape().isRequired,
+};
+
+export default withRouter(GameSegment);

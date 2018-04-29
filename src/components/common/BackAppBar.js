@@ -24,7 +24,12 @@ function BackAppBar(props) {
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
-        <IconButton className={classes.menuButton} color="inherit" aria-label="Back">
+        <IconButton
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="Back"
+          onClick={props.onPress}
+        >
           <BackIcon />
         </IconButton>
         <Typography variant="title" color="inherit">
@@ -36,8 +41,9 @@ function BackAppBar(props) {
 }
 
 BackAppBar.propTypes = {
-  classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  classes: PropTypes.shape().isRequired,
   title: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(BackAppBar);

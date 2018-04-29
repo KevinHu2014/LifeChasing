@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { bindActionCreators } from 'redux';
 import { compose, withProps, withHandlers, lifecycle } from 'recompose';
+import { withRouter } from 'react-router-dom';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 
@@ -254,6 +255,10 @@ class Map extends Component {
               },
             );
             this.props.gameDialog('end', false);
+            this.props.history.push({
+              pathname: '/GameSegment',
+              state: {},
+            });
           }}
         >
           <GameEndDialog
@@ -298,6 +303,7 @@ Map.propTypes = {
   }).isRequired,
   location: PropTypes.shape().isRequired,
   firebase: PropTypes.shape().isRequired,
+  history: React.PropTypes.shape().isRequired,
 };
 
 function mapStateToProps(state) {
@@ -333,4 +339,4 @@ const map = compose(
   firebaseConnect(),
   connect(mapStateToProps, mapDispatchToProps),
 )(Map);
-export default map;
+export default withRouter(map);
