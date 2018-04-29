@@ -42,9 +42,10 @@ const beanMap = (state = initialState, action) => {
       return Object.assign({}, state, {
         markers: state.markers.filter((bean) => {
           // Eat Beans
-          // 0.000045-->5m , 0.000044-->5m
-          if (!(Math.abs(bean.latitude - action.latitude) < 0.000045 * 5
-                  && Math.abs(bean.longitude - action.longitude) < 0.000044 * 5)) {
+          let dist = Distance(bean.latitude, bean.longitude, action.latitude, action.longitude, 'K');
+          dist = Math.round(dist * 1000) / 1000; // 四捨五入
+          dist *= 1000; // 1 Km = 1000m
+          if (dist >= 5) {
             return bean;
           }
           Counter += 1;
