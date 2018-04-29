@@ -174,7 +174,9 @@ class Map extends Component {
                 mode,
                 interface: 'Material',
               },
-            );
+            ).then((result) => {
+              this.setState({ gameKey: result.key });
+            });
           }}
         >
           <GameStartDialog mode={mode} />
@@ -184,7 +186,9 @@ class Map extends Component {
           title="遊戲暫停"
           buttonText="continue"
           open={this.props.beanMap.gamePauseDialog}
-          onClose={() => { this.props.gameDialog('pause', false); }}
+          onClose={() => {
+            this.props.gameDialog('pause', false);
+          }}
         >
           <GamePauseDialog pill={5} ghost={1} speed={5} />
         </MapDialog>
@@ -193,7 +197,24 @@ class Map extends Component {
           title="遊戲結束"
           buttonText="ok"
           open={this.props.beanMap.gameEndDialog}
-          onClose={() => { this.props.gameDialog('end', false); }}
+          onClose={() => {
+            this.props.firebase.update(
+              `game/${this.state.gameKey}`,
+              {
+                beanEaten: 3,
+                caughtTimes: 2,
+                totalDistance: 4,
+                timeSpent: 1,
+                heartRate: 1,
+                maxSpeed: 1,
+                gameScore: 1,
+                sportScore: 1,
+                totalBeans: 100,
+                expectTimeCost: 10,
+              },
+            );
+            this.props.gameDialog('end', false);
+          }}
         >
           <GameEndDialog pill={5} exercise={30} game={50} />
         </MapDialog>
