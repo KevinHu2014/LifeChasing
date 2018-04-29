@@ -40,6 +40,8 @@ const MapWithAMarkerClusterer = compose(
           this.setState({
             directions: result,
           });
+          // duration 的值 還不知道怎麼傳到 parent
+          // console.log(result.routes[1].legs[0].duration.value);
           // console.log(result);
         } else {
           console.error(`error fetching directions ${result}`);
@@ -150,7 +152,11 @@ class Map extends Component {
         role="presentation"
       >
         <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
-        <MapWithAMarkerClusterer id="map" markers={this.props.beanMap.markers} showDirections={mode === '半自動'} />
+        <MapWithAMarkerClusterer
+          id="map"
+          markers={this.props.beanMap.markers}
+          showDirections={mode === '半自動'}
+        />
         <MapDialog
           id="start"
           title="遊戲開始"
