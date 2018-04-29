@@ -196,8 +196,8 @@ class Map extends Component {
           open={this.props.beanMap.gameStartDialog}
           onClose={() => {
             this.props.gameDialog('start', false);
-            console.log(this.props.firebaseAuth.uid);
-            console.log(this.state);
+            // console.log(this.props.firebaseAuth.uid);
+            // console.log(this.state);
             const UID = this.props.firebaseAuth.uid;
             this.props.firebase.push(
               'game',
@@ -207,8 +207,7 @@ class Map extends Component {
                 interface: 'Material',
               },
             ).then(async (result) => {
-              console.log(result);
-              console.log(result.key);
+              // console.log(result.key);
               await this.setState({ gameKey: result.key });
             });
           }}
@@ -238,7 +237,7 @@ class Map extends Component {
             } = this.props.beanMap;
 
             const { totalBeans, expectTimeCost } = this.state;
-            console.log(this.state.gameKey);
+            // console.log(this.state.gameKey);
             this.props.firebase.update(
               `game/${this.state.gameKey}`,
               {
