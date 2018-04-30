@@ -76,7 +76,12 @@ class StartPage extends Component {
               label: this.props.classes.label,
             }}
             style={{ margin: 15 }}
-            onClick={() => { console.log('clicked!'); }}
+            onClick={() => {
+              this.props.history.push({
+                pathname: '/SignIn',
+                state: {},
+              });
+            }}
           >
             Sign in
           </Button>

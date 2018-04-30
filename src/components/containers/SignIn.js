@@ -66,6 +66,10 @@ class SignIn extends Component {
         .then((m) => {
           console.log(m);
           this.props.signInSuccess();
+          this.props.history.push({
+            pathname: '/Main',
+            state: {},
+          });
         })
         .catch((err) => {
           console.log(err.code);
@@ -155,7 +159,12 @@ class SignIn extends Component {
             classes={{
               root: this.props.classes.register,
             }}
-            onClick={() => { console.log('clicked!'); }}
+            onClick={() => {
+              this.props.history.push({
+                pathname: '/SignUp',
+                state: {},
+              });
+            }}
           >
             Register
           </Button>
@@ -199,6 +208,7 @@ SignIn.propTypes = {
   signInSuccess: PropTypes.func.isRequired,
   dialogType: PropTypes.func.isRequired,
   firebase: PropTypes.shape().isRequired,
+  history: React.PropTypes.shape().isRequired,
 };
 
 function mapStateToProps(state) {

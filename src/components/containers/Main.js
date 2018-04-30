@@ -32,6 +32,10 @@ const Main = props => (
           case '登出':
             console.log('logout');
             props.firebase.logout();
+            props.history.push({
+              pathname: '/StartPage',
+              state: {},
+            });
             break;
           default:
             break;
