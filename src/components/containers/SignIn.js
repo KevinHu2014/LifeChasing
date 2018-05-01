@@ -194,7 +194,7 @@ class SignIn extends Component {
           (isLoaded(this.props.fbauth) && (!isEmpty(this.props.fbauth))) &&
           <Redirect
             to={{
-              pathname: '/login',
+              pathname: '/Main',
             }}
           />
         }
