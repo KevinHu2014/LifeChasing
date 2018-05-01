@@ -13,5 +13,6 @@ export const USERNAME_CHANGED = 'USERNAME_CHANGED';
 export const DIALOG_TYPE = 'DIALOG_TYPE';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
+export const WAIT_FOR_AUTH = 'WAIT_FOR_AUTH';
 export const GAME_DIALOG = 'GAME_DIALOG';
 export const GAME_END = 'GAME_END';

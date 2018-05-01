@@ -5,6 +5,7 @@ import {
   DIALOG_TYPE,
   SIGN_UP_SUCCESS,
   SIGN_IN_SUCCESS,
+  WAIT_FOR_AUTH,
 } from './type';
 
 export const usernameChanged = text => ({
@@ -34,5 +35,10 @@ export const signUpSuccess = () => ({
 
 export const signInSuccess = () => ({
   type: SIGN_IN_SUCCESS,
+  payload: null,
+});
+
+export const waitForAuth = () => ({
+  type: WAIT_FOR_AUTH,
   payload: null,
 });

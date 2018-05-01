@@ -5,6 +5,7 @@ import {
   DIALOG_TYPE,
   SIGN_UP_SUCCESS,
   SIGN_IN_SUCCESS,
+  WAIT_FOR_AUTH,
 } from '../actions/type';
 
 const INITAL_STATE = {
@@ -14,6 +15,7 @@ const INITAL_STATE = {
   showDialog: false,
   errorTitle: '',
   errorMessage: '',
+  loading: false,
 };
 
 const auth = (state = INITAL_STATE, action) => {
@@ -30,6 +32,7 @@ const auth = (state = INITAL_STATE, action) => {
         showDialog: action.payload.type,
         errorTitle: action.payload.errorTitle,
         errorMessage: action.payload.errorMessage,
+        loading: false,
       };
     case SIGN_UP_SUCCESS:
       return {
@@ -40,6 +43,11 @@ const auth = (state = INITAL_STATE, action) => {
       return {
         ...state,
         ...INITAL_STATE,
+      };
+    case WAIT_FOR_AUTH:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;
