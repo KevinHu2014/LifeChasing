@@ -70,10 +70,6 @@ class SignUp extends Component {
         .then((m) => {
           console.log(m.username);
           this.props.signUpSuccess();
-          this.props.history.push({
-            pathname: '/Main',
-            state: { login: true },
-          });
         })
         .catch((err) => {
           console.log(err.code);
