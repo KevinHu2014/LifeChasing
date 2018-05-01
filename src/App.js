@@ -87,18 +87,18 @@ const App = () => (
       <BrowserRouter>
         <div>
           <Switch>
-            <Route path="/Main" component={Main} />
             <Route path="/StartPage" component={StartPage} />
             <Route path="/SignIn" component={SignIn} />
             <Route path="/SignUp" component={SignUp} />
-            <Route path="/SelectInterface" component={SelectInterface} />
-            <Route path="/SelectStart" component={SelectStart} />
-            <Route path="/SelectEnd" component={SelectEnd} />
+            <PrivateRoute path="/Main" component={Main} />
+            <PrivateRoute path="/SelectInterface" component={SelectInterface} />
+            <PrivateRoute path="/SelectStart" component={SelectStart} />
+            <PrivateRoute path="/SelectEnd" component={SelectEnd} />
             <PrivateRoute path="/SelectMode" component={SelectMode} />
-            <Route path="/GameRecord" component={GameRecord} />
-            <Route path="/GameSegment" component={GameSegment} />
-            <Route path="/Map" component={MainMap} />
-            <Route path="/" component={SelectStart} />
+            <PrivateRoute path="/GameRecord" component={GameRecord} />
+            <PrivateRoute path="/GameSegment" component={GameSegment} />
+            <PrivateRoute path="/Map" component={MainMap} />
+            <PrivateRoute path="/" component={Main} />
           </Switch>
         </div>
       </BrowserRouter>

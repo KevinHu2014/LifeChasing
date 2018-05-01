@@ -68,7 +68,7 @@ class SignIn extends Component {
           this.props.signInSuccess();
           this.props.history.push({
             pathname: '/Main',
-            state: {},
+            state: { login: true },
           });
         })
         .catch((err) => {

@@ -68,7 +68,7 @@ class SignUp extends Component {
           this.props.signUpSuccess();
           this.props.history.push({
             pathname: '/Main',
-            state: {},
+            state: { login: true },
           });
         })
         .catch((err) => {

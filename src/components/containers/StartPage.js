@@ -46,7 +46,7 @@ class StartPage extends Component {
         console.log(m.uid);
         this.props.history.push({
           pathname: '/Main',
-          state: {},
+          state: { login: true },
         }); // 暫時的
       })
       .catch((err) => {

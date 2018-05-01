@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, authExists, ...rest }) => (
     {...rest}
     render={(props) => {
       console.log(authExists); // redirect to /StartPage if not authed
-      return (authExists ? (
+      return ((authExists || props.location.state.login) ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -31,6 +31,7 @@ PrivateRoute.propTypes = {
     PropTypes.func,
   ]).isRequired, // 這個不太確定
   authExists: PropTypes.bool.isRequired,
+  location: PropTypes.shape().isRequired,
 };
 
 export default connect(({ firebase: { auth } }) => ({
