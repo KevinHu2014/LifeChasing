@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { bindActionCreators, compose } from 'redux';
-import { firebaseConnect } from 'react-redux-firebase';
+import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import Paper from 'material-ui/Paper';
+import { LinearProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 import Hidden from 'material-ui/Hidden';
 import TextField from 'material-ui/TextField';
@@ -20,6 +22,7 @@ import {
   passwordChanged,
   dialogType,
   signInSuccess,
+  waitForAuth,
 } from '../../actions';
 import { LeftPanel } from '../common';
 import './SignUp.css';
@@ -54,6 +57,7 @@ const styles = theme => ({
 
 class SignIn extends Component {
   signInUser(email, password) {
+    this.props.waitForAuth();
     if (email.length === 0) {
       this.props.dialogType(true, 'Email-required', 'Please enter your email.');
     } else if (password.length === 0) {
@@ -66,10 +70,6 @@ class SignIn extends Component {
         .then((m) => {
           console.log(m);
           this.props.signInSuccess();
-          this.props.history.push({
-            pathname: '/Main',
-            state: { login: true },
-          });
         })
         .catch((err) => {
           console.log(err.code);
@@ -94,94 +94,110 @@ class SignIn extends Component {
   }
   render() {
     return (
-      <div className="SignUp-Box">
-        <Hidden smDown>
-          <LeftPanel />
-        </Hidden>
-        <Paper className="SignUp-Form" style={{ backgroundColor: '#efefef' }}>
-          <img src={ghost} style={{ width: 'auto', height: 150 }} alt="ghost" />
-          <TextField
-            id="email-input"
-            label="Email"
-            classes={{ root: this.props.classes.textField }}
-            placeholder="Email"
-            margin="normal"
-            value={this.props.auth.email}
-            onChange={(event) => {
-              this.props.emailChanged(event.target.value);
-            }}
-          />
-          <TextField
-            id="password-input"
-            label="Password"
-            classes={{ root: this.props.classes.textField }}
-            type="password"
-            autoComplete="current-password"
-            margin="normal"
-            value={this.props.auth.password}
-            onChange={(event) => {
-              this.props.passwordChanged(event.target.value);
-            }}
-          />
-          <Button
-            variant="flat"
-            size="small"
-            color="default"
-            classes={{
-              root: this.props.classes.forgot,
-              label: this.props.classes.label,
-            }}
-            onClick={() => { this.sendResetEmail(this.props.auth.email); }}
-          >
-            Forgot your password?
-          </Button>
-          <Button
-            variant="raised"
-            size="large"
-            color="primary"
-            classes={{
-              root: this.props.classes.signIn,
-            }}
-            onClick={() => {
-              const { email, password } = this.props.auth;
-              this.signInUser(email, password);
-            }}
-          >
-            SIGN IN
-          </Button>
-          <Typography variant="caption">
-              Don‘t have an account?
-          </Typography>
-          <Button
-            variant="flat"
-            size="large"
-            color="default"
-            classes={{
-              root: this.props.classes.register,
-            }}
-            onClick={() => {
-              this.props.history.push({
-                pathname: '/SignUp',
-                state: {},
-              });
-            }}
-          >
-            Register
-          </Button>
-        </Paper>
-        <Dialog open={this.props.auth.showDialog}>
-          <DialogTitle>{this.props.auth.errorTitle}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              {this.props.auth.errorMessage}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => { this.props.dialogType(false, '', ''); }} color="primary" autoFocus>
-              close
+      <div>
+        <div className="SignUp-Box">
+          <Hidden smDown>
+            <LeftPanel />
+          </Hidden>
+          <Paper className="SignUp-Form" style={{ backgroundColor: '#efefef' }}>
+            <img src={ghost} style={{ width: 'auto', height: 150 }} alt="ghost" />
+            <TextField
+              id="email-input"
+              label="Email"
+              classes={{ root: this.props.classes.textField }}
+              placeholder="Email"
+              margin="normal"
+              value={this.props.auth.email}
+              onChange={(event) => {
+                this.props.emailChanged(event.target.value);
+              }}
+            />
+            <TextField
+              id="password-input"
+              label="Password"
+              classes={{ root: this.props.classes.textField }}
+              type="password"
+              autoComplete="current-password"
+              margin="normal"
+              value={this.props.auth.password}
+              onChange={(event) => {
+                this.props.passwordChanged(event.target.value);
+              }}
+            />
+            <Button
+              variant="flat"
+              size="small"
+              color="default"
+              classes={{
+                root: this.props.classes.forgot,
+                label: this.props.classes.label,
+              }}
+              onClick={() => { this.sendResetEmail(this.props.auth.email); }}
+            >
+              Forgot your password?
             </Button>
-          </DialogActions>
-        </Dialog>
+            <Button
+              variant="raised"
+              size="large"
+              color="primary"
+              classes={{
+                root: this.props.classes.signIn,
+              }}
+              onClick={() => {
+                const { email, password } = this.props.auth;
+                this.signInUser(email, password);
+              }}
+            >
+              SIGN IN
+            </Button>
+            <Typography variant="caption">
+                Don‘t have an account?
+            </Typography>
+            <Button
+              variant="flat"
+              size="large"
+              color="default"
+              classes={{
+                root: this.props.classes.register,
+              }}
+              onClick={() => {
+                this.props.history.push({
+                  pathname: '/SignUp',
+                  state: {},
+                });
+              }}
+            >
+              Register
+            </Button>
+          </Paper>
+          <Dialog open={this.props.auth.showDialog}>
+            <DialogTitle>{this.props.auth.errorTitle}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                {this.props.auth.errorMessage}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => { this.props.dialogType(false, '', ''); }} color="primary" autoFocus>
+                close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+        <div style={{ position: 'absolute', top: '99vh', width: '100vw' }}>
+          {
+            this.props.auth.loading &&
+            <LinearProgress value={10} />
+          }
+        </div>
+        {
+          (isLoaded(this.props.fbauth) && (!isEmpty(this.props.fbauth))) &&
+          <Redirect
+            to={{
+              pathname: '/login',
+            }}
+          />
+        }
       </div>
     );
   }
@@ -202,10 +218,13 @@ SignIn.propTypes = {
     showDialog: PropTypes.bool.isRequired,
     errorTitle: PropTypes.string.isRequired,
     errorMessage: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
   }).isRequired,
+  fbauth: PropTypes.shape().isRequired,
   emailChanged: PropTypes.func.isRequired,
   passwordChanged: PropTypes.func.isRequired,
   signInSuccess: PropTypes.func.isRequired,
+  waitForAuth: PropTypes.func.isRequired,
   dialogType: PropTypes.func.isRequired,
   firebase: PropTypes.shape().isRequired,
   history: React.PropTypes.shape().isRequired,
@@ -214,6 +233,7 @@ SignIn.propTypes = {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    fbauth: state.firebase.auth,
   };
 }
 
@@ -223,6 +243,7 @@ function mapDispatchToProps(dispatch) {
     passwordChanged,
     dialogType,
     signInSuccess,
+    waitForAuth,
   }, dispatch);
 }
 
