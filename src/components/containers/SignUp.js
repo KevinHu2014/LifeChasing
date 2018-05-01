@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { bindActionCreators, compose } from 'redux';
 import firebase from 'firebase';
-import { firebaseConnect } from 'react-redux-firebase';
+import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { LinearProgress } from 'material-ui/Progress';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Hidden from 'material-ui/Hidden';
@@ -22,6 +24,7 @@ import {
   passwordChanged,
   dialogType,
   signUpSuccess,
+  waitForAuth,
 } from '../../actions';
 import { LeftPanel } from '../common';
 import './SignUp.css';
@@ -52,6 +55,7 @@ const styles = theme => ({
 // eslint-disable-next-line react/prefer-stateless-function
 class SignUp extends Component {
   createNewUser({ username, email, password }) {
+    this.props.waitForAuth();
     if (username.length === 0) {
       this.props.dialogType(true, 'Username-required', 'Please set an username.');
     } else if (email.length === 0) {
@@ -79,94 +83,110 @@ class SignUp extends Component {
   }
   render() {
     return (
-      <div className="SignUp-Box">
-        <Hidden smDown>
-          <LeftPanel />
-        </Hidden>
-        <Paper className="SignUp-Form">
-          <Typography variant="display1">
-              Sign Up
-          </Typography>
-          <TextField
-            id="username-input"
-            label="User name"
-            classes={{ root: this.props.classes.textField }}
-            placeholder="User name"
-            margin="normal"
-            value={this.props.auth.username}
-            onChange={(event) => {
-              this.props.usernameChanged(event.target.value);
-            }}
-          />
-          <TextField
-            id="email-input"
-            label="Email"
-            classes={{ root: this.props.classes.textField }}
-            placeholder="Email"
-            margin="normal"
-            value={this.props.auth.email}
-            onChange={(event) => {
-              this.props.emailChanged(event.target.value);
-            }}
-          />
-          <TextField
-            id="password-input"
-            label="Password"
-            classes={{ root: this.props.classes.textField }}
-            type="password"
-            autoComplete="current-password"
-            margin="normal"
-            value={this.props.auth.password}
-            onChange={(event) => {
-              this.props.passwordChanged(event.target.value);
-            }}
-          />
-          <Button
-            variant="raised"
-            size="large"
-            color="primary"
-            classes={{
-              root: this.props.classes.signUp,
-              label: this.props.classes.label,
-            }}
-            onClick={() => {
-              const { username, email, password } = this.props.auth;
-              this.createNewUser({ username, email, password });
-            }}
-          >
-            SIGNUP
-          </Button>
-          <Button
-            variant="flat"
-            size="large"
-            color="default"
-            classes={{
-              root: this.props.classes.signIn,
-              label: this.props.classes.label,
-            }}
-            onClick={() => {
-              this.props.history.push({
-                pathname: '/SignIn',
-                state: {},
-              });
-            }}
-          >
-            or Signin
-          </Button>
-        </Paper>
-        <Dialog open={this.props.auth.showDialog}>
-          <DialogTitle>{this.props.auth.errorTitle}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              {this.props.auth.errorMessage}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => { this.props.dialogType(false, '', ''); }} color="primary" autoFocus>
-              close
+      <div>
+        <div className="SignUp-Box">
+          <Hidden smDown>
+            <LeftPanel />
+          </Hidden>
+          <Paper className="SignUp-Form">
+            <Typography variant="display1">
+                Sign Up
+            </Typography>
+            <TextField
+              id="username-input"
+              label="User name"
+              classes={{ root: this.props.classes.textField }}
+              placeholder="User name"
+              margin="normal"
+              value={this.props.auth.username}
+              onChange={(event) => {
+                this.props.usernameChanged(event.target.value);
+              }}
+            />
+            <TextField
+              id="email-input"
+              label="Email"
+              classes={{ root: this.props.classes.textField }}
+              placeholder="Email"
+              margin="normal"
+              value={this.props.auth.email}
+              onChange={(event) => {
+                this.props.emailChanged(event.target.value);
+              }}
+            />
+            <TextField
+              id="password-input"
+              label="Password"
+              classes={{ root: this.props.classes.textField }}
+              type="password"
+              autoComplete="current-password"
+              margin="normal"
+              value={this.props.auth.password}
+              onChange={(event) => {
+                this.props.passwordChanged(event.target.value);
+              }}
+            />
+            <Button
+              variant="raised"
+              size="large"
+              color="primary"
+              classes={{
+                root: this.props.classes.signUp,
+                label: this.props.classes.label,
+              }}
+              onClick={() => {
+                const { username, email, password } = this.props.auth;
+                this.createNewUser({ username, email, password });
+              }}
+            >
+              SIGNUP
             </Button>
-          </DialogActions>
-        </Dialog>
+            <Button
+              variant="flat"
+              size="large"
+              color="default"
+              classes={{
+                root: this.props.classes.signIn,
+                label: this.props.classes.label,
+              }}
+              onClick={() => {
+                this.props.history.push({
+                  pathname: '/SignIn',
+                  state: {},
+                });
+              }}
+            >
+              or Signin
+            </Button>
+          </Paper>
+          <Dialog open={this.props.auth.showDialog}>
+            <DialogTitle>{this.props.auth.errorTitle}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                {this.props.auth.errorMessage}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => { this.props.dialogType(false, '', ''); }} color="primary" autoFocus>
+                close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+        <div style={{ position: 'absolute', top: '99vh', width: '100vw' }}>
+          {
+            this.props.auth.loading &&
+            <LinearProgress value={10} />
+          }
+        </div>
+        {
+          (isLoaded(this.props.fbauth) && (!isEmpty(this.props.fbauth))) &&
+          <Redirect
+            to={{
+              pathname: '/Main',
+            }}
+          />
+        }
       </div>
     );
   }
@@ -186,18 +206,22 @@ SignUp.propTypes = {
     showDialog: PropTypes.bool.isRequired,
     errorTitle: PropTypes.string.isRequired,
     errorMessage: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
   }).isRequired,
+  fbauth: React.PropTypes.shape().isRequired,
   usernameChanged: PropTypes.func.isRequired,
   emailChanged: PropTypes.func.isRequired,
   passwordChanged: PropTypes.func.isRequired,
   signUpSuccess: PropTypes.func.isRequired,
   dialogType: PropTypes.func.isRequired,
+  waitForAuth: PropTypes.func.isRequired,
   history: React.PropTypes.shape().isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    fbauth: state.firebase.auth,
   };
 }
 
@@ -208,6 +232,7 @@ function mapDispatchToProps(dispatch) {
     passwordChanged,
     dialogType,
     signUpSuccess,
+    waitForAuth,
   }, dispatch);
 }
 
