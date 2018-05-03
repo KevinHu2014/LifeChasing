@@ -39,7 +39,6 @@ const styles = theme => ({
   },
 });
 
-// eslint-disable-next-line react/prefer-stateless-function
 class StartPage extends Component {
   signInAnonymously() {
     this.props.waitForAuth();
