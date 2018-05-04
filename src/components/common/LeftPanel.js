@@ -10,13 +10,16 @@ const LeftPanel = () => (
         Life Chasing
       </Typography>
       <Typography style={{ color: '#fff' }}>
-          Culpa aliqua non minim minim enim in ea ex ex veniam qui fugiat.
-          Consequat officia tempor consectetur nulla do elit laboris. Irure
-          ullamco irure esse excepteur irure reprehenderit aute ex. Lorem
-          deserunt Lorem minim ullamco pariatur pariatur eiusmod occaecat do.
-          Amet velit cillum culpa commodo sint. Veniam quis labore ea ut consectetur
-          voluptate fugiat sint id officia incididunt. Ullamco laboris et nisi voluptate
-          ex reprehenderit culpa aliquip ut cupidatat.
+      This research is aimed at developing an age-friendly location-based game
+      prototype – Life Chasing, the goal is promoting the health of the elderly.
+      The interface design of the game follows the Universal Design and the
+      design-for-elderly guidelines. Besides various incentive mechanisms within the game play,
+      an experience evaluation module is developed in Life Chasing.
+      Based on the principle of experience design, the game will collect all game- related data,
+      including environmental data; physical information of player, etc.
+      The evaluation module returns the analytical results (including the heartbeat analysis
+      from the integrated wristband) to the player, who can setup the game that
+      best meets the individuals personal needs.
       </Typography>
     </div>
   </Paper>

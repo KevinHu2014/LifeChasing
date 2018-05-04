@@ -65,8 +65,7 @@ class StartPage extends Component {
                 Life Chasing
             </Typography>
             <Typography variant="caption" style={{ margin: 15, marginBottom: 0 }}>
-              Consequat esse amet aliqua labore adipisicing
-              aute.
+              A Location-based Game Prototype for Elderly Health Promotion
             </Typography>
             <Button
               variant="raised"
