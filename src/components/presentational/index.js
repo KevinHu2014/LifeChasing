@@ -4,3 +4,4 @@ export { default as SelectInterface } from './SelectInterface';
 export { default as SelectStart } from './SelectStart';
 export { default as SelectEnd } from './SelectEnd';
 export { default as SelectMode } from './SelectMode';
+export { default as DialogSelection } from './DialogSelection';

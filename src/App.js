@@ -16,6 +16,7 @@ import {
   SelectEnd,
   SelectMode,
   SelectInterface,
+  DialogSelection,
 } from './components/presentational';
 import {
   Main,
@@ -91,6 +92,7 @@ const App = () => (
             <Route path="/SignIn" component={SignIn} />
             <Route path="/SignUp" component={SignUp} />
             <PrivateRoute path="/Main" component={Main} />
+            <Route path="/DialogSelection" component={DialogSelection} />
             <PrivateRoute path="/SelectInterface" component={SelectInterface} />
             <PrivateRoute path="/SelectStart" component={SelectStart} />
             <PrivateRoute path="/SelectEnd" component={SelectEnd} />
