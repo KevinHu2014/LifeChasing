@@ -5,25 +5,19 @@ import Dialog, {
   DialogContent,
 } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
-import { InputLabel } from 'material-ui/Input';
-import { MenuItem } from 'material-ui/Menu';
-import { FormControl } from 'material-ui/Form';
-import Select from 'material-ui/Select';
+import Divider from 'material-ui/Divider';
 import { withStyles } from 'material-ui/styles';
 
-const styles = theme => ({
+import { DialogSelectionItem } from '../common';
+
+const styles = () => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     width: 200,
-    height: 260,
+    height: 230,
     // overflow: 'scroll',
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 150,
-    minHeight: 60,
   },
 });
 
@@ -36,139 +30,12 @@ const DialogSelection = props => (
           root: props.classes.root,
         }}
       >
-        <FormControl
-          classes={{
-            root: props.classes.formControl,
-          }}
-        >
-          <InputLabel htmlFor="age-simple">Age</InputLabel>
-          <Select
-            value=""
-            onChange={(event) => { console.log(event.target.value); }}
-            inputProps={{
-              name: 'age',
-              id: 'age-simple',
-            }}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl
-          classes={{
-            root: props.classes.formControl,
-          }}
-        >
-          <InputLabel htmlFor="age-simple">Age</InputLabel>
-          <Select
-            value=""
-            onChange={(event) => { console.log(event.target.value); }}
-            inputProps={{
-              name: 'age',
-              id: 'age-simple',
-            }}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl
-          classes={{
-            root: props.classes.formControl,
-          }}
-        >
-          <InputLabel htmlFor="age-simple">Age</InputLabel>
-          <Select
-            value=""
-            onChange={(event) => { console.log(event.target.value); }}
-            inputProps={{
-              name: 'age',
-              id: 'age-simple',
-            }}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl
-          classes={{
-            root: props.classes.formControl,
-          }}
-        >
-          <InputLabel htmlFor="age-simple">Age</InputLabel>
-          <Select
-            value=""
-            onChange={(event) => { console.log(event.target.value); }}
-            inputProps={{
-              name: 'age',
-              id: 'age-simple',
-            }}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl
-          classes={{
-            root: props.classes.formControl,
-          }}
-        >
-          <InputLabel htmlFor="age-simple">Age</InputLabel>
-          <Select
-            value=""
-            onChange={(event) => { console.log(event.target.value); }}
-            inputProps={{
-              name: 'age',
-              id: 'age-simple',
-            }}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl
-          classes={{
-            root: props.classes.formControl,
-          }}
-        >
-          <InputLabel htmlFor="age-simple">Age</InputLabel>
-          <Select
-            value=""
-            onChange={(event) => { console.log(event.target.value); }}
-            inputProps={{
-              name: 'age',
-              id: 'age-simple',
-            }}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
+        <DialogSelectionItem heading="起點" content={['捷運站', '聖言樓', '側門']} />
+        <DialogSelectionItem heading="終點" content={['國璽樓', '輔園', '中美堂']} />
+        <DialogSelectionItem heading="模式" content={['全自動', '半自動', '手動']} />
+        <DialogSelectionItem heading="手環" content={['無', '藍色', '黑色']} />
       </DialogContent>
+      <Divider />
       <DialogActions>
         <Button onClick={() => { console.log('closed!'); }} color="primary" autoFocus>
           Cancel
