@@ -10,7 +10,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
     minWidth: 180,
-    minHeight: 60,
+    minHeight: 50,
   },
 });
 
@@ -36,7 +36,7 @@ class DialogSelectionItem extends React.Component {
             id: heading,
           }}
         >
-          {content.map(item => (<MenuItem value={item}>{item}</MenuItem>))}
+          {content.map(item => (<MenuItem key={item} value={item}>{item}</MenuItem>))}
         </Select>
       </FormControl>
     );
@@ -47,7 +47,7 @@ class DialogSelectionItem extends React.Component {
 DialogSelectionItem.propTypes = {
   classes: PropTypes.shape().isRequired,
   heading: PropTypes.string.isRequired,
-  content: PropTypes.shape().isRequired,
+  content: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(DialogSelectionItem);

@@ -16,14 +16,14 @@ const styles = () => ({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     width: 200,
-    height: 230,
-    // overflow: 'scroll',
+    height: 200,
+    overflow: 'scroll',
   },
 });
 
 const DialogSelection = props => (
   <div>
-    <Dialog open autoScrollBodyContent autoDetectWindowHeight>
+    <Dialog open>
       <DialogTitle>遊戲選項</DialogTitle>
       <DialogContent
         classes={{
