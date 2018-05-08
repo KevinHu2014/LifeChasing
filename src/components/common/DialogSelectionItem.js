@@ -30,7 +30,10 @@ class DialogSelectionItem extends React.Component {
         <InputLabel htmlFor={heading}>{heading}</InputLabel>
         <Select
           value={this.state.val}
-          onChange={(event) => { this.setState({ val: event.target.value }); }}
+          onChange={(event) => {
+            this.setState({ val: event.target.value });
+            this.props.onSelect(event.target.value);
+          }}
           inputProps={{
             name: heading,
             id: heading,
@@ -47,6 +50,7 @@ class DialogSelectionItem extends React.Component {
 DialogSelectionItem.propTypes = {
   classes: PropTypes.shape().isRequired,
   heading: PropTypes.string.isRequired,
+  onSelect: PropTypes.func.isRequired,
   content: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
