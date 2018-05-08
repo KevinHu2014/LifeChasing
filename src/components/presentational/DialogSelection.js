@@ -17,7 +17,7 @@ const styles = () => ({
     justifyContent: 'flex-start',
     width: 200,
     height: 200,
-    overflow: 'scroll',
+    overflowY: 'scroll',
   },
 });
 
