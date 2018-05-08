@@ -9,12 +9,12 @@ const SelectInterface = props => (
     <ThreeButtonSelection
       header="請選擇模式"
       secondary={false}
-      first="Materail"
+      first="Material"
       second="高齡友善"
       third="隨機"
       clickHandler={(select) => {
         switch (select) {
-          case 'Materail':
+          case 'Material':
             break;
           case '高齡友善':
             props.history.push({

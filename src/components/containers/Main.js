@@ -18,7 +18,7 @@ const Main = props => (
           case '開始遊戲':
             console.log('start game');
             props.history.push({
-              pathname: '/SelectStart',
+              pathname: '/SelectInterface',
               state: {},
             });
             break;
