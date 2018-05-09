@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { ThreeButtonSelection } from '../common/';
 
 
-const SelectEnd = props => (
+const SelectMode = props => (
   <div>
     <ThreeButtonSelection
       header="請選擇模式"
@@ -26,9 +26,9 @@ const SelectEnd = props => (
   </div>
 );
 
-SelectEnd.propTypes = {
+SelectMode.propTypes = {
   history: React.PropTypes.shape().isRequired,
   location: React.PropTypes.shape().isRequired,
 };
 
-export default withRouter(SelectEnd);
+export default withRouter(SelectMode);
