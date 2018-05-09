@@ -4,21 +4,22 @@ import { withRouter } from 'react-router-dom';
 import { ThreeButtonSelection } from '../common/';
 
 
-const SelectMode = props => (
+const SelectFitbit = props => (
   <div>
     <ThreeButtonSelection
-      header="請選擇模式"
+      header="請選擇手環"
       secondary={false}
-      first="全自動"
-      second="半自動"
-      third="手動"
+      first="無"
+      second="藍色"
+      third="黑色"
       clickHandler={(a) => {
         props.history.push({
-          pathname: '/SelectFitbit',
+          pathname: '/Map',
           state: {
             start: props.location.state.start,
             end: props.location.state.end,
-            mode: a,
+            mode: props.location.state.mode,
+            fitbit: a,
           },
         });
       }}
@@ -26,9 +27,9 @@ const SelectMode = props => (
   </div>
 );
 
-SelectMode.propTypes = {
+SelectFitbit.propTypes = {
   history: React.PropTypes.shape().isRequired,
   location: React.PropTypes.shape().isRequired,
 };
 
-export default withRouter(SelectMode);
+export default withRouter(SelectFitbit);

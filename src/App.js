@@ -15,6 +15,7 @@ import {
   SelectStart,
   SelectEnd,
   SelectMode,
+  SelectFitbit,
   SelectInterface,
   DialogSelection,
 } from './components/presentational';
@@ -97,6 +98,7 @@ const App = () => (
             <PrivateRoute path="/SelectStart" component={SelectStart} />
             <PrivateRoute path="/SelectEnd" component={SelectEnd} />
             <PrivateRoute path="/SelectMode" component={SelectMode} />
+            <PrivateRoute path="/SelectFitbit" component={SelectFitbit} />
             <PrivateRoute path="/GameRecord" component={GameRecord} />
             <PrivateRoute path="/GameSegment" component={GameSegment} />
             <PrivateRoute path="/Map" component={MainMap} />
