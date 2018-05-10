@@ -30,28 +30,28 @@
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575px) {
     .paper {
-        background-color: white !important;
+        /* background-color: white !important; */
     }
  }
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767px) {
     .paper {
-        background-color: green !important;
+        /* background-color: green !important; */
     }
  }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991px) {
     .paper {
-        background-color: blue !important;
+        /* background-color: blue !important; */
     }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) and (max-width: 1199px) {
     .paper {
-        background: yellow !important;
+        /* background: yellow !important; */
         height: calc((100vh - 64px - 24px) / 2);
     }
     #two { order: 4; }
@@ -63,7 +63,7 @@
 @media (min-width: 1200px) {
     .paper {
         height: calc((100vh - 64px - 30px) / 2);
-        background: orange !important;
+        /* background: orange !important; */
     }
     #two { order: 4; }
     #three { order: 2; }
