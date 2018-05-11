@@ -118,6 +118,9 @@ class Map extends Component {
       console.log('window has focus');
       if (!(this.props.beanMap.gameStartDialog)) {
         this.props.gameDialog('pause', true);
+        setTimeout(() => {
+          this.props.gameDialog('pause', false);
+        }, 1000 * 15); // 15 seconds
       }
     }, false);
     window.addEventListener('blur', () => {
