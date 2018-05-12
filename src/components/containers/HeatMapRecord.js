@@ -1,17 +1,37 @@
 import React, { Component, PropTypes } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firebaseConnect } from 'react-redux-firebase';
 
 class HeatMapRecord extends Component {
   HandleTouch(e) {
-    console.log(this.state);
-    console.log(e.targetTouches[0].clientX);
-    console.log(e.targetTouches[0].clientY);
+    // console.log(e.targetTouches[0]);
+    // console.log(e.targetTouches[0].clientX);
+    // console.log(e.targetTouches[0].clientY);
+    // console.log(e.targetTouches[0].radiusX);
+    // console.log(e.targetTouches[0].radiusY);
+    // console.log(window.innerWidth);
+    // console.log(window.innerHeight);
+    this.props.firebase.push(
+      'touch',
+      {
+        userUid: this.props.firebaseAuth.uid,
+        gameUid: this.props.gameKey,
+        time: new Date().getTime(),
+        width: window.innerWidth,
+        height: window.innerHeight,
+        radiusX: e.targetTouches[0].radiusX,
+        radiusY: e.targetTouches[0].radiusY,
+        page: this.props.page,
+        clientX: e.targetTouches[0].clientX,
+        clientY: e.targetTouches[0].clientY,
+      },
+    );
   }
   render() {
     return (
       <div
         onTouchStart={(e) => {
-          // console.log(e.targetTouches[0].pageX);
-          console.log(this.props.gameKey);
           this.HandleTouch(e);
         }}
         role="presentation"
@@ -25,6 +45,20 @@ class HeatMapRecord extends Component {
 HeatMapRecord.propTypes = {
   children: PropTypes.node.isRequired,
   gameKey: PropTypes.string.isRequired,
+  page: PropTypes.string.isRequired,
+  firebase: PropTypes.shape().isRequired,
+  firebaseAuth: PropTypes.shape({
+    uid: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
-export default HeatMapRecord;
+function mapStateToProps(state) {
+  return {
+    firebaseAuth: state.firebase.auth,
+  };
+}
+
+export default compose(
+  firebaseConnect(),
+  connect(mapStateToProps),
+)(HeatMapRecord);
