@@ -2,9 +2,10 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { ThreeButtonSelection } from '../common/';
+import { HeatMapRecord } from '../containers';
 
 const SelectStart = props => (
-  <div>
+  <HeatMapRecord page="SelectStart">
     <ThreeButtonSelection
       header="請選擇起點"
       secondary
@@ -19,7 +20,7 @@ const SelectStart = props => (
         });
        }}
     />
-  </div>
+  </HeatMapRecord>
 );
 
 SelectStart.propTypes = {
