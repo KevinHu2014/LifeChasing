@@ -82,7 +82,6 @@ class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameKey: null,
       expectTimeCost: 805,
       expectDistance: 10,
       destination: {
@@ -178,7 +177,7 @@ class Map extends Component {
   }
 
   render() {
-    const { mode } = this.props.location.state;
+    const { mode, gameKey, theInterface } = this.props.location.state;
     return (
       <div
         onTouchStart={(e) => {
@@ -200,20 +199,14 @@ class Map extends Component {
           open={this.props.beanMap.gameStartDialog}
           onClose={() => {
             this.props.gameDialog('start', false);
-            // console.log(this.props.firebaseAuth.uid);
-            // console.log(this.state);
-            const UID = this.props.firebaseAuth.uid;
-            this.props.firebase.push(
-              'game',
+            this.props.firebase.update(
+              `game/${gameKey}`,
               {
-                userUid: UID,
                 mode,
-                interface: 'Material',
+                interface: theInterface,
+                startTime: new Date().getTime(),
               },
-            ).then(async (result) => {
-              // console.log(result.key);
-              await this.setState({ gameKey: result.key });
-            });
+            );
           }}
         >
           <GameStartDialog mode={mode} />
@@ -243,7 +236,7 @@ class Map extends Component {
             const { totalBeans, expectTimeCost } = this.state;
             // console.log(this.state.gameKey);
             this.props.firebase.update(
-              `game/${this.state.gameKey}`,
+              `game/${gameKey}`,
               {
                 beanEaten: score,
                 caughtTimes: ghostCounter,
@@ -301,9 +294,6 @@ Map.propTypes = {
     gameScore: PropTypes.number.isRequired,
     sportScore: PropTypes.number.isRequired,
   }).isRequired,
-  firebaseAuth: PropTypes.shape({
-    uid: PropTypes.string.isRequired,
-  }).isRequired,
   location: PropTypes.shape().isRequired,
   firebase: PropTypes.shape().isRequired,
   history: React.PropTypes.shape().isRequired,
@@ -314,7 +304,6 @@ function mapStateToProps(state) {
 //   console.log(state);
   return {
     beanMap: state.beanMap,
-    firebaseAuth: state.firebase.auth,
   };
 }
 
