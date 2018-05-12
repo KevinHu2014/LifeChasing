@@ -2,10 +2,10 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { ThreeButtonSelection } from '../common/';
-
+import { HeatMapRecord } from '../containers';
 
 const SelectEnd = props => (
-  <div>
+  <HeatMapRecord page="SelectEnd" gameKey={props.location.state.gameKey}>
     <ThreeButtonSelection
       header="請選擇終點"
       secondary
@@ -16,13 +16,14 @@ const SelectEnd = props => (
         props.history.push({
           pathname: '/SelectMode',
           state: {
+            gameKey: props.location.state.gameKey,
             start: props.location.state.start,
             end: a,
           },
         });
       }}
     />
-  </div>
+  </HeatMapRecord>
 );
 
 SelectEnd.propTypes = {

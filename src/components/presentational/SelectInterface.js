@@ -26,6 +26,9 @@ class SelectInterface extends React.Component {
               case '高齡友善':
                 this.props.history.push({
                   pathname: '/SelectStart',
+                  state: {
+                    gameKey: this.props.location.state.gameKey,
+                  },
                 });
                 break;
               case '隨機':
@@ -46,6 +49,8 @@ class SelectInterface extends React.Component {
             this.props.history.push({
               pathname: '/Map',
               state: {
+                theInterface: 'Material',
+                gameKey: this.props.location.state.gameKey,
                 start,
                 end,
                 mode,
@@ -60,6 +65,7 @@ class SelectInterface extends React.Component {
 
 SelectInterface.propTypes = {
   history: React.PropTypes.shape().isRequired,
+  location: React.PropTypes.shape().isRequired,
 };
 
 export default withRouter(SelectInterface);

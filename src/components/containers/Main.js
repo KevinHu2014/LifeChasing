@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { withFirebase } from 'react-redux-firebase';
+import { firebaseConnect } from 'react-redux-firebase';
+import { compose } from 'recompose';
 
 import { ThreeButtonSelection } from '../common';
 
@@ -17,9 +19,18 @@ const Main = props => (
         switch (a) {
           case '開始遊戲':
             console.log('start game');
-            props.history.push({
-              pathname: '/SelectInterface',
-              state: {},
+            console.log(props.firebaseAuth.uid);
+            props.firebase.push(
+              'game',
+              {
+                userUid: props.firebaseAuth.uid,
+              },
+            ).then(async (result) => {
+              // console.log(result.key);
+              props.history.push({
+                pathname: '/SelectInterface',
+                state: { gameKey: result.key },
+              });
             });
             break;
           case '查詢記錄':
@@ -48,6 +59,20 @@ const Main = props => (
 Main.propTypes = {
   firebase: PropTypes.shape().isRequired,
   history: React.PropTypes.shape().isRequired,
+  firebaseAuth: PropTypes.shape({
+    uid: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
-export default withRouter(withFirebase(Main));
+function mapStateToProps(state) {
+  return {
+    firebaseAuth: state.firebase.auth,
+  };
+}
+
+const main = compose(
+  firebaseConnect(),
+  connect(mapStateToProps),
+)(Main);
+
+export default withRouter(main);

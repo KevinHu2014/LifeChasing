@@ -5,7 +5,7 @@ import { ThreeButtonSelection } from '../common/';
 import { HeatMapRecord } from '../containers';
 
 const SelectStart = props => (
-  <HeatMapRecord page="SelectStart">
+  <HeatMapRecord page="SelectStart" gameKey={props.location.state.gameKey}>
     <ThreeButtonSelection
       header="請選擇起點"
       secondary
@@ -16,7 +16,10 @@ const SelectStart = props => (
         console.log(a);
         props.history.push({
           pathname: '/SelectEnd',
-          state: { start: a },
+          state: {
+            gameKey: props.location.state.gameKey,
+            start: a,
+          },
         });
        }}
     />
@@ -25,6 +28,7 @@ const SelectStart = props => (
 
 SelectStart.propTypes = {
   history: React.PropTypes.shape().isRequired,
+  location: React.PropTypes.shape().isRequired,
 };
 
 export default withRouter(SelectStart);

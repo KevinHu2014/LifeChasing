@@ -11,6 +11,7 @@ class HeatMapRecord extends Component {
       <div
         onTouchStart={(e) => {
           // console.log(e.targetTouches[0].pageX);
+          console.log(this.props.gameKey);
           this.HandleTouch(e);
         }}
         role="presentation"
@@ -23,6 +24,7 @@ class HeatMapRecord extends Component {
 
 HeatMapRecord.propTypes = {
   children: PropTypes.node.isRequired,
+  gameKey: PropTypes.string.isRequired,
 };
 
 export default HeatMapRecord;
