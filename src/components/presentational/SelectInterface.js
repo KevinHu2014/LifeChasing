@@ -40,6 +40,7 @@ class SelectInterface extends React.Component {
         />
         <DialogSelection
           open={this.state.open}
+          gameKey={this.props.location.state.gameKey}
           deny={() => {
             this.setState({ open: false });
           }}
