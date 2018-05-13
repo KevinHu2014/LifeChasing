@@ -72,7 +72,9 @@ class DialogSelection extends React.Component {
                 const {
                  start, end, mode, fitbit,
                 } = this.state;
-                this.props.apply(start, end, mode, fitbit);
+                if (start.length && end.length && mode.length && fitbit.length) {
+                  this.props.apply(start, end, mode, fitbit);
+                }
               }}
               color="primary"
               autoFocus
