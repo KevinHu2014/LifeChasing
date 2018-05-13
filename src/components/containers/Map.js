@@ -70,6 +70,9 @@ const MapWithAMarkerClusterer = compose(
         {props.markers.map(marker => (
           <Marker
             key={marker.id}
+            icon={{
+              url: 'https://firebasestorage.googleapis.com/v0/b/life-chasing.appspot.com/o/candy.png?alt=media&token=48fc705b-8bdc-48fb-9bd3-72669cb55f35', // pass your image here
+            }}
             onClick={() => { console.log(`${marker.latitude}, ${marker.longitude}`); }}
             position={{ lat: marker.latitude, lng: marker.longitude }}
           />
