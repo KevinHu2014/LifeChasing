@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+// import List from 'material-ui/List';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import { withRouter } from 'react-router-dom';
@@ -12,27 +13,76 @@ import { BackAppBar } from '../common';
 class GameRecord extends Component {
   renderListItem() {
     if (isLoaded(this.props.game)) {
+      /**
+       將原本的 object key 寫進陣列
+       this.props.game <- object
+       {
+         Lqwer123: {
+           startTime: 111111,
+           expectTimeCost: 1113333,
+           .....
+         },
+         Lqwer456: {
+           startTime: 111111,
+           expectTimeCost: 1113333,
+           .....
+         },
+         Lqwer789: {
+           startTime: 111111,
+           expectTimeCost: 1113333,
+           .....
+         },
+       }
+       改寫後
+       gameItem <- 仍然是 object
+
+       {
+         Lqwer123: {
+           key: 'Lqwer123',
+           startTime: 111111,
+           expectTimeCost: 1113333,
+           .....
+         },
+         Lqwer456: {
+           key: 'Lqwer456',
+           startTime: 111111,
+           expectTimeCost: 1113333,
+           .....
+         },
+         Lqwer789: {
+           key: 'Lqwer789',
+           startTime: 111111,
+           expectTimeCost: 1113333,
+           .....
+         },
+       }
+       */
+      const gameItem = Object.keys(this.props.game).map(i => (
+        Object.assign(this.props.game[i], { key: i })
+      ));
+      // console.log(typeof (gameItem));
       return (
         <List>
           {
-            Object.values(this.props.game).map((item) => {
-              console.log(item);
+            Object.values(gameItem).map((item) => {
+              console.log(item.key);
               const date = new Date();
               date.setTime(item.startTime);
               // millisecond -> minute
               const costMinute = Math.round(item.expectTimeCost / 1000 / 60);
               return (
-                <div key={item.startTime}>
-                  <ListItem divider>
-                    <Avatar>
-                      {item.mode[0]}
-                    </Avatar>
-                    <ListItemText
-                      primary={`${costMinute} Min`}
-                      secondary={date.toDateString()}
-                    />
-                  </ListItem>
-                </div>
+                <ListItem
+                  key={item.key}
+                  divider
+                >
+                  <Avatar>
+                    {item.mode[0]}
+                  </Avatar>
+                  <ListItemText
+                    primary={`${costMinute} Min`}
+                    secondary={date.toDateString()}
+                  />
+                </ListItem>
               );
             })
           }
