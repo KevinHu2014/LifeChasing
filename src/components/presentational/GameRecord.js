@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import Divider from 'material-ui/Divider';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -24,7 +23,7 @@ class GameRecord extends Component {
               const costMinute = Math.round(item.expectTimeCost / 1000 / 60);
               return (
                 <div key={item.startTime}>
-                  <ListItem>
+                  <ListItem divider>
                     <Avatar>
                       {item.mode[0]}
                     </Avatar>
@@ -33,7 +32,6 @@ class GameRecord extends Component {
                       secondary={date.toDateString()}
                     />
                   </ListItem>
-                  <Divider />
                 </div>
               );
             })
