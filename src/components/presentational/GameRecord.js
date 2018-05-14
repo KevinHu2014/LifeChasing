@@ -5,23 +5,12 @@ import Divider from 'material-ui/Divider';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect, isLoaded } from 'react-redux-firebase';
+import { LinearProgress } from 'material-ui/Progress';
 
 import { BackAppBar } from '../common';
 
 class GameRecord extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { };
-  }
-  componentDidMount() {
-    if (!isLoaded(this.props.game)) {
-      console.log(this.props.game);
-    }
-    if (isEmpty(this.props.game)) {
-      console.log('empty');
-    }
-  }
   renderListItem() {
     if (isLoaded(this.props.game)) {
       return (
@@ -52,7 +41,7 @@ class GameRecord extends Component {
         </List>
       );
     }
-    return (<div />);
+    return (<LinearProgress value={10} />);
   }
   render() {
     return (
