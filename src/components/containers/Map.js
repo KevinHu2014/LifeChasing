@@ -241,6 +241,7 @@ class Map extends Component {
             this.props.firebase.update(
               `game/${gameKey}`,
               {
+                mode,
                 beanEaten: score,
                 caughtTimes: ghostCounter,
                 totalDistance: distance,
@@ -256,7 +257,7 @@ class Map extends Component {
             this.props.gameDialog('end', false);
             this.props.history.push({
               pathname: '/GameSegment',
-              state: {},
+              state: { key: gameKey },
             });
           }}
         >

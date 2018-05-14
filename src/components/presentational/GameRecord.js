@@ -65,25 +65,34 @@ class GameRecord extends Component {
         <List>
           {
             Object.values(gameItem).map((item) => {
-              console.log(item.key);
-              const date = new Date();
-              date.setTime(item.startTime);
-              // millisecond -> minute
-              const costMinute = Math.round(item.expectTimeCost / 1000 / 60);
-              return (
-                <ListItem
-                  key={item.key}
-                  divider
-                >
-                  <Avatar>
-                    {item.mode[0]}
-                  </Avatar>
-                  <ListItemText
-                    primary={`${costMinute} Min`}
-                    secondary={date.toDateString()}
-                  />
-                </ListItem>
-              );
+              if (item.mode !== undefined) {
+                console.log(item.key);
+                const date = new Date();
+                date.setTime(item.startTime);
+                // millisecond -> minute
+                const costMinute = Math.round(item.expectTimeCost / 1000 / 60);
+                return (
+                  <ListItem
+                    key={item.key}
+                    divider
+                    onClick={() => {
+                      this.props.history.push({
+                        pathname: '/GameSegment',
+                        state: { key: item.key },
+                      });
+                    }}
+                  >
+                    <Avatar>
+                      {item.mode[0]}
+                    </Avatar>
+                    <ListItemText
+                      primary={`${costMinute} Min`}
+                      secondary={date.toDateString()}
+                    />
+                  </ListItem>
+                );
+              }
+              return true;
             })
           }
         </List>
