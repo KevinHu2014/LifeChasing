@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import Dialog, {
   DialogActions,
   DialogTitle,
@@ -11,7 +11,7 @@ import { withStyles } from 'material-ui/styles';
 import { DialogSelectionItem } from '../common';
 import { HeatMapRecord } from '../containers';
 
-const styles = () => ({
+const styles = {
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -20,9 +20,9 @@ const styles = () => ({
     height: 200,
     overflowY: 'scroll',
   },
-});
+};
 
-class DialogSelection extends React.Component {
+class DialogSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
