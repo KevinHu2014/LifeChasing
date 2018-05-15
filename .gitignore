@@ -11,6 +11,7 @@
 
 # firebase config
 /src/firebaseConfig.js
+/src/setting.js
 
 # misc
 .DS_Store
