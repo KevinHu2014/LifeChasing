@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import ReduxPromise from 'redux-promise';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -44,7 +45,7 @@ const store = createStore(
   reducers,
   compose(
     reactReduxFirebase(firebase, config),
-    applyMiddleware(ReduxPromise, logger),
+    applyMiddleware(ReduxPromise, thunk, logger),
   ),
 );
 
