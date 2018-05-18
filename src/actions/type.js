@@ -16,3 +16,8 @@ export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
 export const WAIT_FOR_AUTH = 'WAIT_FOR_AUTH';
 export const GAME_DIALOG = 'GAME_DIALOG';
 export const GAME_END = 'GAME_END';
+
+// Weather Actions
+export const FETCH_WEATHER = 'FETCH_WEATHER';
+export const GET_WEATHER_SUCCESS = 'GET_WEATHER_SUCCESS';
+export const GET_WEATHER_FAIL = 'GET_WEATHER_FAIL';
