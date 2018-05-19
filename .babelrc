@@ -7,7 +7,11 @@
       "polyfill": false,
       "regenerator": true
     }],
-    ["transform-react-jsx"],
-    ["transform-remove-console"]
-  ]
+    ["transform-react-jsx"]
+  ],
+  "env": {
+    "production": {
+      "plugins": ["transform-remove-console"]
+    }
+  }
 }
