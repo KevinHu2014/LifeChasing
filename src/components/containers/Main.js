@@ -6,7 +6,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'recompose';
 
 import { ThreeButtonSelection } from '../common';
-import { fetchWeather } from '../../actions';
+import { fetchWeather, checkWeatherCondition } from '../../actions';
 
 class Main extends Component {
   componentDidMount() {
@@ -33,14 +33,22 @@ class Main extends Component {
           third="登出"
           clickHandler={(a) => {
             console.log(a);
+            const {
+              weatherID, sunrise, sunset, light,
+            } = this.props.weather;
             switch (a) {
               case '開始遊戲':
                 console.log('start game');
                 console.log(this.props.firebaseAuth.uid);
+                this.props.checkWeatherCondition(new Date().getTime());
                 this.props.firebase.push(
                   'game',
                   {
                     userUid: this.props.firebaseAuth.uid,
+                    weatherID,
+                    sunrise,
+                    sunset,
+                    light,
                   },
                 ).then(async (result) => {
                   // console.log(result.key);
@@ -82,16 +90,19 @@ Main.propTypes = {
     uid: PropTypes.string.isRequired,
   }).isRequired,
   fetchWeather: PropTypes.func.isRequired,
+  checkWeatherCondition: PropTypes.func.isRequired,
+  weather: PropTypes.shape().isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     firebaseAuth: state.firebase.auth,
+    weather: state.weather,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchWeather }, dispatch);
+  return bindActionCreators({ fetchWeather, checkWeatherCondition }, dispatch);
 }
 
 
