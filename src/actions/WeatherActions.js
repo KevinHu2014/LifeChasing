@@ -23,11 +23,11 @@ export const getWeatherFail = (dispatch, err) => {
 
 export const fetchWeather = (latitude, longitude) => async (dispatch) => {
   dispatch({ type: FETCH_WEATHER });
-  const url = `api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${setting.weatherAPIKey}`;
+  const url = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${setting.weatherAPIKey}`;
   axios.get(url)
     .then((response) => {
-      console.log(response);
-      getWeatherSuccess(dispatch, response);
+      console.log(response.data);
+      getWeatherSuccess(dispatch, response.data);
     })
     .catch((err) => { getWeatherFail(dispatch, err); });
 };
