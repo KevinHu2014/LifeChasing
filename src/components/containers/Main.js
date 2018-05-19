@@ -54,7 +54,7 @@ class Main extends Component {
                   // console.log(result.key);
                   this.props.history.push({
                     pathname: '/SelectInterface',
-                    state: { gameKey: result.key },
+                    state: { gameKey: result.key, light },
                   });
                 });
                 break;
