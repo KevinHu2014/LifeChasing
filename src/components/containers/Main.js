@@ -5,14 +5,12 @@ import { withRouter } from 'react-router-dom';
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'recompose';
 import { I18n } from 'react-i18next';
-import i18n from '../../i18n';
 
 import { ThreeButtonSelection } from '../common';
 import { fetchWeather, checkWeatherCondition } from '../../actions';
 
 class Main extends Component {
   componentDidMount() {
-    i18n.changeLanguage('en');
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const lat = position.coords.latitude;
@@ -32,18 +30,18 @@ class Main extends Component {
           t => (
             <div>
               <ThreeButtonSelection
-                header={t('title')}
+                header={t('main.title')}
                 secondary
-                first="開始遊戲"
-                second="查詢記錄"
-                third="登出"
+                first={t('main.start_game')}
+                second={t('main.see_record')}
+                third={t('main.logout')}
                 clickHandler={(a) => {
                   console.log(a);
                   const {
                     weatherID, sunrise, sunset, light,
                   } = this.props.weather;
                   switch (a) {
-                    case '開始遊戲':
+                    case t('main.start_game'):
                       console.log('start game');
                       console.log(this.props.firebaseAuth.uid);
                       this.props.checkWeatherCondition(new Date().getTime());
@@ -64,14 +62,14 @@ class Main extends Component {
                         });
                       });
                       break;
-                    case '查詢記錄':
+                    case t('main.see_record'):
                       console.log('check record');
                       this.props.history.push({
                         pathname: '/GameRecord',
                         state: {},
                       });
                       break;
-                    case '登出':
+                    case t('main.logout'):
                       console.log('logout');
                       this.props.firebase.logout();
                       this.props.history.push({

@@ -1,7 +1,17 @@
 {
   "title": "Life Chasing",
-  "description": {
-    "part1": "To get started, edit <1>src/App.js</1> and save to reload.",
-    "part2": "Switch language between english and german using buttons above."
+  "description": "",
+  "main": {
+    "title": "Life Chasing",
+    "start_game": "Start",
+    "see_record": "Record",
+    "logout": "Logout"
+  },
+  "interface": {
+    "title": "Select Interface",
+    "material": "Material",
+    "elder_friendly": "Friendly",
+    "random": "Random"
   }
+
 }

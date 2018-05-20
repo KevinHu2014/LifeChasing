@@ -1,7 +1,16 @@
 {
   "title": "長壽精靈",
-  "description": {
-    "part1": "Um loszulegen, ändere <1>src/App(DE).js</1> speicheren und neuladen.",
-    "part2": "Ändere die Sprachen zwischen deutsch und englisch mit Hilfe der beiden Schalter."
+  "description": "",
+  "main": {
+    "title": "長壽精靈",
+    "start_game": "開始遊戲",
+    "see_record": "查詢記錄",
+    "logout": "登出"
+  },
+  "interface": {
+    "title": "請選擇模式",
+    "material": "Material",
+    "elder_friendly": "高齡友善",
+    "random": "隨機"
   }
 }
