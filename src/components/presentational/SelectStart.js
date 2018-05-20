@@ -1,29 +1,36 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { I18n } from 'react-i18next';
 
 import { ThreeButtonSelection } from '../common/';
 import { HeatMapRecord } from '../containers';
 
 const SelectStart = props => (
-  <HeatMapRecord page="SelectStart" gameKey={props.location.state.gameKey}>
-    <ThreeButtonSelection
-      header="請選擇起點"
-      secondary
-      first="捷運站"
-      second="聖言樓"
-      third="側門"
-      clickHandler={(a) => {
-        console.log(a);
-        props.history.push({
-          pathname: '/SelectEnd',
-          state: {
-            gameKey: props.location.state.gameKey,
-            start: a,
-          },
-        });
-       }}
-    />
-  </HeatMapRecord>
+  <I18n>
+    {
+      t => (
+        <HeatMapRecord page="SelectStart" gameKey={props.location.state.gameKey}>
+          <ThreeButtonSelection
+            header={t('start.title')}
+            secondary
+            first={t('start.mrt')}
+            second={t('start.sf')}
+            third={t('start.lane')}
+            clickHandler={(a) => {
+              console.log(a);
+              props.history.push({
+                pathname: '/SelectEnd',
+                state: {
+                  gameKey: props.location.state.gameKey,
+                  start: a,
+                },
+              });
+            }}
+          />
+        </HeatMapRecord>
+      )
+    }
+  </I18n>
 );
 
 SelectStart.propTypes = {

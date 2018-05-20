@@ -12,5 +12,36 @@
     "material": "Material",
     "elder_friendly": "高齡友善",
     "random": "隨機"
+  },
+  "start": {
+    "title": "請選擇起點",
+    "subtitle": "起點",
+    "mrt": "捷運站",
+    "sf": "聖言樓",
+    "lane": "514巷"
+  },
+  "end": {
+    "title": "請選擇終點",
+    "subtitle": "終點",
+    "hopital": "輔大醫院",
+    "cafeteria": "輔園",
+    "auditorium": "中美堂"
+  },
+  "mode": {
+    "title": "請選擇模式",
+    "subtitle": "模式",
+    "full": "全自動",
+    "semi": "半自動",
+    "manual": "手動"
+  },
+  "fitbit": {
+    "title": "請選擇手環",
+    "subtitle": "手環",
+    "none": "無",
+    "blue": "藍色",
+    "black": "黑色"
+  },
+  "material": {
+    "title": "遊戲選項"
   }
 }

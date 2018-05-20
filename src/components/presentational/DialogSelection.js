@@ -7,6 +7,7 @@ import Dialog, {
 import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
 import { withStyles } from 'material-ui/styles';
+import { I18n } from 'react-i18next';
 
 import { DialogSelectionItem } from '../common';
 import { HeatMapRecord } from '../containers';
@@ -34,59 +35,65 @@ class DialogSelection extends Component {
   }
   render() {
     return (
-      <div>
-        <Dialog open={this.props.open}>
-          <HeatMapRecord page="DialogSelection" gameKey={this.props.gameKey}>
-            <DialogTitle>遊戲選項</DialogTitle>
-            <DialogContent
-              classes={{
-                root: this.props.classes.root,
-              }}
-            >
-              <DialogSelectionItem
-                heading="起點"
-                content={['捷運站', '聖言樓', '側門']}
-                onSelect={(val) => { this.setState({ start: val }); }}
-              />
-              <DialogSelectionItem
-                heading="終點"
-                content={['國璽樓', '輔園', '中美堂']}
-                onSelect={(val) => { this.setState({ end: val }); }}
-              />
-              <DialogSelectionItem
-                heading="模式"
-                content={['全自動', '半自動', '手動']}
-                onSelect={(val) => { this.setState({ mode: val }); }}
-              />
-              <DialogSelectionItem
-                heading="手環"
-                content={['無', '藍色', '黑色']}
-                onSelect={(val) => { this.setState({ fitbit: val }); }}
-              />
-            </DialogContent>
-            <Divider />
-            <DialogActions>
-              <Button onClick={() => { this.props.deny(); }} color="primary" autoFocus>
-                Cancel
-              </Button>
-              <Button
-                onClick={() => {
-                  const {
-                  start, end, mode, fitbit,
-                  } = this.state;
-                  if (start.length && end.length && mode.length && fitbit.length) {
-                    this.props.apply(start, end, mode, fitbit);
-                  }
-                }}
-                color="primary"
-                autoFocus
-              >
-                Ok
-              </Button>
-            </DialogActions>
-          </HeatMapRecord>
-        </Dialog>
-      </div>
+      <I18n>
+        {
+          t => (
+            <div>
+              <Dialog open={this.props.open}>
+                <HeatMapRecord page="DialogSelection" gameKey={this.props.gameKey}>
+                  <DialogTitle>{t('material.title')}</DialogTitle>
+                  <DialogContent
+                    classes={{
+                      root: this.props.classes.root,
+                    }}
+                  >
+                    <DialogSelectionItem
+                      heading={t('start.subtitle')}
+                      content={[t('start.mrt'), t('start.sf'), t('start.lane')]}
+                      onSelect={(val) => { this.setState({ start: val }); }}
+                    />
+                    <DialogSelectionItem
+                      heading={t('end.subtitle')}
+                      content={[t('end.hopital'), t('end.cafeteria'), t('end.auditorium')]}
+                      onSelect={(val) => { this.setState({ end: val }); }}
+                    />
+                    <DialogSelectionItem
+                      heading={t('mode.subtitle')}
+                      content={[t('mode.full'), t('mode.semi'), t('mode.manual')]}
+                      onSelect={(val) => { this.setState({ mode: val }); }}
+                    />
+                    <DialogSelectionItem
+                      heading={t('fitbit.subtitle')}
+                      content={[t('fitbit.none'), t('fitbit.blue'), t('fitbit.black')]}
+                      onSelect={(val) => { this.setState({ fitbit: val }); }}
+                    />
+                  </DialogContent>
+                  <Divider />
+                  <DialogActions>
+                    <Button onClick={() => { this.props.deny(); }} color="primary" autoFocus>
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        const {
+                        start, end, mode, fitbit,
+                        } = this.state;
+                        if (start.length && end.length && mode.length && fitbit.length) {
+                          this.props.apply(start, end, mode, fitbit);
+                        }
+                      }}
+                      color="primary"
+                      autoFocus
+                    >
+                      Ok
+                    </Button>
+                  </DialogActions>
+                </HeatMapRecord>
+              </Dialog>
+            </div>
+          )
+        }
+      </I18n>
     );
   }
 }

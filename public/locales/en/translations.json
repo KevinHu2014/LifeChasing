@@ -12,6 +12,37 @@
     "material": "Material",
     "elder_friendly": "Friendly",
     "random": "Random"
+  },
+  "start": {
+    "title": "Select Start",
+    "subtitle": "Start",
+    "mrt": "FJU MRT",
+    "sf": "Xavier",
+    "lane": "514 Lane"
+  },
+  "end": {
+    "title": "Select Destination",
+    "subtitle": "Destination",
+    "hopital": "Hopital",
+    "cafeteria": "Cafeteria",
+    "auditorium": "Auditorium"
+  },
+  "mode": {
+    "title": "Select Mode",
+    "subtitle": "Mode",
+    "full": "Full Auto",
+    "semi": "Semi Auto",
+    "manual": "Manual"
+  },
+  "fitbit": {
+    "title": "Select Fitbit",
+    "subtitle": "Fitbit",
+    "none": "None",
+    "blue": "Blue",
+    "black": "Black"
+  },
+  "material": {
+    "title": "Game selection"
   }
 
 }
