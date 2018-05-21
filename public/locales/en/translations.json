@@ -43,6 +43,11 @@
   },
   "material": {
     "title": "Game selection"
+  },
+  "map": {
+    "start": "Game Start",
+    "pause": "Game Pause",
+    "end": "Game Over"
   }
 
 }

@@ -6,6 +6,7 @@ import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
+import { I18n } from 'react-i18next';
 
 import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed, gameDialog, gameEnd } from '../../actions';
 import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../common';
@@ -182,92 +183,98 @@ class Map extends Component {
   render() {
     const { mode, gameKey, theInterface } = this.props.location.state;
     return (
-      <div
-        onTouchStart={(e) => {
-          // console.log(e.targetTouches[0].pageX);
-          this.HandleTouch(e);
-        }}
-        role="presentation"
-      >
-        <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
-        <MapWithAMarkerClusterer
-          id="map"
-          markers={this.props.beanMap.markers}
-          showDirections={mode === '半自動'}
-        />
-        <MapDialog
-          id="start"
-          title="遊戲開始"
-          buttonText="ok"
-          open={this.props.beanMap.gameStartDialog}
-          onClose={() => {
-            this.props.gameDialog('start', false);
-            this.props.firebase.update(
-              `game/${gameKey}`,
-              {
-                mode,
-                interface: theInterface,
-                startTime: new Date().getTime(),
-              },
-            );
-          }}
-        >
-          <GameStartDialog mode={mode} />
-        </MapDialog>
-        <MapDialog
-          id="pause"
-          title="遊戲暫停"
-          buttonText="continue"
-          open={this.props.beanMap.gamePauseDialog}
-          onClose={() => {
-            this.props.gameDialog('pause', false);
-          }}
-        >
-          <GamePauseDialog pill={5} ghost={1} speed={5} />
-        </MapDialog>
-        <MapDialog
-          id="end"
-          title="遊戲結束"
-          buttonText="ok"
-          open={this.props.beanMap.gameEndDialog}
-          onClose={() => {
-            const {
-              score, ghostCounter, distance, totalTime, maxSpeed,
-              gameScore, sportScore,
-            } = this.props.beanMap;
+      <I18n>
+        {
+          t => (
+            <div
+              onTouchStart={(e) => {
+                // console.log(e.targetTouches[0].pageX);
+                this.HandleTouch(e);
+              }}
+              role="presentation"
+            >
+              <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
+              <MapWithAMarkerClusterer
+                id="map"
+                markers={this.props.beanMap.markers}
+                showDirections={mode === t('mode.semi')}
+              />
+              <MapDialog
+                id="start"
+                title={t('map.start')}
+                buttonText="ok"
+                open={this.props.beanMap.gameStartDialog}
+                onClose={() => {
+                  this.props.gameDialog('start', false);
+                  this.props.firebase.update(
+                    `game/${gameKey}`,
+                    {
+                      mode,
+                      interface: theInterface,
+                      startTime: new Date().getTime(),
+                    },
+                  );
+                }}
+              >
+                <GameStartDialog mode={mode} />
+              </MapDialog>
+              <MapDialog
+                id="pause"
+                title={t('map.pause')}
+                buttonText="continue"
+                open={this.props.beanMap.gamePauseDialog}
+                onClose={() => {
+                  this.props.gameDialog('pause', false);
+                }}
+              >
+                <GamePauseDialog pill={5} ghost={1} speed={5} />
+              </MapDialog>
+              <MapDialog
+                id="end"
+                title={t('map.end')}
+                buttonText="ok"
+                open={this.props.beanMap.gameEndDialog}
+                onClose={() => {
+                  const {
+                    score, ghostCounter, distance, totalTime, maxSpeed,
+                    gameScore, sportScore,
+                  } = this.props.beanMap;
 
-            const { totalBeans, expectTimeCost } = this.state;
-            // console.log(this.state.gameKey);
-            this.props.firebase.update(
-              `game/${gameKey}`,
-              {
-                mode,
-                beanEaten: score,
-                caughtTimes: ghostCounter,
-                totalDistance: distance,
-                timeSpent: totalTime,
-                heartRate: 1, // hard code
-                maxSpeed,
-                gameScore,
-                sportScore,
-                totalBeans,
-                expectTimeCost,
-              },
-            );
-            this.props.gameDialog('end', false);
-            this.props.history.push({
-              pathname: '/GameSegment',
-              state: { key: gameKey },
-            });
-          }}
-        >
-          <GameEndDialog
-            pill={this.props.beanMap.score}
-            exercise={this.props.beanMap.sportScore}
-            game={this.props.beanMap.gameScore}
-          />
-        </MapDialog>
-      </div>
+                  const { totalBeans, expectTimeCost } = this.state;
+                  // console.log(this.state.gameKey);
+                  this.props.firebase.update(
+                    `game/${gameKey}`,
+                    {
+                      mode,
+                      beanEaten: score,
+                      caughtTimes: ghostCounter,
+                      totalDistance: distance,
+                      timeSpent: totalTime,
+                      heartRate: 1, // hard code
+                      maxSpeed,
+                      gameScore,
+                      sportScore,
+                      totalBeans,
+                      expectTimeCost,
+                    },
+                  );
+                  this.props.gameDialog('end', false);
+                  this.props.history.push({
+                    pathname: '/GameSegment',
+                    state: { key: gameKey },
+                  });
+                }}
+              >
+                <GameEndDialog
+                  pill={this.props.beanMap.score}
+                  exercise={this.props.beanMap.sportScore}
+                  game={this.props.beanMap.gameScore}
+                />
+              </MapDialog>
+            </div>
+          )
+        }
+      </I18n>
     );
   }
 }
