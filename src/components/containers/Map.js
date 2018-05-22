@@ -11,6 +11,7 @@ import { I18n } from 'react-i18next';
 import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed, gameDialog, gameEnd } from '../../actions';
 import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../common';
 import Distance from '../../Distance';
+import HeatMapRecord from './HeatMapRecord';
 
 /* global google */
 const MapWithAMarkerClusterer = compose(
@@ -135,12 +136,6 @@ class Map extends Component {
     navigator.geolocation.clearWatch(this.watchId);
   }
 
-  HandleTouch(e) {
-    console.log(this.state);
-    console.log(e.targetTouches[0].clientX);
-    console.log(e.targetTouches[0].clientY);
-  }
-
   SetAlarm(minutes) {
     this.props.setTimer(minutes);
     setTimeout(() => {
@@ -181,17 +176,17 @@ class Map extends Component {
   }
 
   render() {
-    const { mode, gameKey, theInterface } = this.props.location.state;
+    const {
+      mode, light, gameKey, theInterface,
+    } = this.props.location.state;
     return (
       <I18n>
         {
           t => (
-            <div
-              onTouchStart={(e) => {
-                // console.log(e.targetTouches[0].pageX);
-                this.HandleTouch(e);
-              }}
-              role="presentation"
+            <HeatMapRecord
+              page="Map"
+              light={light}
+              gameKey={gameKey}
             >
               <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
               <MapWithAMarkerClusterer
@@ -271,7 +266,7 @@ class Map extends Component {
                   game={this.props.beanMap.gameScore}
                 />
               </MapDialog>
-            </div>
+            </HeatMapRecord>
           )
         }
       </I18n>
