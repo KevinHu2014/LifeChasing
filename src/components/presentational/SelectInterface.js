@@ -32,6 +32,7 @@ class SelectInterface extends React.Component {
                         pathname: '/SelectStart',
                         state: {
                           gameKey: this.props.location.state.gameKey,
+                          light: this.props.location.state.light,
                         },
                       });
                       break;
@@ -48,7 +49,8 @@ class SelectInterface extends React.Component {
                 deny={() => {
                   this.setState({ open: false });
                 }}
-                apply={(start, end, mode, fitbit) => {
+                light={false} // Material 模式沒有動態介面，所以恆為 false
+                apply={(start, end, mode, fitbit, light) => {
                   console.log(fitbit);
                   this.setState({ open: false });
                   this.props.history.push({
@@ -59,6 +61,7 @@ class SelectInterface extends React.Component {
                       start,
                       end,
                       mode,
+                      light,
                     },
                   });
                 }}

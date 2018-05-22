@@ -9,7 +9,11 @@ const SelectEnd = props => (
   <I18n>
     {
       t => (
-        <HeatMapRecord page="SelectEnd" gameKey={props.location.state.gameKey}>
+        <HeatMapRecord
+          page="SelectEnd"
+          light={props.location.state.light}
+          gameKey={props.location.state.gameKey}
+        >
           <ThreeButtonSelection
             header={t('end.title')}
             secondary
@@ -20,6 +24,7 @@ const SelectEnd = props => (
               props.history.push({
                 pathname: '/SelectMode',
                 state: {
+                  light: props.location.state.light,
                   gameKey: props.location.state.gameKey,
                   start: props.location.state.start,
                   end: a,

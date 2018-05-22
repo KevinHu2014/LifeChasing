@@ -9,7 +9,11 @@ const SelectFitbit = props => (
   <I18n>
     {
       t => (
-        <HeatMapRecord page="SelectFitbit" gameKey={props.location.state.gameKey}>
+        <HeatMapRecord
+          page="SelectFitbit"
+          light={props.location.state.light}
+          gameKey={props.location.state.gameKey}
+        >
           <ThreeButtonSelection
             header={t('fitbit.title')}
             secondary={false}
@@ -20,6 +24,7 @@ const SelectFitbit = props => (
               props.history.push({
                 pathname: '/Map',
                 state: {
+                  light: props.location.state.light,
                   gameKey: props.location.state.gameKey,
                   start: props.location.state.start,
                   end: props.location.state.end,

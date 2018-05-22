@@ -40,7 +40,11 @@ class DialogSelection extends Component {
           t => (
             <div>
               <Dialog open={this.props.open}>
-                <HeatMapRecord page="DialogSelection" gameKey={this.props.gameKey}>
+                <HeatMapRecord
+                  page="DialogSelection"
+                  light={this.props.light}
+                  gameKey={this.props.gameKey}
+                >
                   <DialogTitle>{t('material.title')}</DialogTitle>
                   <DialogContent
                     classes={{
@@ -78,8 +82,9 @@ class DialogSelection extends Component {
                         const {
                         start, end, mode, fitbit,
                         } = this.state;
+                        const { light } = this.props;
                         if (start.length && end.length && mode.length && fitbit.length) {
-                          this.props.apply(start, end, mode, fitbit);
+                          this.props.apply(start, end, mode, fitbit, light);
                         }
                       }}
                       color="primary"
@@ -103,6 +108,7 @@ DialogSelection.propTypes = {
   apply: PropTypes.func.isRequired,
   deny: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
+  light: PropTypes.bool.isRequired,
   gameKey: PropTypes.string.isRequired,
 };
 
