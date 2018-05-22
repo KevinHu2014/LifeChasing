@@ -2,8 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
+import './HeatMap.css';
 
 class HeatMapRecord extends Component {
+  componentDidMount() {
+    console.log(this.props.light);
+  }
   HandleTouch(e) {
     // console.log(e.targetTouches[0]);
     // console.log(e.targetTouches[0].clientX);
@@ -34,6 +38,7 @@ class HeatMapRecord extends Component {
         onTouchStart={(e) => {
           this.HandleTouch(e);
         }}
+        className={this.props.light ? 'HeatMap_Light_On' : 'HeatMap_Light_Off'}
         role="presentation"
       >
         {this.props.children}
@@ -43,6 +48,7 @@ class HeatMapRecord extends Component {
 }
 
 HeatMapRecord.propTypes = {
+  light: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   gameKey: PropTypes.string.isRequired,
   page: PropTypes.string.isRequired,

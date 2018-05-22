@@ -1,0 +1,7 @@
+.HeatMap_Light_On {
+  filter: brightness(0.6);
+}
+
+.HeatMap_Light_Off {
+  filter: brightness(1);
+}
