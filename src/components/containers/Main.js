@@ -7,7 +7,7 @@ import { compose } from 'recompose';
 import { I18n } from 'react-i18next';
 
 import { ThreeButtonSelection } from '../common';
-import { fetchWeather, checkWeatherCondition } from '../../actions';
+import { fetchWeather } from '../../actions';
 
 class Main extends Component {
   componentDidMount() {
@@ -44,7 +44,6 @@ class Main extends Component {
                     case t('main.start_game'):
                       console.log('start game');
                       console.log(this.props.firebaseAuth.uid);
-                      this.props.checkWeatherCondition(new Date().getTime());
                       this.props.firebase.push(
                         'game',
                         {
@@ -97,7 +96,6 @@ Main.propTypes = {
     uid: PropTypes.string.isRequired,
   }).isRequired,
   fetchWeather: PropTypes.func.isRequired,
-  checkWeatherCondition: PropTypes.func.isRequired,
   weather: PropTypes.shape().isRequired,
 };
 
@@ -109,7 +107,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchWeather, checkWeatherCondition }, dispatch);
+  return bindActionCreators({ fetchWeather }, dispatch);
 }
 
 

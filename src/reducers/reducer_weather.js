@@ -1,7 +1,4 @@
-import {
-  GET_WEATHER_SUCCESS,
-  CHECK_WEATHER_CONDITION,
-} from '../actions/type';
+import { GET_WEATHER_SUCCESS } from '../actions/type';
 
 const INITAL_STATE = {
   sunrise: null,
@@ -13,24 +10,17 @@ const INITAL_STATE = {
 const weather = (state = INITAL_STATE, action) => {
   switch (action.type) {
     case GET_WEATHER_SUCCESS: {
-      return {
-        ...state,
-        sunrise: action.payload.sys.sunrise,
-        sunset: action.payload.sys.sunset,
-        weatherID: action.payload.weather[0].id,
-      };
-    }
-    case CHECK_WEATHER_CONDITION: {
+      // Check Weather Codition
       let light = false; // 預設要調暗螢幕亮度
       // 介於日出到日落之間
-      if (action.payload > state.sunrise && action.payload < state.sunset) {
+      if (action.time > action.sunrise && action.time < action.sunset) {
         /*
          weather condition 可以參考下列網址
          https://openweathermap.org/weather-conditions
 
          大部份的天氣情況都是需要調暗螢幕亮度的
         */
-        switch (state.weatherID.toString()) {
+        switch (action.weatherID.toString()) {
           case '800':
             // clear sky
             light = true;
@@ -49,7 +39,13 @@ const weather = (state = INITAL_STATE, action) => {
         }
       }
       // else ->  直接調低螢幕亮度
-      return { ...state, light };
+      return {
+        ...state,
+        sunrise: action.sunrise,
+        sunset: action.sunset,
+        weatherID: action.weatherID,
+        light,
+      };
     }
     default:
       return state;

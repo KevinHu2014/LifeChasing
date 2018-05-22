@@ -3,7 +3,6 @@ import {
   FETCH_WEATHER,
   GET_WEATHER_SUCCESS,
   GET_WEATHER_FAIL,
-  CHECK_WEATHER_CONDITION,
 } from './type';
 
 import setting from '../setting';
@@ -11,7 +10,10 @@ import setting from '../setting';
 const getWeatherSuccess = (dispatch, response) => {
   dispatch({
     type: GET_WEATHER_SUCCESS,
-    payload: response,
+    sunrise: response.sys.sunrise,
+    sunset: response.sys.sunset,
+    weatherID: response.weather[0].id,
+    time: new Date().getTime(),
   });
 };
 
@@ -32,8 +34,3 @@ export const fetchWeather = (latitude, longitude) => async (dispatch) => {
     })
     .catch((err) => { getWeatherFail(dispatch, err); });
 };
-
-export const checkWeatherCondition = time => ({
-  type: CHECK_WEATHER_CONDITION,
-  payload: time,
-});
