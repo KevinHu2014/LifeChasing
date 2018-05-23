@@ -48,6 +48,10 @@
     "start": "Game Start",
     "pause": "Game Pause",
     "end": "Game Over"
+  },
+  "dialog": {
+    "fullStartContent1": "Game is about to start, please press ok and lock your device to start",
+    "fullStartContent2": "Game is about to start, please press ok to start"
   }
 
 }

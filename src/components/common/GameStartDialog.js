@@ -1,13 +1,20 @@
 import React, { PropTypes } from 'react';
 import { DialogContent, DialogContentText } from 'material-ui/Dialog';
+import { I18n } from 'react-i18next';
 
 const GameStartDialog = props => (
-  <DialogContent>
-    <DialogContentText>
-      {(props.mode === '全自動') ? '遊戲即將開始，點擊OK鍵後請鎖定手機'
-                                  : '遊戲即將開始，點擊OK鍵後即開始遊戲'}
-    </DialogContentText>
-  </DialogContent>
+  <I18n>
+    {
+      t => (
+        <DialogContent>
+          <DialogContentText>
+            {(props.mode === t('mode.full')) ? t('dialog.fullStartContent1')
+                                          : t('dialog.fullStartContent2')}
+          </DialogContentText>
+        </DialogContent>
+        )
+    }
+  </I18n>
 );
 
 GameStartDialog.propTypes = {

@@ -48,5 +48,9 @@
     "start": "遊戲開始",
     "pause": "遊戲暫停",
     "end": "遊戲結束"
+  },
+  "dialog": {
+    "fullStartContent1": "遊戲即將開始，點擊OK鍵後請鎖定手機",
+    "fullStartContent2": "遊戲即將開始，點擊OK鍵後即開始遊戲"
   }
 }
