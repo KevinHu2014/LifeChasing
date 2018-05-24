@@ -5,11 +5,18 @@ import { withRouter } from 'react-router-dom';
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'recompose';
 import { I18n } from 'react-i18next';
+import { LinearProgress } from 'material-ui/Progress';
 
 import { ThreeButtonSelection } from '../common';
 import { fetchWeather } from '../../actions';
 
 class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+    };
+  }
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -37,6 +44,7 @@ class Main extends Component {
                 third={t('main.logout')}
                 clickHandler={(a) => {
                   console.log(a);
+                  this.setState({ loading: true });
                   const {
                     weatherID, sunrise, sunset, light,
                   } = this.props.weather;
@@ -55,6 +63,7 @@ class Main extends Component {
                         },
                       ).then(async (result) => {
                         // console.log(result.key);
+                        this.setState({ loading: false });
                         this.props.history.push({
                           pathname: '/SelectInterface',
                           state: { gameKey: result.key, light },
@@ -63,6 +72,7 @@ class Main extends Component {
                       break;
                     case t('main.see_record'):
                       console.log('check record');
+                      this.setState({ loading: false });
                       this.props.history.push({
                         pathname: '/GameRecord',
                         state: {},
@@ -71,6 +81,7 @@ class Main extends Component {
                     case t('main.logout'):
                       console.log('logout');
                       this.props.firebase.logout();
+                      this.setState({ loading: false });
                       this.props.history.push({
                         pathname: '/StartPage',
                         state: {},
@@ -81,6 +92,12 @@ class Main extends Component {
                   }
                 }}
               />
+              <div style={{ position: 'absolute', top: '99vh', width: '100vw' }}>
+                {
+                  this.state.loading &&
+                  <LinearProgress value={10} />
+                }
+              </div>
             </div>
           )
         }
