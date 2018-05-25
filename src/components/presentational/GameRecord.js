@@ -7,6 +7,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
 import { LinearProgress } from 'material-ui/Progress';
+import { I18n } from 'react-i18next';
 
 import { BackAppBar } from '../common';
 
@@ -102,22 +103,28 @@ class GameRecord extends Component {
   }
   render() {
     return (
-      <div>
-        <BackAppBar
-          title="Game Records"
-          onPress={() => {
-            this.props.history.push({
-              pathname: '/Main',
-              state: {},
-            });
-          }}
-        />
-        <div className="grid">
-          {
-            this.renderListItem()
-          }
-        </div>
-      </div>
+      <I18n>
+        {
+          t => (
+            <div>
+              <BackAppBar
+                title={t('gameRecord.title')}
+                onPress={() => {
+                  this.props.history.push({
+                    pathname: '/Main',
+                    state: {},
+                  });
+                }}
+              />
+              <div className="grid">
+                {
+                  this.renderListItem()
+                }
+              </div>
+            </div>
+          )
+        }
+      </I18n>
     );
   }
 }
