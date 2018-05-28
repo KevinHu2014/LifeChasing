@@ -6,3 +6,4 @@ export { default as SelectEnd } from './SelectEnd';
 export { default as SelectMode } from './SelectMode';
 export { default as SelectFitbit } from './SelectFitbit';
 export { default as DialogSelection } from './DialogSelection';
+export { default as MarkerCreator } from './MarkerCreator';

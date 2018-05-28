@@ -22,7 +22,7 @@ const SelectFitbit = props => (
             third={t('fitbit.black')}
             clickHandler={(a) => {
               props.history.push({
-                pathname: '/Map',
+                pathname: '/MarkerCreator',
                 state: {
                   light: props.location.state.light,
                   gameKey: props.location.state.gameKey,
