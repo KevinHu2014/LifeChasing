@@ -24,14 +24,16 @@ const SelectStart = props => (
             clickHandler={(a) => {
               console.log(a);
               console.log(props.location.state.light);
-              props.history.push({
-                pathname: '/SelectEnd',
-                state: {
-                  light: props.location.state.light,
-                  gameKey: props.location.state.gameKey,
-                  start: a,
-                },
-              });
+              if (a === t('start.mrt')) {
+                props.history.push({
+                  pathname: '/SelectEnd',
+                  state: {
+                    light: props.location.state.light,
+                    gameKey: props.location.state.gameKey,
+                    start: { lat: 25.032854, lon: 121.435198 },
+                  },
+                });
+              }
             }}
           />
         </HeatMapRecord>

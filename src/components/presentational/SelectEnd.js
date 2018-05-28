@@ -21,15 +21,17 @@ const SelectEnd = props => (
             second={t('end.cafeteria')}
             third={t('end.auditorium')}
             clickHandler={(a) => {
-              props.history.push({
-                pathname: '/SelectMode',
-                state: {
-                  light: props.location.state.light,
-                  gameKey: props.location.state.gameKey,
-                  start: props.location.state.start,
-                  end: a,
-                },
-              });
+              if (a === t('end.hopital')) {
+                props.history.push({
+                  pathname: '/SelectMode',
+                  state: {
+                    light: props.location.state.light,
+                    gameKey: props.location.state.gameKey,
+                    start: props.location.state.start,
+                    end: { lat: 25.038491, lon: 121.431402 },
+                  },
+                });
+              }
             }}
           />
         </HeatMapRecord>
