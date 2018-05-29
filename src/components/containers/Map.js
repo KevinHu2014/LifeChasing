@@ -8,7 +8,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } fr
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { I18n } from 'react-i18next';
 
-import { fetchMarkers, initPosition, eatBeans, setTimer, timeOut, calSpeed, gameDialog, gameEnd } from '../../actions';
+import { initPosition, eatBeans, setTimer, timeOut, calSpeed, gameDialog, gameEnd } from '../../actions';
 import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../common';
 import Distance from '../../Distance';
 import HeatMapRecord from './HeatMapRecord';
@@ -100,7 +100,6 @@ class Map extends Component {
     };// 暫時 hard code
   }
   componentWillMount() {
-    this.props.fetchMarkers();
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const lat = position.coords.latitude;
@@ -177,7 +176,7 @@ class Map extends Component {
 
   render() {
     const {
-      mode, light, gameKey, theInterface,
+      mode, light, gameKey, theInterface, marker,
     } = this.props.location.state;
     return (
       <I18n>
@@ -191,7 +190,7 @@ class Map extends Component {
               <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
               <MapWithAMarkerClusterer
                 id="map"
-                markers={this.props.beanMap.markers}
+                markers={marker}
                 showDirections={mode === t('mode.semi')}
               />
               <MapDialog
@@ -275,7 +274,6 @@ class Map extends Component {
 }
 
 Map.propTypes = {
-  fetchMarkers: PropTypes.func.isRequired,
   initPosition: PropTypes.func.isRequired,
   eatBeans: PropTypes.func.isRequired,
   setTimer: PropTypes.func.isRequired,
@@ -319,7 +317,6 @@ function mapDispatchToProps(dispatch) {
   // Whenever eatBeans is called, the results should be
   // pass to all our reducers
   return bindActionCreators({
-    fetchMarkers,
     initPosition,
     eatBeans,
     setTimer,

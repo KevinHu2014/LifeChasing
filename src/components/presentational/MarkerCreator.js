@@ -23,6 +23,8 @@ class MarkerCreator extends Component {
             startLon: start.lon,
             endLat: end.lat,
             endLon: end.lon,
+            data: 0,
+            dots: 0,
           },
         ).then(() => {
           // TODO: 這裡要還需要做一個dialog，點擊Ok才回Main
@@ -31,9 +33,20 @@ class MarkerCreator extends Component {
           });
         });
       }
-      return (
-        <div />
-      );
+      console.log((Object.values(this.props.marker))[0].data);
+      this.props.history.push({
+        pathname: '/Map',
+        state: {
+          light: this.props.location.state.light,
+          gameKey: this.props.location.state.gameKey,
+          start: this.props.location.state.start,
+          end: this.props.location.state.end,
+          mode: this.props.location.state.mode,
+          theInterface: '高齡友善',
+          fitbit: this.props.location.state.fitbit,
+          marker: (Object.values(this.props.marker))[0].data,
+        },
+      });
     }
     return (<LinearProgress value={10} />);
   }
