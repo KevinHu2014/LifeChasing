@@ -32,21 +32,22 @@ class MarkerCreator extends Component {
             pathname: '/Main',
           });
         });
+      } else {
+        // console.log((Object.values(this.props.marker))[0].data);
+        this.props.history.push({
+          pathname: '/Map',
+          state: {
+            light: this.props.location.state.light,
+            gameKey: this.props.location.state.gameKey,
+            start: this.props.location.state.start,
+            end: this.props.location.state.end,
+            mode: this.props.location.state.mode,
+            theInterface: '高齡友善',
+            fitbit: this.props.location.state.fitbit,
+            marker: (Object.values(this.props.marker))[0].data,
+          },
+        });
       }
-      console.log((Object.values(this.props.marker))[0].data);
-      this.props.history.push({
-        pathname: '/Map',
-        state: {
-          light: this.props.location.state.light,
-          gameKey: this.props.location.state.gameKey,
-          start: this.props.location.state.start,
-          end: this.props.location.state.end,
-          mode: this.props.location.state.mode,
-          theInterface: '高齡友善',
-          fitbit: this.props.location.state.fitbit,
-          marker: (Object.values(this.props.marker))[0].data,
-        },
-      });
     }
     return (<LinearProgress value={10} />);
   }
