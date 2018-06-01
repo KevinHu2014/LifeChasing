@@ -33,7 +33,7 @@ const MapWithAMarkerClusterer = compose(
   lifecycle({
     componentDidMount() {
       const DirectionsService = new google.maps.DirectionsService();
-
+      // TODO: 這裡要想辦法把 props 傳進來
       DirectionsService.route({
         origin: new google.maps.LatLng(25.032854, 121.435198),
         destination: new google.maps.LatLng(25.038491, 121.431402),
@@ -56,12 +56,14 @@ const MapWithAMarkerClusterer = compose(
 )(props =>
   (
     <GoogleMap
+     // TODO: 這裡的 hard code 要改掉
       defaultZoom={17}
       defaultCenter={{ lat: 25.03515125, lng: 121.4330576875 }}
     >
       {
         props.showDirections && props.directions &&
         <DirectionsRenderer directions={props.directions} routeIndex={1} />
+        // TODO: 這裡要能分辨哪個 route的所需時間比較久
       }
       <MarkerClusterer
         onClick={props.onMarkerClustererClick}
