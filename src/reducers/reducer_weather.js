@@ -5,6 +5,7 @@ const INITAL_STATE = {
   sunset: null,
   weatherID: null,
   light: null,
+  loading: true,
 };
 
 const weather = (state = INITAL_STATE, action) => {
@@ -45,6 +46,7 @@ const weather = (state = INITAL_STATE, action) => {
         sunset: action.sunset,
         weatherID: action.weatherID,
         light,
+        loading: false,
       };
     }
     default:

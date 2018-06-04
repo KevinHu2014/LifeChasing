@@ -11,12 +11,6 @@ import { ThreeButtonSelection } from '../common';
 import { fetchWeather } from '../../actions';
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-    };
-  }
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -36,65 +30,64 @@ class Main extends Component {
         {
           t => (
             <div>
-              <ThreeButtonSelection
-                header={t('main.title')}
-                secondary
-                first={t('main.start_game')}
-                second={t('main.see_record')}
-                third={t('main.logout')}
-                clickHandler={(a) => {
-                  console.log(a);
-                  this.setState({ loading: true });
-                  const {
-                    weatherID, sunrise, sunset, light,
-                  } = this.props.weather;
-                  switch (a) {
-                    case t('main.start_game'):
-                      console.log('start game');
-                      console.log(this.props.firebaseAuth.uid);
-                      this.props.firebase.push(
-                        'game',
-                        {
-                          userUid: this.props.firebaseAuth.uid,
-                          weatherID,
-                          sunrise,
-                          sunset,
-                          light,
-                        },
-                      ).then(async (result) => {
-                        // console.log(result.key);
-                        this.setState({ loading: false });
-                        this.props.history.push({
-                          pathname: '/SelectInterface',
-                          state: { gameKey: result.key, light },
+              {
+                !this.props.weather.loading &&
+                <ThreeButtonSelection
+                  header={t('main.title')}
+                  secondary
+                  first={t('main.start_game')}
+                  second={t('main.see_record')}
+                  third={t('main.logout')}
+                  clickHandler={(a) => {
+                    console.log(a);
+                    const {
+                      weatherID, sunrise, sunset, light,
+                    } = this.props.weather;
+                    switch (a) {
+                      case t('main.start_game'):
+                        console.log('start game');
+                        console.log(this.props.firebaseAuth.uid);
+                        this.props.firebase.push(
+                          'game',
+                          {
+                            userUid: this.props.firebaseAuth.uid,
+                            weatherID,
+                            sunrise,
+                            sunset,
+                            light,
+                          },
+                        ).then(async (result) => {
+                          // console.log(result.key);
+                          this.props.history.push({
+                            pathname: '/SelectInterface',
+                            state: { gameKey: result.key, light },
+                          });
                         });
-                      });
-                      break;
-                    case t('main.see_record'):
-                      console.log('check record');
-                      this.setState({ loading: false });
-                      this.props.history.push({
-                        pathname: '/GameRecord',
-                        state: {},
-                      });
-                      break;
-                    case t('main.logout'):
-                      console.log('logout');
-                      this.props.firebase.logout();
-                      this.setState({ loading: false });
-                      this.props.history.push({
-                        pathname: '/StartPage',
-                        state: {},
-                      });
-                      break;
-                    default:
-                      break;
-                  }
-                }}
-              />
+                        break;
+                      case t('main.see_record'):
+                        console.log('check record');
+                        this.props.history.push({
+                          pathname: '/GameRecord',
+                          state: {},
+                        });
+                        break;
+                      case t('main.logout'):
+                        console.log('logout');
+                        this.props.firebase.logout();
+                        this.props.history.push({
+                          pathname: '/StartPage',
+                          state: {},
+                        });
+                        break;
+                      default:
+                        break;
+                    }
+                  }}
+                />
+              }
               <div style={{ position: 'absolute', top: '99vh', width: '100vw' }}>
                 {
-                  this.state.loading &&
+                  this.props.weather.loading &&
                   <LinearProgress value={10} />
                 }
               </div>
