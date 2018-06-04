@@ -1,53 +1,75 @@
 import React, { Component, PropTypes } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded } from 'react-redux-firebase';
 import { LinearProgress } from 'material-ui/Progress';
+import { DialogContent, DialogContentText } from 'material-ui/Dialog';
 // import { I18n } from 'react-i18next';
+
+import { MapDialog } from '../common';
 
 class MarkerCreator extends Component {
   renderContent() {
     if (isLoaded(this.props.marker)) {
+      console.log(this.props.marker);
       if (this.props.marker === null) {
         const { start, end } = this.props.location.state;
         const key = start.lat.toString().concat(
           start.lon.toString(),
           end.lat.toString(), end.lon.toString(),
         );
-        this.props.firebase.push(
-          'marker',
-          {
-            key,
-            startLat: start.lat,
-            startLon: start.lon,
-            endLat: end.lat,
-            endLon: end.lon,
-            data: 0,
-            dots: 0,
-          },
-        ).then(() => {
-          // TODO: 這裡要還需要做一個dialog，點擊Ok才回Main
-          this.props.history.push({
-            pathname: '/Main',
-          });
-        });
-      } else {
-        // console.log((Object.values(this.props.marker))[0].data);
-        this.props.history.push({
-          pathname: '/Map',
-          state: {
-            light: this.props.location.state.light,
-            gameKey: this.props.location.state.gameKey,
-            start: this.props.location.state.start,
-            end: this.props.location.state.end,
-            mode: this.props.location.state.mode,
-            theInterface: '高齡友善',
-            fitbit: this.props.location.state.fitbit,
-            marker: (Object.values(this.props.marker))[0].data,
-          },
-        });
+        console.log('');
+        return (
+          <MapDialog
+            id="notAvailable"
+            title="Sevrice not available"
+            buttonText="ok"
+            open
+            onClose={() => {
+              this.props.firebase.push(
+                'marker',
+                {
+                  key,
+                  startLat: start.lat,
+                  startLon: start.lon,
+                  endLat: end.lat,
+                  endLon: end.lon,
+                  data: 0,
+                  dots: 0,
+                },
+              ).then(() => (
+                this.props.history.push({
+                  pathname: '/Main',
+                })
+              ));
+            }}
+          >
+            <DialogContent>
+              <DialogContentText>
+                {'Please come back later !'}
+              </DialogContentText>
+            </DialogContent>
+          </MapDialog>
+        );
       }
+      return (
+        <Redirect
+          to={{
+            pathname: '/Map',
+            state: {
+              light: this.props.location.state.light,
+              gameKey: this.props.location.state.gameKey,
+              start: this.props.location.state.start,
+              end: this.props.location.state.end,
+              mode: this.props.location.state.mode,
+              theInterface: '高齡友善',
+              fitbit: this.props.location.state.fitbit,
+              marker: (Object.values(this.props.marker))[0].data,
+            },
+          }}
+        />
+      );
     }
     return (<LinearProgress value={10} />);
   }
