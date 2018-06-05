@@ -4,6 +4,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { bindActionCreators } from 'redux';
 import { compose, withProps, withHandlers, lifecycle } from 'recompose';
 import { withRouter } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { I18n } from 'react-i18next';
@@ -12,6 +13,8 @@ import { initPosition, eatBeans, setTimer, timeOut, calSpeed, gameDialog, gameEn
 import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../common';
 import Distance from '../../Distance';
 import HeatMapRecord from './HeatMapRecord';
+
+const history = createHistory();
 
 /* global google */
 const MapWithAMarkerClusterer = compose(
@@ -118,7 +121,12 @@ class Map extends Component {
   componentDidMount() {
     this.GetLocationAndEatBean();
     this.SetAlarm(5); // input is minutes
-    console.log(this.props.location.state);
+
+    // disable back button
+    window.onpopstate = () => {
+      history.go(1);
+    };
+
     window.addEventListener('focus', () => {
       console.log('window has focus');
       if (!(this.props.beanMap.gameStartDialog)) {
