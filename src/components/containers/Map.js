@@ -61,6 +61,12 @@ const MapWithAMarkerClusterer = compose(
     <GoogleMap
      // TODO: 這裡的 hard code 要改掉
       defaultZoom={17}
+      // 關閉地圖種類的切換、放大縮小、街景
+      defaultOptions={{
+        mapTypeControl: false,
+        zoomControl: false,
+        streetViewControl: false,
+      }}
       defaultCenter={{ lat: 25.03515125, lng: 121.4330576875 }}
     >
       {
