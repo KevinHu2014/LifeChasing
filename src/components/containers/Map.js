@@ -59,15 +59,14 @@ const MapWithAMarkerClusterer = compose(
 )(props =>
   (
     <GoogleMap
-     // TODO: 這裡的 hard code 要改掉
-      defaultZoom={17}
+      defaultZoom={21}
       // 關閉地圖種類的切換、放大縮小、街景
       defaultOptions={{
         mapTypeControl: false,
         zoomControl: false,
         streetViewControl: false,
       }}
-      defaultCenter={{ lat: 25.03515125, lng: 121.4330576875 }}
+      defaultCenter={{ lat: props.start.lat, lng: props.start.lon }}
     >
       {
         props.showDirections && props.directions &&
@@ -192,7 +191,7 @@ class Map extends Component {
 
   render() {
     const {
-      mode, light, gameKey, theInterface, marker,
+      mode, light, gameKey, theInterface, marker, start,
     } = this.props.location.state;
     return (
       <I18n>
@@ -206,6 +205,7 @@ class Map extends Component {
               <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
               <MapWithAMarkerClusterer
                 id="map"
+                start={start}
                 markers={marker}
                 showDirections={mode === t('mode.semi')}
               />
