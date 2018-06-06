@@ -54,11 +54,14 @@ class DialogSelection extends Component {
                     <DialogSelectionItem
                       heading={t('start.subtitle')}
                       content={[t('start.mrt'), t('start.sf'), t('start.lane')]}
+                      // TODO: 這裡要將 onSelect 裡的 val參數改加上經緯度
+                      // 寫一個 switch 將 t('start.mrt') 改成 { lat: xxx, lon: xxx }
                       onSelect={(val) => { this.setState({ start: val }); }}
                     />
                     <DialogSelectionItem
                       heading={t('end.subtitle')}
                       content={[t('end.hopital'), t('end.cafeteria'), t('end.auditorium')]}
+                      // TODO: 這裡也是要改成經緯度
                       onSelect={(val) => { this.setState({ end: val }); }}
                     />
                     <DialogSelectionItem
