@@ -58,7 +58,7 @@ class SelectInterface extends React.Component {
                   console.log(fitbit);
                   this.setState({ open: false });
                   this.props.history.push({
-                    pathname: '/Map',
+                    pathname: '/MarkerCreator',
                     state: {
                       theInterface: 'Material',
                       gameKey: this.props.location.state.gameKey,
@@ -66,6 +66,7 @@ class SelectInterface extends React.Component {
                       end,
                       mode,
                       light,
+                      fitbit,
                     },
                   });
                 }}
