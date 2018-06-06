@@ -50,6 +50,10 @@ class SelectInterface extends React.Component {
                   this.setState({ open: false });
                 }}
                 light={false} // Material 模式沒有動態介面，所以恆為 false
+                /*
+                  透過此 apply function props
+                  把 child 的參數傳回 parent
+                 */
                 apply={(start, end, mode, fitbit, light) => {
                   console.log(fitbit);
                   this.setState({ open: false });

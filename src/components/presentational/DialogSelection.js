@@ -84,6 +84,11 @@ class DialogSelection extends Component {
                         } = this.state;
                         const { light } = this.props;
                         if (start.length && end.length && mode.length && fitbit.length) {
+                          /*
+                             這裡是一個 apply 的 function props
+                             透過這個 function 將 child 的 props 值
+                             傳給 parent
+                          */
                           this.props.apply(start, end, mode, fitbit, light);
                         }
                       }}
