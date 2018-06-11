@@ -191,7 +191,7 @@ class Map extends Component {
 
   render() {
     const {
-      mode, light, gameKey, theInterface, marker, start,
+      mode, light, gameKey, theInterface, marker, start, fitbit,
     } = this.props.location.state;
     return (
       <I18n>
@@ -256,6 +256,7 @@ class Map extends Component {
                     `game/${gameKey}`,
                     {
                       mode,
+                      fitbit,
                       beanEaten: score,
                       caughtTimes: ghostCounter,
                       totalDistance: distance,
