@@ -270,6 +270,7 @@ class Map extends Component {
                     },
                   );
                   this.props.gameDialog('end', false);
+                  // TODO: Discuss whether to go to GameSegment or back to Main
                   this.props.history.push({
                     pathname: '/GameSegment',
                     state: { key: gameKey },
