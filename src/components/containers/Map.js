@@ -261,7 +261,7 @@ class Map extends Component {
                       caughtTimes: ghostCounter,
                       totalDistance: distance,
                       timeSpent: totalTime,
-                      heartRate: 1, // hard code
+                      heartRate: 0, // hard code
                       maxSpeed,
                       gameScore,
                       sportScore,
