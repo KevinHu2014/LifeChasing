@@ -28,76 +28,88 @@ class GameSegment extends Component {
           {
             Object.values(gameItem).map((item) => {
               if (item.key === this.props.location.state.key) {
+                const date = new Date(item.startTime);
                 return (
-                  <Grid key={item.key} container spacing={8}>
-                    <Grid id="one" item xs={6} sm={6} md={4} lg={4}>
-                      <Paper className="paper">
-                        <Typography variant="display1" align="center">
-                          {item.mode}
-                        </Typography>
-                      </Paper>
+                  <div>
+                    <BackAppBar
+                      title={`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}
+                      onPress={() => {
+                        this.props.history.push({
+                          pathname: '/GameRecord',
+                          state: {},
+                        });
+                      }}
+                    />
+                    <Grid key={item.key} container spacing={8}>
+                      <Grid id="one" item xs={6} sm={6} md={4} lg={4}>
+                        <Paper className="paper">
+                          <Typography variant="display1" align="center">
+                            {item.mode}
+                          </Typography>
+                        </Paper>
+                      </Grid>
+                      <Grid id="two" item xs={6} sm={6} md={4} lg={4}>
+                        <Paper className="paper">
+                          <Typography variant="title" align="left">
+                            time spent: {Math.round(item.expectTimeCost / 1000 / 60)} min
+                          </Typography>
+                          <Typography variant="title" align="left">
+                            avg speed: {Math.round(item.maxSpeed * 1000) / 1000} m/s
+                          </Typography>
+                          <Typography variant="title" align="left">
+                            distance: {item.totalDistance} km
+                          </Typography>
+                        </Paper>
+                      </Grid>
+                      <Grid id="three" item xs={6} sm={6} md={4} lg={4}>
+                        <Paper className="paper" style={{ alignItems: 'center' }}>
+                          <Typography variant="title" align="left">
+                            Exercise Score
+                          </Typography>
+                          <Typography variant="display3" align="center" color="secondary">
+                            {Math.round(item.sportScore * 100) / 100}
+                          </Typography>
+                          <Typography variant="title" align="left">
+                            points
+                          </Typography>
+                        </Paper>
+                      </Grid>
+                      <Grid id="four" item xs={6} sm={6} md={4} lg={4}>
+                        <Paper className="paper" style={{ alignItems: 'center' }}>
+                          <Typography variant="title" align="left">
+                            Game Score
+                          </Typography>
+                          <Typography variant="display3" align="center" color="secondary">
+                            {Math.round(item.gameScore * 100) / 100}
+                          </Typography>
+                          <Typography variant="title" align="left">
+                            points
+                          </Typography>
+                        </Paper>
+                      </Grid>
+                      <Grid id="five" item xs={6} sm={6} md={4} lg={4}>
+                        <Paper className="paper" style={{ alignItems: 'center' }}>
+                          <HeartPulse color="error" style={{ width: '60px', height: '60px' }} />
+                          <Typography variant="display1" align="center" color="secondary">
+                            {item.heartRate}
+                          </Typography>
+                          <Typography variant="title" align="left">
+                            highest bpm
+                          </Typography>
+                        </Paper>
+                      </Grid>
+                      <Grid id="six" item xs={6} sm={6} md={4} lg={4}>
+                        <Paper className="paper">
+                          <Typography variant="title" align="left">
+                            fairy pellets: {item.totalBeans}
+                          </Typography>
+                          <Typography variant="title" align="left">
+                            caught: {item.caughtTimes}
+                          </Typography>
+                        </Paper>
+                      </Grid>
                     </Grid>
-                    <Grid id="two" item xs={6} sm={6} md={4} lg={4}>
-                      <Paper className="paper">
-                        <Typography variant="title" align="left">
-                          time spent: {Math.round(item.expectTimeCost / 1000 / 60)} min
-                        </Typography>
-                        <Typography variant="title" align="left">
-                          avg speed: {Math.round(item.maxSpeed * 1000) / 1000} m/s
-                        </Typography>
-                        <Typography variant="title" align="left">
-                          distance: {item.totalDistance} km
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid id="three" item xs={6} sm={6} md={4} lg={4}>
-                      <Paper className="paper" style={{ alignItems: 'center' }}>
-                        <Typography variant="title" align="left">
-                          Exercise Score
-                        </Typography>
-                        <Typography variant="display3" align="center" color="secondary">
-                          {Math.round(item.sportScore * 100) / 100}
-                        </Typography>
-                        <Typography variant="title" align="left">
-                          points
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid id="four" item xs={6} sm={6} md={4} lg={4}>
-                      <Paper className="paper" style={{ alignItems: 'center' }}>
-                        <Typography variant="title" align="left">
-                          Game Score
-                        </Typography>
-                        <Typography variant="display3" align="center" color="secondary">
-                          {Math.round(item.gameScore * 100) / 100}
-                        </Typography>
-                        <Typography variant="title" align="left">
-                          points
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid id="five" item xs={6} sm={6} md={4} lg={4}>
-                      <Paper className="paper" style={{ alignItems: 'center' }}>
-                        <HeartPulse color="error" style={{ width: '60px', height: '60px' }} />
-                        <Typography variant="display1" align="center" color="secondary">
-                          {item.heartRate}
-                        </Typography>
-                        <Typography variant="title" align="left">
-                          highest bpm
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid id="six" item xs={6} sm={6} md={4} lg={4}>
-                      <Paper className="paper">
-                        <Typography variant="title" align="left">
-                          fairy pellets: {item.totalBeans}
-                        </Typography>
-                        <Typography variant="title" align="left">
-                          caught: {item.caughtTimes}
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
+                  </div>
                 );
               }
               return true;
@@ -112,16 +124,6 @@ class GameSegment extends Component {
   render() {
     return (
       <div>
-        <BackAppBar
-          // TODO: 這裡原本是塞日期的，只是寫起來有點麻煩，有空再來改
-          title=""
-          onPress={() => {
-            this.props.history.push({
-              pathname: '/GameRecord',
-              state: {},
-            });
-          }}
-        />
         {
           this.renderConent()
         }
