@@ -36,10 +36,9 @@ const MapWithAMarkerClusterer = compose(
   lifecycle({
     componentDidMount() {
       const DirectionsService = new google.maps.DirectionsService();
-      // TODO: 這裡要想辦法把 props 傳進來
       DirectionsService.route({
-        origin: new google.maps.LatLng(25.032854, 121.435198),
-        destination: new google.maps.LatLng(25.038491, 121.431402),
+        origin: new google.maps.LatLng(this.props.start.lat, this.props.start.lon),
+        destination: new google.maps.LatLng(this.props.end.lat, this.props.end.lon),
         travelMode: google.maps.TravelMode.WALKING,
         provideRouteAlternatives: true,
       }, (result, status) => {
@@ -192,6 +191,7 @@ class Map extends Component {
   render() {
     const {
       mode, light, gameKey, theInterface, marker, start, fitbit,
+      end,
     } = this.props.location.state;
     return (
       <I18n>
@@ -206,6 +206,8 @@ class Map extends Component {
               <MapWithAMarkerClusterer
                 id="map"
                 start={start}
+                end={end}
+                interface={theInterface}
                 markers={marker}
                 showDirections={mode === t('mode.semi')}
               />
