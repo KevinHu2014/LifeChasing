@@ -63,7 +63,7 @@ class MarkerCreator extends Component {
               start: this.props.location.state.start,
               end: this.props.location.state.end,
               mode: this.props.location.state.mode,
-              theInterface: '高齡友善',
+              theInterface: this.props.location.state.theInterface,
               fitbit: this.props.location.state.fitbit,
               marker: (Object.values(this.props.marker))[0].data,
             },

@@ -57,18 +57,20 @@ class SelectInterface extends React.Component {
                 apply={(start, end, mode, fitbit, light) => {
                   console.log(fitbit);
                   this.setState({ open: false });
-                  this.props.history.push({
-                    pathname: '/MarkerCreator',
-                    state: {
-                      theInterface: 'Material',
-                      gameKey: this.props.location.state.gameKey,
-                      start,
-                      end,
-                      mode,
-                      light,
-                      fitbit,
-                    },
-                  });
+                  if (start === t('start.mrt') && end === t('end.hopital')) {
+                    this.props.history.push({
+                      pathname: '/MarkerCreator',
+                      state: {
+                        theInterface: t('interface.material'),
+                        gameKey: this.props.location.state.gameKey,
+                        start: { lat: 25.032854, lon: 121.435198 },
+                        end: { lat: 25.038491, lon: 121.431402 },
+                        mode,
+                        light,
+                        fitbit,
+                      },
+                    });
+                  }
                 }}
               />
             </div>

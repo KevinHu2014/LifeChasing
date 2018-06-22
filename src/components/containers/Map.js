@@ -35,6 +35,7 @@ const MapWithAMarkerClusterer = compose(
   withGoogleMap,
   lifecycle({
     componentDidMount() {
+      console.log(this.props);
       const DirectionsService = new google.maps.DirectionsService();
       DirectionsService.route({
         origin: new google.maps.LatLng(this.props.start.lat, this.props.start.lon),
@@ -69,8 +70,21 @@ const MapWithAMarkerClusterer = compose(
     >
       {
         props.showDirections && props.directions &&
-        <DirectionsRenderer directions={props.directions} routeIndex={1} />
-        // TODO: 這裡要能分辨哪個 route的所需時間比較久
+        <I18n>
+          {
+            /*
+              這裡直接寫死
+              如果是高齡友善介面 則選擇 較遠的 route
+              如果是Material 介面 則選擇 近的
+            */
+            t => (
+              <DirectionsRenderer
+                directions={props.directions}
+                routeIndex={(props.interface === t('interface.elder_friendly')) ? 2 : 0}
+              />
+            )
+          }
+        </I18n>
       }
       <MarkerClusterer
         onClick={props.onMarkerClustererClick}

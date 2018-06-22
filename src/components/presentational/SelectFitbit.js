@@ -29,7 +29,7 @@ const SelectFitbit = props => (
                   start: props.location.state.start,
                   end: props.location.state.end,
                   mode: props.location.state.mode,
-                  theInterface: '高齡友善',
+                  theInterface: t('interface.elder_friendly'),
                   fitbit: a,
                 },
               });
