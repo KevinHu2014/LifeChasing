@@ -76,7 +76,7 @@ const beanMap = (state = initialState, action) => {
       /*
           action.payload is set after SET_TIMER
           so action.payload might be larger
-          if the state.alarm, it means the alarm
+          if the state.alarm is larger, it means the alarm
           time must have been update
         */
       if (action.payload >= state.alarm) {
