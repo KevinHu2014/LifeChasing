@@ -9,7 +9,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } fr
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { I18n } from 'react-i18next';
 
-import { initPosition, eatBeans, setTimer, timeOut, calSpeed, gameDialog, gameEnd } from '../../actions';
+import { initPosition, eatBeans, setTimer, checkTimeOut, calSpeed, gameDialog, gameEnd } from '../../actions';
 import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../common';
 import Distance from '../../Distance';
 import HeatMapRecord from './HeatMapRecord';
@@ -138,7 +138,7 @@ class Map extends Component {
 
   componentDidMount() {
     this.GetLocationAndEatBean();
-    this.SetAlarm(1); // input is minutes
+    this.SetAlarm(0.5); // input is minutes
 
     // disable back button
     window.onpopstate = () => {
@@ -166,7 +166,7 @@ class Map extends Component {
   SetAlarm(minutes) {
     this.props.setTimer(minutes);
     setTimeout(() => {
-      this.props.timeOut(new Date().getTime(), this.props.beanMap.alarm);
+      this.props.checkTimeOut(new Date().getTime());
     }, 1000 * 60 * minutes);
   }
 
@@ -311,7 +311,7 @@ Map.propTypes = {
   initPosition: PropTypes.func.isRequired,
   eatBeans: PropTypes.func.isRequired,
   setTimer: PropTypes.func.isRequired,
-  timeOut: PropTypes.func.isRequired,
+  checkTimeOut: PropTypes.func.isRequired,
   calSpeed: PropTypes.func.isRequired,
   gameDialog: PropTypes.func.isRequired,
   gameEnd: PropTypes.func.isRequired,
@@ -331,7 +331,6 @@ Map.propTypes = {
     maxSpeed: PropTypes.number.isRequired,
     gameScore: PropTypes.number.isRequired,
     sportScore: PropTypes.number.isRequired,
-    alarm: PropTypes.number.isRequired,
   }).isRequired,
   location: PropTypes.shape().isRequired,
   firebase: PropTypes.shape().isRequired,
@@ -355,7 +354,7 @@ function mapDispatchToProps(dispatch) {
     initPosition,
     eatBeans,
     setTimer,
-    timeOut,
+    checkTimeOut,
     calSpeed,
     gameDialog,
     gameEnd,

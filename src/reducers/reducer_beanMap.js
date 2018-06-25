@@ -73,14 +73,8 @@ const beanMap = (state = initialState, action) => {
       });
     }
     case TIME_OUT: {
-      // action.payload stands for whether it is time out or not
-      // if it is time out than the ghost will be release
-      if (action.payload) {
-        return Object.assign({}, state, {
-          ghost: true,
-        });
-      }
-      return state;
+      // the ghost will be release when it is time out
+      return { ...state, ghost: true };
     }
     case CAL_SPEED: {
       /*

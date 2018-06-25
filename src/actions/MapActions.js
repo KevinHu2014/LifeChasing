@@ -50,22 +50,25 @@ export function setTimer(minutes) {
   };
 }
 
-export function timeOut(current, alarm) {
+export function timeOut() {
+  return {
+    type: TIME_OUT,
+    payload: true,
+  };
+}
+
+export function checkTimeOut(current) {
   /*
     current is set after SET_TIMER
     so current might be larger
     if the alarm is larger, it means the alarm
     time must have been update
   */
-  if (current >= alarm) {
-    return {
-      type: TIME_OUT,
-      payload: true,
-    };
-  }
-  return {
-    type: TIME_OUT,
-    payload: false,
+  return (dispatch, getState) => {
+    console.log(getState().beanMap);
+    if (current >= getState().beanMap.alarm) {
+      dispatch(timeOut());
+    }
   };
 }
 
