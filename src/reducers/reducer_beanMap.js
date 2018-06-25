@@ -73,16 +73,11 @@ const beanMap = (state = initialState, action) => {
       });
     }
     case TIME_OUT: {
-      /*
-          action.payload is set after SET_TIMER
-          so action.payload might be larger
-          if the state.alarm is larger, it means the alarm
-          time must have been update
-        */
-      if (action.payload >= state.alarm) {
+      // action.payload stands for whether it is time out or not
+      // if it is time out than the ghost will be release
+      if (action.payload) {
         return Object.assign({}, state, {
           ghost: true,
-          ghostCounter: state.ghostCounter + 1,
         });
       }
       return state;

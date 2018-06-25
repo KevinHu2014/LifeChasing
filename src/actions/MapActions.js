@@ -50,10 +50,22 @@ export function setTimer(minutes) {
   };
 }
 
-export function timeOut(current) {
+export function timeOut(current, alarm) {
+  /*
+    current is set after SET_TIMER
+    so current might be larger
+    if the alarm is larger, it means the alarm
+    time must have been update
+  */
+  if (current >= alarm) {
+    return {
+      type: TIME_OUT,
+      payload: true,
+    };
+  }
   return {
     type: TIME_OUT,
-    payload: current,
+    payload: false,
   };
 }
 

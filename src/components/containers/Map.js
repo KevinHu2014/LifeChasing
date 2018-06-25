@@ -138,7 +138,7 @@ class Map extends Component {
 
   componentDidMount() {
     this.GetLocationAndEatBean();
-    this.SetAlarm(5); // input is minutes
+    this.SetAlarm(1); // input is minutes
 
     // disable back button
     window.onpopstate = () => {
@@ -166,7 +166,7 @@ class Map extends Component {
   SetAlarm(minutes) {
     this.props.setTimer(minutes);
     setTimeout(() => {
-      this.props.timeOut(new Date().getTime());
+      this.props.timeOut(new Date().getTime(), this.props.beanMap.alarm);
     }, 1000 * 60 * minutes);
   }
 
@@ -179,7 +179,7 @@ class Map extends Component {
         } = this.state;
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
-        this.SetAlarm(5); // Reset time clock
+        this.SetAlarm(1); // Reset time clock
         this.props.eatBeans(lat, lng);
         this.props.calSpeed(lat, lng, new Date().getTime());
         let dist = Distance(lat, lng, destination.lat, destination.lng, 'K');
@@ -331,6 +331,7 @@ Map.propTypes = {
     maxSpeed: PropTypes.number.isRequired,
     gameScore: PropTypes.number.isRequired,
     sportScore: PropTypes.number.isRequired,
+    alarm: PropTypes.number.isRequired,
   }).isRequired,
   location: PropTypes.shape().isRequired,
   firebase: PropTypes.shape().isRequired,
