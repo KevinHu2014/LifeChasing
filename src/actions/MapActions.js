@@ -1,7 +1,6 @@
-import axios from 'axios';
 import {
   EAT_BEANS,
-  FETCH_MARKERS,
+  IMPORT_MARKERS,
   INIT_POSITION,
   SET_TIMER,
   TIME_OUT,
@@ -9,13 +8,6 @@ import {
   GAME_DIALOG,
   GAME_END,
 } from './type';
-
-const url = [
-  // Length issue
-  'https://gist.githubusercontent.com',
-  '/KevinHu2014/80f0dfe62528601a9ac0634c8379bee4',
-  '/raw/56bd6ee4e2a86a06f8c8bb83a93807a3df3cd67e/ReactDot.json',
-].join(''); // Marker url
 
 export function eatBeans(latitude, longitude) {
   // eatBeans is an ActionCreator, it needs to return an action,
@@ -27,11 +19,10 @@ export function eatBeans(latitude, longitude) {
   };
 }
 
-export function fetchMarkers() {
-  const request = axios.get(url);
+export function importMarkers(marker) {
   return {
-    type: FETCH_MARKERS,
-    payload: request,
+    type: IMPORT_MARKERS,
+    payload: marker,
   };
 }
 

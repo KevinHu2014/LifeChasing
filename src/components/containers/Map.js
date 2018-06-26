@@ -9,7 +9,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } fr
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { I18n } from 'react-i18next';
 
-import { initPosition, eatBeans, setTimer, checkTimeOut, calSpeed, gameDialog, gameEnd } from '../../actions';
+import { initPosition, eatBeans, setTimer, checkTimeOut, calSpeed, gameDialog, gameEnd, importMarkers } from '../../actions';
 import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../common';
 import Distance from '../../Distance';
 import HeatMapRecord from './HeatMapRecord';
@@ -123,6 +123,7 @@ class Map extends Component {
     };// 暫時 hard code
   }
   componentWillMount() {
+    this.props.importMarkers(this.props.location.state.marker);
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const lat = position.coords.latitude;
@@ -204,7 +205,7 @@ class Map extends Component {
 
   render() {
     const {
-      mode, light, gameKey, theInterface, marker, start, fitbit,
+      mode, light, gameKey, theInterface, start, fitbit,
       end,
     } = this.props.location.state;
     return (
@@ -222,7 +223,7 @@ class Map extends Component {
                 start={start}
                 end={end}
                 interface={theInterface}
-                markers={marker}
+                markers={this.props.beanMap.markers}
                 showDirections={mode === t('mode.semi')}
               />
               <MapDialog
@@ -313,6 +314,7 @@ Map.propTypes = {
   setTimer: PropTypes.func.isRequired,
   checkTimeOut: PropTypes.func.isRequired,
   calSpeed: PropTypes.func.isRequired,
+  importMarkers: PropTypes.func.isRequired,
   gameDialog: PropTypes.func.isRequired,
   gameEnd: PropTypes.func.isRequired,
   beanMap: PropTypes.shape({
@@ -358,6 +360,7 @@ function mapDispatchToProps(dispatch) {
     calSpeed,
     gameDialog,
     gameEnd,
+    importMarkers,
   }, dispatch);
 }
 

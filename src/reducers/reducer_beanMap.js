@@ -1,5 +1,5 @@
 import {
-  FETCH_MARKERS,
+  IMPORT_MARKERS,
   INIT_POSITION,
   EAT_BEANS,
   SET_TIMER,
@@ -36,9 +36,9 @@ const initialState = {
 
 const beanMap = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_MARKERS:
+    case IMPORT_MARKERS:
       return Object.assign({}, state, {
-        markers: action.payload.data.Dots,
+        markers: action.payload,
       });
     case INIT_POSITION:
       return Object.assign({}, state, {
