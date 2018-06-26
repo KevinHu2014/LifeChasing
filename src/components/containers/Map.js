@@ -109,7 +109,7 @@ const MapWithAMarkerClusterer = compose(
         <Marker
         // ghost marker
           icon={{
-            url: 'https://firebasestorage.googleapis.com/v0/b/life-chasing.appspot.com/o/ghost.png?alt=media&token=3454b5e8-1ff4-447b-9b04-06680a098bfb',
+            url: 'https://firebasestorage.googleapis.com/v0/b/life-chasing.appspot.com/o/ghost.png?alt=media&token=e03894b1-5f40-4345-b174-18388b916cca',
           }}
           position={{ lat: props.ghostPosition.latitude, lng: props.ghostPosition.longitude }}
         />
