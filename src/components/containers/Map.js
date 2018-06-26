@@ -217,6 +217,12 @@ class Map extends Component {
       mode, light, gameKey, theInterface, start, fitbit,
       end,
     } = this.props.location.state;
+    const {
+      markers, ghost, ghostPosition,
+      score, ghostCounter, distance, totalTime, maxSpeed,
+      gameScore, sportScore, avgSpeed, gamePauseDialog,
+      gameStartDialog, gameEndDialog,
+    } = this.props.beanMap;
     return (
       <I18n>
         {
@@ -226,22 +232,22 @@ class Map extends Component {
               light={light}
               gameKey={gameKey}
             >
-              <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{this.props.beanMap.score}</h1>
+              <h1 style={{ position: 'absolute', left: '50%', zIndex: '10' }}>{score}</h1>
               <MapWithAMarkerClusterer
                 id="map"
                 start={start}
                 end={end}
                 interface={theInterface}
-                markers={this.props.beanMap.markers}
+                markers={markers}
                 showDirections={mode === t('mode.semi')}
-                ghost={this.props.beanMap.ghost}
-                ghostPosition={this.props.beanMap.ghostPosition}
+                ghost={ghost}
+                ghostPosition={ghostPosition}
               />
               <MapDialog
                 id="start"
                 title={t('map.start')}
                 buttonText="ok"
-                open={this.props.beanMap.gameStartDialog}
+                open={gameStartDialog}
                 onClose={() => {
                   this.props.gameDialog('start', false);
                   this.props.firebase.update(
@@ -260,7 +266,7 @@ class Map extends Component {
                 id="pause"
                 title={t('map.pause')}
                 buttonText="continue"
-                open={this.props.beanMap.gamePauseDialog}
+                open={gamePauseDialog}
                 onClose={() => {
                   this.props.gameDialog('pause', false);
                 }}
@@ -271,14 +277,9 @@ class Map extends Component {
                 id="end"
                 title={t('map.end')}
                 buttonText="ok"
-                open={this.props.beanMap.gameEndDialog}
+                open={gameEndDialog}
                 onClose={() => {
-                  const {
-                    score, ghostCounter, distance, totalTime, maxSpeed,
-                    gameScore, sportScore,
-                  } = this.props.beanMap;
-
-                  const { totalBeans, expectTimeCost } = this.state;
+                  const { totalBeans, expectTimeCost } = this.state; // hard code
                   // console.log(this.state.gameKey);
                   this.props.firebase.update(
                     `game/${gameKey}`,
@@ -306,9 +307,9 @@ class Map extends Component {
                 }}
               >
                 <GameEndDialog
-                  pill={this.props.beanMap.score}
-                  exercise={this.props.beanMap.sportScore}
-                  game={this.props.beanMap.gameScore}
+                  pill={score}
+                  exercise={sportScore}
+                  game={gameScore}
                 />
               </MapDialog>
             </HeatMapRecord>
@@ -346,6 +347,7 @@ Map.propTypes = {
     ghostCounter: PropTypes.number.isRequired,
     distance: PropTypes.number.isRequired,
     totalTime: PropTypes.number.isRequired,
+    avgSpeed: PropTypes.number.isRequired,
     maxSpeed: PropTypes.number.isRequired,
     gameScore: PropTypes.number.isRequired,
     sportScore: PropTypes.number.isRequired,
