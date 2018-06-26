@@ -7,6 +7,7 @@ import {
   CAL_SPEED,
   GAME_DIALOG,
   GAME_END,
+  GHOST_POSITION,
 } from '../actions/type';
 import Distance from '../Distance';
 
@@ -19,6 +20,7 @@ const initialState = {
   sportScore: 0,
   alarm: new Date().getTime(),
   markers: [],
+  markersTemp: [], // a copy of markers
   ghost: false,
   ghostCounter: 0,
   maxSpeed: 0,
@@ -39,6 +41,7 @@ const beanMap = (state = initialState, action) => {
     case IMPORT_MARKERS:
       return Object.assign({}, state, {
         markers: action.payload,
+        markersTemp: action.payload,
       });
     case INIT_POSITION:
       return Object.assign({}, state, {
@@ -50,6 +53,17 @@ const beanMap = (state = initialState, action) => {
       return Object.assign({}, state, {
         markers: state.markers.filter((bean) => {
           // Eat Beans
+          let dist = Distance(bean.latitude, bean.longitude, action.latitude, action.longitude, 'K');
+          dist = Math.round(dist * 1000) / 1000; // 四捨五入
+          dist *= 1000; // 1 Km = 1000m
+          if (dist >= 5) {
+            return bean;
+          }
+          Counter += 1;
+          return false;
+        }),
+        markersTemp: state.markers.filter((bean) => {
+          // a copy for markers
           let dist = Distance(bean.latitude, bean.longitude, action.latitude, action.longitude, 'K');
           dist = Math.round(dist * 1000) / 1000; // 四捨五入
           dist *= 1000; // 1 Km = 1000m
@@ -95,6 +109,7 @@ const beanMap = (state = initialState, action) => {
         latitude: action.latitude,
         longitude: action.longitude,
         lastUpdateTime: action.currentTime,
+        ghost: false, // if the user have move, then set the ghost to false
       });
     }
     case GAME_DIALOG: {
@@ -161,6 +176,21 @@ const beanMap = (state = initialState, action) => {
         sportScore,
         gameEndDialog: true,
         totalTime,
+      });
+    }
+    case GHOST_POSITION: {
+      const { latitude, longitude, caught } = action.payload;
+      // TODO: 還要像辦法加入更換鬼魂marker 圖片的方式
+      if (caught) {
+        console.log(state.markersTemp);
+        return Object.assign({}, state, {
+          markers: [...state.markersTemp, { longitude, latitude }],
+          ghostCounter: state.ghostCounter + 1,
+          ghost: false,
+        });
+      }
+      return Object.assign({}, state, {
+        markers: [...state.markersTemp, { id: 9999, longitude, latitude }],
       });
     }
     default:

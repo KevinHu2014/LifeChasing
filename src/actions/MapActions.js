@@ -7,6 +7,7 @@ import {
   CAL_SPEED,
   GAME_DIALOG,
   GAME_END,
+  GHOST_POSITION,
 } from './type';
 
 export function eatBeans(latitude, longitude) {
@@ -48,6 +49,14 @@ export function timeOut() {
   };
 }
 
+export function ghostPosition(position) {
+  // position is an object contains latitude & longitude & caught
+  return {
+    type: GHOST_POSITION,
+    payload: position,
+  };
+}
+
 export function checkTimeOut(current) {
   /*
     current is set after SET_TIMER
@@ -59,6 +68,35 @@ export function checkTimeOut(current) {
     console.log(getState().beanMap);
     if (current >= getState().beanMap.alarm) {
       dispatch(timeOut());
+      let i = 0; // counter
+      const times = 10; // how many times for ghost to appear before it hit user
+      const minutes = 0.1; // by modifying the time to make the game harder
+      const dist = 0.005; // how far away does the ghost start to appear
+      const lat = getState().beanMap.latitude;
+      const lon = getState().beanMap.longitude;
+      const timerID = setInterval(() => {
+        const move = i * dist * (1 / times);
+        console.log(move);
+        console.log(i);
+        if (i >= times) {
+          clearInterval(timerID); // The setInterval it cleared and doesn't run anymore.
+        } else if (getState().beanMap.ghost) {
+          if (i === times) {
+            dispatch(ghostPosition({
+              latitude: (lat - dist) + move,
+              longitude: (lon - dist) + move,
+              caught: true,
+            }));
+          } else {
+            dispatch(ghostPosition({
+              latitude: (lat - dist) + move,
+              longitude: (lon - dist) + move,
+              caught: false,
+            }));
+          }
+        }
+        i += 1;
+      }, 60 * 1000 * minutes);
     }
   };
 }
