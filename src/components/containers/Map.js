@@ -332,7 +332,7 @@ Map.propTypes = {
   beanMap: PropTypes.shape({
     score: PropTypes.number.isRequired,
     markers: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       latitude: PropTypes.number.isRequired,
       longitude: PropTypes.number.isRequired,
     })).isRequired,
@@ -340,10 +340,10 @@ Map.propTypes = {
     gamePauseDialog: PropTypes.bool.isRequired,
     gameEndDialog: PropTypes.bool.isRequired,
     ghost: PropTypes.bool.isRequired,
-    ghostPosition: PropTypes.arrayOf(PropTypes.shape({
+    ghostPosition: PropTypes.shape({
       latitude: PropTypes.number.isRequired,
       longitude: PropTypes.number.isRequired,
-    })).isRequired,
+    }).isRequired,
     ghostCounter: PropTypes.number.isRequired,
     distance: PropTypes.number.isRequired,
     totalTime: PropTypes.number.isRequired,
