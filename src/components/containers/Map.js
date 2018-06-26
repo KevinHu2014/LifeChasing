@@ -119,16 +119,16 @@ class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expectTimeCost: 805,
-      expectDistance: 10,
+      expectTimeCost: 800000, // milliseconds
+      expectDistance: 1.1, // km
       destination: {
-        lat: 25.038491,
-        lng: 121.431402,
+        lat: this.props.location.state.end.lat,
+        lng: this.props.location.state.end.lon,
       },
-      totalBeans: 377,
-      w1: 0.5,
-      w2: 0.3,
-      sd: 10, // Default exercise speed <- 看不懂的東西
+      totalBeans: this.props.location.state.dots,
+      w1: 1,
+      w2: 50,
+      sd: 1.5, // Default exercise speed (m/s)
     };// 暫時 hard code
   }
   componentWillMount() {

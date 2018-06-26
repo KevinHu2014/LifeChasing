@@ -129,7 +129,7 @@ const beanMap = (state = initialState, action) => {
       const totalTime = (currentTime - state.startTime);
       /**
         Game Score
-        (((Bm * W1) - (C * W2)) / (Bt * W1))*(Ta / Tt)*100;
+        (((Bm * W1) - (C * W2)) / (Bt * W1))*(Tt / Ta)*100;
         Bm: Number of fairy balls eaten
         C: Number of times being caught by monster
         Tt: Time used of this game segment
@@ -138,7 +138,7 @@ const beanMap = (state = initialState, action) => {
         Wi: Weight
       */
       let gameScore = (((score * w1) - (ghostCounter * w2)) / (totalBeans * w1)) *
-        (expectTimeCost / totalTime) * 100;
+        (totalTime / expectTimeCost) * 100;
       gameScore = Math.round(gameScore * 1000) / 1000; // 四捨五入
       /**
         Sport Score

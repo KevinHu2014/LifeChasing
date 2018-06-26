@@ -66,6 +66,7 @@ class MarkerCreator extends Component {
               theInterface: this.props.location.state.theInterface,
               fitbit: this.props.location.state.fitbit,
               marker: (Object.values(this.props.marker))[0].data,
+              dots: (Object.values(this.props.marker))[0].dots,
             },
           }}
         />
