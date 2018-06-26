@@ -168,13 +168,13 @@ const beanMap = (state = initialState, action) => {
     }
     case GHOST_POSITION: {
       const { latitude, longitude, caught } = action.payload;
-      // TODO: 還要像辦法加入更換鬼魂marker 圖片的方式
       if (caught) {
         console.log(state.markersTemp);
         return Object.assign({}, state, {
           ghostPosition: { longitude, latitude },
           ghostCounter: state.ghostCounter + 1,
           ghost: false,
+          gamePauseDialog: true,
         });
       }
       return Object.assign({}, state, {

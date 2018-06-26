@@ -71,7 +71,7 @@ export function checkTimeOut(current) {
       let i = 0; // counter
       const times = 10; // how many times for ghost to appear before it hit user
       const seconds = 1; // by modifying the time to make the game harder
-      const dist = 0.001; // how far away does the ghost start to appear
+      const dist = 0.0001; // how far away does the ghost start to appear
       const lat = getState().beanMap.latitude;
       const lon = getState().beanMap.longitude;
       const timerID = setInterval(() => {
