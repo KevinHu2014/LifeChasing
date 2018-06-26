@@ -26,7 +26,7 @@ export const getWeatherFail = (dispatch, err) => {
 
 export const fetchWeather = (latitude, longitude) => async (dispatch) => {
   dispatch({ type: FETCH_WEATHER });
-  const url = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${setting.weatherAPIKey}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${setting.weatherAPIKey}`;
   axios.get(url)
     .then((response) => {
       console.log(response.data);
