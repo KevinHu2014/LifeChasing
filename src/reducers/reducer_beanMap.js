@@ -20,9 +20,9 @@ const initialState = {
   sportScore: 0,
   alarm: new Date().getTime(),
   markers: [],
-  markersTemp: [], // a copy of markers
   ghost: false,
   ghostCounter: 0,
+  ghostPosition: { longitude: 0, latitude: 0 },
   maxSpeed: 0,
   avgSpeed: 0,
   distance: 0, // Km
@@ -41,7 +41,6 @@ const beanMap = (state = initialState, action) => {
     case IMPORT_MARKERS:
       return Object.assign({}, state, {
         markers: action.payload,
-        markersTemp: action.payload,
       });
     case INIT_POSITION:
       return Object.assign({}, state, {
@@ -53,17 +52,6 @@ const beanMap = (state = initialState, action) => {
       return Object.assign({}, state, {
         markers: state.markers.filter((bean) => {
           // Eat Beans
-          let dist = Distance(bean.latitude, bean.longitude, action.latitude, action.longitude, 'K');
-          dist = Math.round(dist * 1000) / 1000; // 四捨五入
-          dist *= 1000; // 1 Km = 1000m
-          if (dist >= 5) {
-            return bean;
-          }
-          Counter += 1;
-          return false;
-        }),
-        markersTemp: state.markers.filter((bean) => {
-          // a copy for markers
           let dist = Distance(bean.latitude, bean.longitude, action.latitude, action.longitude, 'K');
           dist = Math.round(dist * 1000) / 1000; // 四捨五入
           dist *= 1000; // 1 Km = 1000m
@@ -184,13 +172,13 @@ const beanMap = (state = initialState, action) => {
       if (caught) {
         console.log(state.markersTemp);
         return Object.assign({}, state, {
-          markers: [...state.markersTemp, { longitude, latitude }],
+          ghostPosition: { longitude, latitude },
           ghostCounter: state.ghostCounter + 1,
           ghost: false,
         });
       }
       return Object.assign({}, state, {
-        markers: [...state.markersTemp, { id: 9999, longitude, latitude }],
+        ghostPosition: { longitude, latitude },
       });
     }
     default:

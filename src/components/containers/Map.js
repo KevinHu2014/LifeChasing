@@ -103,6 +103,15 @@ const MapWithAMarkerClusterer = compose(
           />
           ))}
       </MarkerClusterer>
+      {
+        props.ghost &&
+        <Marker
+          icon={{
+            url: 'https://firebasestorage.googleapis.com/v0/b/life-chasing.appspot.com/o/ghost.png?alt=media&token=3454b5e8-1ff4-447b-9b04-06680a098bfb',
+          }}
+          position={{ lat: props.ghostPosition.latitude, lng: props.ghostPosition.longitude }}
+        />
+      }
     </GoogleMap>));
 
 
@@ -139,7 +148,7 @@ class Map extends Component {
 
   componentDidMount() {
     this.GetLocationAndEatBean();
-    this.SetAlarm(0.5); // input is minutes
+    this.SetAlarm(0.1); // input is minutes, there are two parts of times need to be changed
 
     // disable back button
     window.onpopstate = () => {
@@ -180,7 +189,7 @@ class Map extends Component {
         } = this.state;
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
-        this.SetAlarm(1); // Reset time clock
+        this.SetAlarm(0.1); // there are two parts of times need to be changed
         this.props.eatBeans(lat, lng);
         this.props.calSpeed(lat, lng, new Date().getTime());
         let dist = Distance(lat, lng, destination.lat, destination.lng, 'K');
@@ -225,6 +234,8 @@ class Map extends Component {
                 interface={theInterface}
                 markers={this.props.beanMap.markers}
                 showDirections={mode === t('mode.semi')}
+                ghost={this.props.beanMap.ghost}
+                ghostPosition={this.props.beanMap.ghostPosition}
               />
               <MapDialog
                 id="start"
@@ -327,6 +338,11 @@ Map.propTypes = {
     gameStartDialog: PropTypes.bool.isRequired,
     gamePauseDialog: PropTypes.bool.isRequired,
     gameEndDialog: PropTypes.bool.isRequired,
+    ghost: PropTypes.bool.isRequired,
+    ghostPosition: PropTypes.arrayOf(PropTypes.shape({
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
+    })).isRequired,
     ghostCounter: PropTypes.number.isRequired,
     distance: PropTypes.number.isRequired,
     totalTime: PropTypes.number.isRequired,
