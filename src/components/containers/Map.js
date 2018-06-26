@@ -147,9 +147,6 @@ class Map extends Component {
   }
 
   componentDidMount() {
-    this.GetLocationAndEatBean();
-    this.SetAlarm(0.1); // input is minutes, there are two parts of times need to be changed
-
     // disable back button
     window.onpopstate = () => {
       history.go(1);
@@ -189,7 +186,7 @@ class Map extends Component {
         } = this.state;
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
-        this.SetAlarm(0.1); // there are two parts of times need to be changed
+        this.SetAlarm(0.1); // input is minute
         this.props.eatBeans(lat, lng);
         this.props.calSpeed(lat, lng, new Date().getTime());
         let dist = Distance(lat, lng, destination.lat, destination.lng, 'K');
@@ -249,6 +246,9 @@ class Map extends Component {
                 buttonText="ok"
                 open={gameStartDialog}
                 onClose={() => {
+                  // 開始遊戲後才去抓使用者位置
+                  this.GetLocationAndEatBean();
+
                   this.props.gameDialog('start', false);
                   this.props.firebase.update(
                     `game/${gameKey}`,
