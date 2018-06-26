@@ -128,7 +128,7 @@ class Map extends Component {
       totalBeans: this.props.location.state.dots,
       w1: 1,
       w2: 50,
-      sd: 1.5, // Default exercise speed (m/s)
+      sd: 5.4, // Default exercise speed (km/hr)
     };// 暫時 hard code
   }
   componentWillMount() {
