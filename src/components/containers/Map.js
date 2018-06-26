@@ -271,7 +271,7 @@ class Map extends Component {
                   this.props.gameDialog('pause', false);
                 }}
               >
-                <GamePauseDialog pill={5} ghost={1} speed={5} />
+                <GamePauseDialog pill={score} ghost={ghostCounter} speed={avgSpeed} />
               </MapDialog>
               <MapDialog
                 id="end"
