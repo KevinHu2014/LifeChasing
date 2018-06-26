@@ -94,6 +94,7 @@ const MapWithAMarkerClusterer = compose(
       >
         {props.markers.map(marker => (
           <Marker
+          // bean marker
             key={marker.id}
             icon={{
               url: 'https://firebasestorage.googleapis.com/v0/b/life-chasing.appspot.com/o/candy.png?alt=media&token=48fc705b-8bdc-48fb-9bd3-72669cb55f35', // pass your image here
@@ -106,12 +107,20 @@ const MapWithAMarkerClusterer = compose(
       {
         props.ghost &&
         <Marker
+        // ghost marker
           icon={{
             url: 'https://firebasestorage.googleapis.com/v0/b/life-chasing.appspot.com/o/ghost.png?alt=media&token=3454b5e8-1ff4-447b-9b04-06680a098bfb',
           }}
           position={{ lat: props.ghostPosition.latitude, lng: props.ghostPosition.longitude }}
         />
       }
+      <Marker
+      // user loation marker
+        icon={{
+          url: 'https://firebasestorage.googleapis.com/v0/b/life-chasing.appspot.com/o/center.png?alt=media&token=6d6940b0-472f-4f83-bd1e-80b6da456767',
+        }}
+        position={{ lat: props.userlocationLat, lng: props.userlocationLon }}
+      />
     </GoogleMap>));
 
 
@@ -218,7 +227,7 @@ class Map extends Component {
       markers, ghost, ghostPosition,
       score, ghostCounter, distance, totalTime, maxSpeed,
       gameScore, sportScore, avgSpeed, gamePauseDialog,
-      gameStartDialog, gameEndDialog,
+      gameStartDialog, gameEndDialog, latitude, longitude,
     } = this.props.beanMap;
     return (
       <I18n>
@@ -239,6 +248,8 @@ class Map extends Component {
                 showDirections={mode === t('mode.semi')}
                 ghost={ghost}
                 ghostPosition={ghostPosition}
+                userlocationLat={latitude}
+                userlocationLon={longitude}
               />
               <MapDialog
                 id="start"
@@ -330,6 +341,8 @@ Map.propTypes = {
   gameDialog: PropTypes.func.isRequired,
   gameEnd: PropTypes.func.isRequired,
   beanMap: PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
     score: PropTypes.number.isRequired,
     markers: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
