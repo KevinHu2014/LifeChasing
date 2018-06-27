@@ -49,7 +49,7 @@ class SelectInterface extends React.Component {
                 deny={() => {
                   this.setState({ open: false });
                 }}
-                light={false} // Material 模式沒有動態介面，所以恆為 false
+                light // Material 模式沒有動態介面，所以恆為亮
                 /*
                   透過此 apply function props
                   把 child 的參數傳回 parent
