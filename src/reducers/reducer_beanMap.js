@@ -55,7 +55,7 @@ const beanMap = (state = initialState, action) => {
           let dist = Distance(bean.latitude, bean.longitude, action.latitude, action.longitude, 'K');
           dist = Math.round(dist * 1000) / 1000; // 四捨五入
           dist *= 1000; // 1 Km = 1000m
-          if (dist >= 5) {
+          if (dist >= 10) {
             return bean;
           }
           Counter += 1;

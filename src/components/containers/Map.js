@@ -9,6 +9,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } fr
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { I18n } from 'react-i18next';
 
+import Button from 'material-ui/Button';
 import { initPosition, eatBeans, setTimer, checkTimeOut, calSpeed, gameDialog, gameEnd, importMarkers } from '../../actions';
 import { MapDialog, GameStartDialog, GamePauseDialog, GameEndDialog } from '../common';
 import Distance from '../../Distance';
@@ -202,7 +203,7 @@ class Map extends Component {
         dist = Math.round(dist * 1000) / 1000; // 四捨五入
         dist *= 1000; // 1 Km = 1000m
         console.log(dist);
-        if (dist < 5) {
+        if (dist < 10) {
           console.log('game end');
           this.props.gameEnd(
             totalBeans, expectTimeCost, expectDistance,
@@ -323,6 +324,22 @@ class Map extends Component {
                   game={gameScore}
                 />
               </MapDialog>
+              <Button
+                onClick={() => {
+                  const {
+                    totalBeans, expectTimeCost,
+                    expectDistance, w1, w2, sd,
+                  } = this.state;
+                  this.props.gameEnd(
+                    totalBeans, expectTimeCost, expectDistance,
+                    w1, w2, sd, new Date().getTime(),
+                  );
+                }}
+                color="primary"
+                autoFocus
+              >
+                end
+              </Button>
             </HeatMapRecord>
           )
         }
