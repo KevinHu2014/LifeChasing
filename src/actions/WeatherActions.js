@@ -8,10 +8,15 @@ import {
 import setting from '../setting';
 
 const getWeatherSuccess = (dispatch, response) => {
+  /*
+   openweather api 的 sunrise 和 sunset 單位是用秒 ！！！
+   但一般 JS 的 getTime 是 milliseconds !!
+   所以 sunrise 跟 sunset 要再乘上 1000
+  */
   dispatch({
     type: GET_WEATHER_SUCCESS,
-    sunrise: response.sys.sunrise,
-    sunset: response.sys.sunset,
+    sunrise: response.sys.sunrise * 1000,
+    sunset: response.sys.sunset * 1000,
     weatherID: response.weather[0].id,
     time: new Date().getTime(),
   });

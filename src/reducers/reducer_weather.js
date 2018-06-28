@@ -35,6 +35,7 @@ const weather = (state = INITAL_STATE, action) => {
             light = true;
             break;
           default:
+            // other weather coditions
             light = false;
             break;
         }
