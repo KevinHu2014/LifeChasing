@@ -51,7 +51,7 @@ class GameSegment extends Component {
                       <Grid id="two" item xs={6} sm={6} md={4} lg={4}>
                         <Paper className="paper">
                           <Typography variant="title" align="left">
-                            time spent: {Math.round(item.expectTimeCost / 1000 / 60)} min
+                            time spent: {Math.round(item.timeSpent / 1000 / 60)} min
                           </Typography>
                           <Typography variant="title" align="left">
                             avg speed: {Math.round(item.maxSpeed * 1000) / 1000} m/s
