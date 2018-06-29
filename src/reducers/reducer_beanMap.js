@@ -90,6 +90,7 @@ const beanMap = (state = initialState, action) => {
         dist = Distance(state.latitude, state.longitude, action.latitude, action.longitude, 'K');
       }
       dist = Math.round(dist * 1000) / 1000;
+      // TODO:  更換速率即時間單位
       const time = (action.currentTime - state.lastUpdateTime) * 1000 * 60 * 60;
       const totalTime = (action.currentTime - state.startTime) * 1000 * 60 * 60;
       const speed = dist / time;
