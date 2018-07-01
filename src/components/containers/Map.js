@@ -8,6 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import { I18n } from 'react-i18next';
+import i18n from 'i18next';
 
 import Button from 'material-ui/Button';
 import { initPosition, eatBeans, setTimer, checkTimeOut, calSpeed, gameDialog, gameEnd, importMarkers } from '../../actions';
@@ -139,7 +140,8 @@ class Map extends Component {
       w1: 1,
       w2: 50,
       sd: 5.4, // Default exercise speed (km/hr)
-      locationUpdateTime: (new Date().getTime() + (1000 * 60)), // 一開始先加個一分鐘
+      locationUpdateTime: new Date().getTime(),
+      startTime: new Date().getTime(),
     };// 暫時 hard code
   }
   componentWillMount() {
@@ -194,6 +196,7 @@ class Map extends Component {
         const {
           destination, totalBeans, expectTimeCost,
           expectDistance, w1, w2, sd, locationUpdateTime,
+          startTime,
         } = this.state;
         const { latitude, longitude } = this.props.beanMap;
         const lat = position.coords.latitude;
@@ -206,9 +209,17 @@ class Map extends Component {
         move = Math.round(move * 1000) / 1000; // 四捨五入
         move *= 1000; // 1 Km = 1000m
         const timeSinceLastMove = (new Date().getTime() - locationUpdateTime) / 1000; // s
-        if ((move / timeSinceLastMove) < 1) { // 如果移動小於 1 m/s，則放出鬼魂
-          this.props.checkTimeOut(true); // 直接放出鬼魂
+        // 在全自動模式下，關閉這個功能
+        if (this.props.location.state.mode !== i18n.t('mode.full')) {
+          // 前一分鐘不要觸發地點小於 1 m/s 的鬼魂
+          if (locationUpdateTime > startTime + (1000 * 60)) {
+            // 如果移動小於 1 m/s，則放出鬼魂
+            if ((move / timeSinceLastMove) < 1) {
+              this.props.checkTimeOut(true); // 直接放出鬼魂
+            }
+          }
         }
+
         this.setState({ locationUpdateTime: new Date().getTime() });
 
         // 距離終點有多遠
@@ -273,14 +284,15 @@ class Map extends Component {
                 onClose={() => {
                   // 開始遊戲後才去抓使用者位置
                   this.GetLocationAndEatBean();
-
+                  const current = new Date().getTime();
+                  this.setState({ startTime: current });
                   this.props.gameDialog('start', false);
                   this.props.firebase.update(
                     `game/${gameKey}`,
                     {
                       mode,
                       interface: theInterface,
-                      startTime: new Date().getTime(),
+                      startTime: current,
                       fitbitStart: new Date().toLocaleTimeString('en-US', { hour12: false, timeZone: 'Asia/Shanghai' }),
                       gameDate: (new Date().toLocaleDateString().split('/')).join('-'),
                     },
