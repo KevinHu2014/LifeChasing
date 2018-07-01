@@ -89,11 +89,16 @@ const beanMap = (state = initialState, action) => {
       if (state.latitude !== 0 && state.longitude !== 0) {
         dist = Distance(state.latitude, state.longitude, action.latitude, action.longitude, 'K');
       }
-      dist = Math.round(dist * 1000) / 1000;
+      // Distance function return Km
+      // 1000 m = 1Km
+      dist *= 1000; // m
+      dist = Math.round(dist * 1000) / 1000; // round to .001
       // TODO:  更換速率即時間單位
-      const time = (action.currentTime - state.lastUpdateTime) * 1000 * 60 * 60;
-      const totalTime = (action.currentTime - state.startTime) * 1000 * 60 * 60;
-      const speed = dist / time;
+      // js getTime() Return the number of milliseconds since 1970/01/01
+      // 1000 milliseconds = 1 second
+      const time = (action.currentTime - state.lastUpdateTime) / 1000; // seconds
+      const totalTime = (action.currentTime - state.startTime) / 1000; // seconds
+      const speed = dist / time; // m / s
       return Object.assign({}, state, {
         maxSpeed: Math.max(state.maxSpeed, speed),
         avgSpeed: (state.distance + dist) / totalTime,
