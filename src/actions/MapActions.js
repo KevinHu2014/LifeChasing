@@ -57,7 +57,7 @@ export function ghostPosition(position) {
   };
 }
 
-export function checkTimeOut(current) {
+export function checkTimeOut(flag) {
   /*
     current is set after SET_TIMER
     so current might be larger
@@ -66,7 +66,7 @@ export function checkTimeOut(current) {
   */
   return (dispatch, getState) => {
     console.log(getState().beanMap);
-    if (current >= getState().beanMap.alarm) {
+    if (flag) { // when flag is true means current time >= alarm time
       dispatch(timeOut());
       let i = 0; // counter
       const times = 10; // how many times for ghost to appear before it hit user

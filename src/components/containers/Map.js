@@ -139,6 +139,7 @@ class Map extends Component {
       w1: 1,
       w2: 50,
       sd: 5.4, // Default exercise speed (km/hr)
+      locationUpdateTime: (new Date().getTime() + (1000 * 60)), // 一開始先加個一分鐘
     };// 暫時 hard code
   }
   componentWillMount() {
@@ -183,7 +184,7 @@ class Map extends Component {
   SetAlarm(minutes) {
     this.props.setTimer(minutes);
     setTimeout(() => {
-      this.props.checkTimeOut(new Date().getTime());
+      this.props.checkTimeOut(new Date().getTime() >= this.props.beanMap.alarm);
     }, 1000 * 60 * minutes);
   }
 
@@ -192,13 +193,25 @@ class Map extends Component {
       (position) => {
         const {
           destination, totalBeans, expectTimeCost,
-          expectDistance, w1, w2, sd,
+          expectDistance, w1, w2, sd, locationUpdateTime,
         } = this.state;
+        const { latitude, longitude } = this.props.beanMap;
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         this.SetAlarm(0.1); // input is minute
         this.props.eatBeans(lat, lng);
         this.props.calSpeed(lat, lng, new Date().getTime());
+        // 距離上一次移動了多少
+        let move = Distance(lat, lng, latitude, longitude, 'K');
+        move = Math.round(move * 1000) / 1000; // 四捨五入
+        move *= 1000; // 1 Km = 1000m
+        const timeSinceLastMove = (new Date().getTime() - locationUpdateTime) / 1000; // s
+        if ((move / timeSinceLastMove) < 1) { // 如果移動小於 1 m/s，則放出鬼魂
+          this.props.checkTimeOut(true); // 直接放出鬼魂
+        }
+        this.setState({ locationUpdateTime: new Date().getTime() });
+
+        // 距離終點有多遠
         let dist = Distance(lat, lng, destination.lat, destination.lng, 'K');
         dist = Math.round(dist * 1000) / 1000; // 四捨五入
         dist *= 1000; // 1 Km = 1000m
@@ -362,6 +375,7 @@ Map.propTypes = {
   gameDialog: PropTypes.func.isRequired,
   gameEnd: PropTypes.func.isRequired,
   beanMap: PropTypes.shape({
+    alarm: PropTypes.number.isRequired,
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
     score: PropTypes.number.isRequired,
