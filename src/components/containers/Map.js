@@ -138,7 +138,7 @@ class Map extends Component {
       },
       totalBeans: this.props.location.state.dots,
       w1: 1,
-      w2: 50,
+      w2: 5,
       sd: 5.4, // Default exercise speed (km/hr)
       locationUpdateTime: new Date().getTime(),
       startTime: new Date().getTime(),
@@ -211,10 +211,10 @@ class Map extends Component {
         const timeSinceLastMove = (new Date().getTime() - locationUpdateTime) / 1000; // s
         // 在全自動模式下，關閉這個功能
         if (this.props.location.state.mode !== i18n.t('mode.full')) {
-          // 前一分鐘不要觸發地點小於 1 m/s 的鬼魂
+          // 前一分鐘不要觸發地點小於 0.5 m/s 的鬼魂
           if (locationUpdateTime > startTime + (1000 * 60)) {
-            // 如果移動小於 1 m/s，則放出鬼魂
-            if ((move / timeSinceLastMove) < 1) {
+            // 如果移動小於 0.5 m/s，則放出鬼魂
+            if ((move / timeSinceLastMove) < 0.5) {
               this.props.checkTimeOut(true); // 直接放出鬼魂
             }
           }
