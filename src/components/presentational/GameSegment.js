@@ -101,7 +101,7 @@ class GameSegment extends Component {
                       <Grid id="six" item xs={6} sm={6} md={4} lg={4}>
                         <Paper className="paper">
                           <Typography variant="title" align="left">
-                            fairy pellets: {item.totalBeans}
+                            fairy pellets: {item.beanEaten}
                           </Typography>
                           <Typography variant="title" align="left">
                             caught: {item.caughtTimes}
