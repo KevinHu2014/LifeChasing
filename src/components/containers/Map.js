@@ -268,6 +268,8 @@ class Map extends Component {
                       mode,
                       interface: theInterface,
                       startTime: new Date().getTime(),
+                      fitbitStart: new Date().toLocaleTimeString('en-US', { hour12: false, timeZone: 'Asia/Shanghai' }),
+                      gameDate: (new Date().toLocaleDateString().split('/')).join('-'),
                     },
                   );
                 }}
@@ -302,6 +304,8 @@ class Map extends Component {
                       caughtTimes: ghostCounter,
                       totalDistance: distance,
                       timeSpent: totalTime,
+                      endTime: new Date().getTime(),
+                      fitbitEnd: new Date().toLocaleTimeString('en-US', { hour12: false, timeZone: 'Asia/Shanghai' }),
                       heartRate: 0, // hard code
                       maxSpeed,
                       gameScore,
