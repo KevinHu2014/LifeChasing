@@ -71,7 +71,7 @@ class GameRecord extends Component {
                 const date = new Date();
                 date.setTime(item.startTime);
                 // millisecond -> minute
-                const costMinute = Math.round(item.expectTimeCost / 1000 / 60);
+                const costMinute = Math.round(item.timeSpent / 1000 / 60);
                 return (
                   <ListItem
                     key={item.key}
