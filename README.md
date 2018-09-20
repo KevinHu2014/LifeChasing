@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/KevinHu2014/LifeChasing.svg?branch=master)](https://travis-ci.org/KevinHu2014/LifeChasing)
+[![Build Status](https://travis-ci.org/WECO-LAB/LifeChasing.svg?branch=master)](https://travis-ci.org/WECO-LAB/LifeChasing)
 
 ## LifeChasing
 A Location-based Game Prototype for Elderly Health Promotion
